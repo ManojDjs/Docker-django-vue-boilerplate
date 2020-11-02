@@ -9,9 +9,11 @@ services:
   web:
       build:
         context: .
-        dockerfile: docker/backendDockerFile
+        dockerfile: docker/dockerfile_backend
+      container_name: docker-django-vue-backend
       image: app
       restart: always
+#      command: ./docker/backend_setup.sh
       command: python backend/manage.py runserver 0.0.0.0:8000
       volumes:
         - .:/code
@@ -21,6 +23,19 @@ services:
         - redis
       depends_on:
         - migration
+  vue:
+    build:
+      context: .
+      dockerfile: docker/frontendDockerFile
+    container_name: docker-django-vue-frontend
+#    command: npm run serve
+    volumes:
+      - .:/app
+    ports:
+      - "8082:8080"
+    depends_on:
+      - web
+
   migration:
     build: .
     image: app
