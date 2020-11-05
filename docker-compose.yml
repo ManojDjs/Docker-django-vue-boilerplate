@@ -21,14 +21,14 @@ services:
         - "8000:8000"
       links:
         - redis
-      depends_on:
-        - migration
+#      depends_on:
+#        - migration
   vue:
     build:
       context: .
       dockerfile: docker/frontendDockerFile
     container_name: docker-django-vue-frontend
-#    command: npm run serve
+    command: npm run serve
     volumes:
       - .:/app
     ports:
@@ -36,17 +36,17 @@ services:
     depends_on:
       - web
 
-  migration:
-    build: .
-    image: app
-    command: python backend/manage.py migrate
-    volumes:
-      - .:/code
-    depends_on:
-      - make_migration
-  make_migration:
-          build: .
-          image: app
-          command: python backend/manage.py makemigrations
-          volumes:
-            - .:/code
+#  migration:
+#    build: .
+#    image: app
+#    command: python backend/manage.py migrate
+#    volumes:
+#      - .:/code
+#    depends_on:
+#      - make_migration
+#  make_migration:
+#          build: .
+#          image: app
+#          command: python backend/manage.py makemigrations
+#          volumes:
+#            - .:/code

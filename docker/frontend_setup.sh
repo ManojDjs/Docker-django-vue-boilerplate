@@ -1,5 +1,6 @@
 #!/bin/sh
 cd src/
+npm cache clean --force
 npm install
 npm run serve
 ## yarn install
