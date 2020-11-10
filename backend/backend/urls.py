@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url, include
+from django.views.generic.base import TemplateView # new
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')), #This is the package that includes all the inbuild django auth view.
+    path('', TemplateView.as_view(template_name='dashboard.html'), name='home'), 
 ]

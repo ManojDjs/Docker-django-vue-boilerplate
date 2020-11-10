@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+   
 ]
 
 MIDDLEWARE = [
@@ -51,10 +52,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'template')], # add this
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
