@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'users'
+    'registration',
+    # 'django.contrib.admin',
+    'backend',
    
 ]
 
@@ -122,3 +126,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+### registration
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
+REGISTRATION_EMAIL_SUBJECT_PREFIX = '[Django Registration Project]'
+SEND_ACTIVATION_EMAIL = True
+REGISTRATION_AUTO_LOGIN = False
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = 'Djsmanoj@1866'  # my gmail password
+EMAIL_HOST_USER = 'djsmanoj12345678910@gmail.com'  # my gmail username
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
