@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'registration',
     # 'django.contrib.admin',
     'backend',
+    'dairy'
    
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

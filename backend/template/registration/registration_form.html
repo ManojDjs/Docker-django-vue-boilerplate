@@ -4,66 +4,81 @@
 {% block content %}
  <div class="col-md-6 offset-md-3">
     <div id="vue-app">
-    <div class="jumbotron jumbotron-fluid">
+
                   <div class="container">
-                    <h1>Login to application</h1>
+                    <h1>Signup</h1>
 
                     <form method="post" class="uniForm">
                         {% csrf_token %}
 
                             <div class="row">
 
-                                <div class="col">
+                                <div class="col-sm-4 align-self-center">
                               <label>Username</label>
                                  </div>
-                                  <div class="col">
+                                  <div class="col-sm-8">
                                       <input class="form-control" type="text" v-model='message' value={{ form.username }}
                                     </div>
                             </div>
 
                            <div class="row">
 
-                                <div class="col">
+                                <div class="col-sm-4 align-self-center">
                               <label>Email</label>
                                  </div>
-                                  <div class="col">
+                                  <div class="col-sm-8">
                                       <input class="form-control" type="text" v-model='email' value={{ form.email }}
                                     </div>
                             </div>
                         <div class="row">
 
-                                <div class="col">
+                                <div class="col-sm-4 align-self-center">
                               <label>Password</label>
                                  </div>
-                                  <div class="col">
-                                      <input class="form-control" type="text" v-model='password1' @input="strength" value={{ form.password1 }}
+                                  <div class="col-sm-8">
+                                      <input class="form-control" type="password" v-model='password1' @input="strength" value={{ form.password1 }}
                                     </div>
                             </div>
 
                         <div class="row">
                             <div class="col">
-                                <div class="progress">
+                                <div class="progress" style="height: 25px;">
                               <div class="progress-bar" role="progressbar" :style="{ width: u_progress+'%'}" aria-valuenow="{ u_progress }" aria-valuemin="0" aria-valuemax="100">lowercase</div>
                               <div class="progress-bar bg-success" role="progressbar" :style="{ width: l_progress+'%'}" aria-valuenow="{ l_progress }" aria-valuemin="0" aria-valuemax="100">uppercase</div>
                               <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">number</div>
                             </div>
-                            </div>
+                                <ul class="list-group">
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Must contain 8 letters
+                                    <span  v-if="L_signal"  class="badge badge-primary badge-pill">ok</span>
+                                  </li>
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Must contain lower and upper case
+                                    <span v-if="u_signal"  class="badge badge-primary badge-pill">ok</span>
+                                  </li>
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Must contain Special character
+                                    <span v-if="S_signal"  class="badge badge-primary badge-pill">ok</span>
+                                  </li>
+                                </ul>
+                                                            </div>
                         </div>
                         <div class="row">
 
-                                <div class="col">
+                                <div class="col-sm-4 align-self-center">
                               <label>Confirm-Password</label>
                                  </div>
-                                  <div class="col">
-                                      <input class="form-control" type="text" v-model='password2' value={{ form.password2 }}
+                                  <div class="col-sm-8">
+                                      <input class="form-control" type="password" v-model='password2' value={{ form.password2 }}
                                     </div>
                             </div>
-                        <button class="btn btn-outline-primary" type="submit">login</button>
+                         <div class="row justify-content-md-center">
+                        <button class="btn btn-outline-primary btn-lg"  type="submit">signup</button>
+                         </div>
                     </form>
-
+                    <a href="/accounts/login"> Already having account? Login!</a>
                   </div>
-            <a href="/accounts/login"> Already having account? Login!</a>
-            </div>
+
 
       <h1>[[ u_progress ]]</h1>
     </div>
@@ -75,6 +90,11 @@
             message:'',
             u_progress:0,
             l_progress:0,
+            u_signal:false,
+            S_signal:false,
+            L_signal:false,
+            decimal:'/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/',
+
 
              username:"",
              email:"",
@@ -85,8 +105,13 @@
         strength(){
         if(this.password1.length>8)
         {this.l_progress=50;
+         this.L_signal=true;
         }
-        this.u_progress=20;
+
+                this.u_progress=20;
+                this.u_signal=true;
+                this.S_signal=true;
+
 
         }
         }
@@ -98,7 +123,11 @@
 </div>
 <style>
     .row{
-padding:10px;
+padding:15px;
     }
+    .input:focus{
+    outline: none;
+}
+
 </style>
 {% endblock%}
