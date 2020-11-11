@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+ <div class="col-md-6 offset-md-3">
+
+    <div class="jumbotron jumbotron-fluid">
+                  <div class="container">
+                    <h1>Login to application</h1>
+
+                    <form method="post" class="uniForm">
+                        {% csrf_token %}
+                    {{ form|crispy }}
+                        <button class="btn btn-outline-primary" type="submit">login</button>
+                    </form>
+
+                  </div>
+            <a href="/accounts/login"> Already having account? Login!</a>
+            </div>
+
+
+</div>
+{% endblock%}

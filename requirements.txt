@@ -12,6 +12,7 @@ Twisted
 txaio
 djangorestframework
 django-registration-redux
+django-crispy-forms
 
 #for removing the root access of django
 #sudo chmod -R a+rwX sneaky(project name)

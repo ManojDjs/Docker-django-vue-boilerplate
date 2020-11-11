@@ -18,7 +18,6 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
-
 urlpatterns = [
 
     url(r'^$',
@@ -36,6 +35,10 @@ urlpatterns = [
         auth_views.LoginView.as_view(
             template_name='registration/login.html'),
         name='login'),
+# url(r'^register/$',
+#         auth_views.regs .as_view(
+#             template_name='registration/login.html'),
+#         name='login'),
 
     url(r'^admin/',
         admin.site.urls,
