@@ -4,10 +4,12 @@
 {% block title %}
 <div class="col-md-6 offset-md-3">
 <div class="container">
-
+ {% if user.is_authenticated %}
+    <h1>welcome to the WELLBEING_Dairy</h1>
+    {% else %}
     <a href="/accounts/register" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign up</a>
     <a href="/accounts/login" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
-
+{% endif %}
                 </div>
     </div>
 {% endblock %}

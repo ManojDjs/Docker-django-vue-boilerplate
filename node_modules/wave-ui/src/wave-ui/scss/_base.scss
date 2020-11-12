@@ -1,0 +1,13 @@
+* {outline: none;margin: 0;padding: 0;}
+
+html, body {height: 100%;}
+body {overflow-x: hidden;}
+
+a {text-decoration: none;}
+
+.w-app, .w-app *, .w-app :before, .w-app :after {box-sizing: border-box;}
+
+.w-main {
+  padding-left: 3 * $base-increment;
+  padding-right: 3 * $base-increment;
+}

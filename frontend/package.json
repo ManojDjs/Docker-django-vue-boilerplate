@@ -11,7 +11,9 @@
     "core-js": "^3.6.5",
     "latest-version": "^5.1.0",
     "npm": "^6.14.8",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-sidebar-menu": "^4.7.3",
+    "wave-ui": "^2.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

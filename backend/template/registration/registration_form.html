@@ -14,7 +14,7 @@
                             <div class="row">
 
                                 <div class="col-sm-4 align-self-center">
-                              <label>Username</label>
+                              <label class="form-control-group">Username</label>
                                  </div>
                                   <div class="col-sm-8">
                                       <input class="form-control" type="text" v-model='message' value={{ form.username }}
@@ -24,7 +24,7 @@
                            <div class="row">
 
                                 <div class="col-sm-4 align-self-center">
-                              <label>Email</label>
+                              <label class="form-control-group">Email</label>
                                  </div>
                                   <div class="col-sm-8">
                                       <input class="form-control" type="text" v-model='email' value={{ form.email }}
@@ -33,7 +33,7 @@
                         <div class="row">
 
                                 <div class="col-sm-4 align-self-center">
-                              <label>Password</label>
+                              <label class="form-control-group">Password</label>
                                  </div>
                                   <div class="col-sm-8">
                                       <input class="form-control" type="password" v-model='password1' @input="strength" value={{ form.password1 }}
@@ -66,7 +66,7 @@
                         <div class="row">
 
                                 <div class="col-sm-4 align-self-center">
-                              <label>Confirm-Password</label>
+                              <label class="form-control-group">Confirm-Password</label>
                                  </div>
                                   <div class="col-sm-8">
                                       <input class="form-control" type="password" v-model='password2' value={{ form.password2 }}
@@ -125,9 +125,12 @@
     .row{
 padding:15px;
     }
-    .input:focus{
-    outline: none;
+    .input:focus {
+    outline: none !important;
+    border:1px solid red;
+    box-shadow: 0 0 10px #719ECE;
 }
+
 
 </style>
 {% endblock%}
