@@ -1,12 +1,26 @@
 <template>
+ <div>
+   <div id="app">
+    <div id="nav">
+      <router-link to="/">Signup</router-link> |
+      <router-link to="/Login">Login</router-link>
+    </div>
+    <router-view/>
+    </div>
 <w-app block>
-  <w-toolbar shadow class="mt6 py1">
-  <w-icon color="dark-blue-dark3" size="2.5em">wi-wave</w-icon>
-  <div class="title3">Well-Being_on the way</div>
-  <div class="spacer"></div>
-  
-  </w-toolbar>
   <w-card class="md6 maa text-center">
+<w-alert :success="success" :error="error" :info="!success &amp;&amp; !error">{{ !success && !error ? 'The form is still pristine' : (success ? 'Success' : 'Error') }}</w-alert>
+<p>The form has been validated {{ validated }} time(s).</p>
+<w-form @validate="validated++;success = error = false" @success="success = true" @error="error = true">
+  <w-input label="First name" :validators="[validators.required]"></w-input>
+  <w-input class="mt3" label="Last name" :validators="[validators.required]"></w-input>
+  <div class="text-right mt6">
+    <w-button type="submit">Validate</w-button>
+  </div>
+</w-form>
+</w-card>
+  
+  <!-- <w-card class="md6 maa text-center">
  <div class="w-flex align-center justify-center">
     <w-button class="my6">Log in</w-button>
     <w-divider class="mx6" vertical="vertical" color="pink"></w-divider>
@@ -14,7 +28,12 @@
 </div>
 </w-card>
   <img alt="Vue logo" src="./assets/logo.png">
-      <w-card title="Terms and conditions">
+      success: null,
+  error: null,
+  validated: 0,
+  validators: {
+    required: value => !!value || 'This field is required'
+  }
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem dolore delectus,
       quisquam ipsa laudantium esse consequatur itaque similique et eligendi eum voluptas
       odit dolor labore eveniet at vel sequi nostrum.
@@ -62,21 +81,31 @@
       <w-icon class="mr1">mdi mdi-email</w-icon>
       Emails
     </w-button>
-  </w-badge>
-  </w-app>
+  </w-badge> -->
+</w-app>
+</div>
 </template>
-
 <script>
-
-
-
 export default {
   name: 'App',
   components: {
-    
+
   },
   data(){
     return{
+      success: null,
+    error: null,
+    validated: 0,
+    validators: {
+      required: value => !!value || 'This field is required'
+      },
+      count:4,
+      icons:["fa fa-github","fa fa-comment","fa fa-code","fa fa-envelope"],
+      list:[{'isLink':false},{'isLink':true,url:"/doo"},{'isLink':true,url:"/foo"},{'isLink':false}],
+      backgroundColor:'#17c4c5',
+      color:'#ffffff',
+      position:'top-left',
+      isOpenNewTab:false,
     tabs: [
     { title: 'Tab 1', content: 'Tab 1 content.' },
     { title: 'Tab 2', content: 'Tab 2 content.' },

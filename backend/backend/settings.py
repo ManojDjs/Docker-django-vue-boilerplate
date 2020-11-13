@@ -39,12 +39,26 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'users'
     'crispy_forms',
-    'registration',
+    
     # 'django.contrib.admin',
-    'backend',
-    'dairy'
+    
+    # 'dairy',
+    # DRF must be listed for the browseable API to work
+    'rest_framework',
+    'accounts',
+    'authemail',
+    # Finally, the app itself
+	'rest_framework.authtoken',
    
 ]
+AUTH_USER_MODEL = 'accounts.MyUser'
+AUTH_EMAIL_VERIFICATION=True
+
+REST_FRAMEWORK = {
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework.authentication.TokenAuthentication',
+	)
+}
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +78,10 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'template')], # add this
+        'DIRS': [os.path.join(BASE_DIR, 'template'),
+        os.path.join(BASE_DIR, 'accounts/template')
+
+        ], # add this
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,16 +147,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 ### registration
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
-REGISTRATION_EMAIL_SUBJECT_PREFIX = '[Django Registration Project]'
-SEND_ACTIVATION_EMAIL = True
-REGISTRATION_AUTO_LOGIN = False
+# ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
+# REGISTRATION_EMAIL_SUBJECT_PREFIX = '[Django Registration Project]'
+# SEND_ACTIVATION_EMAIL = True
+# REGISTRATION_AUTO_LOGIN = False
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
+# # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_FROM = 'djsmanoj12345678910@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = 'Djsmanoj@1866'  # my gmail password
-EMAIL_HOST_USER = 'djsmanoj12345678910@gmail.com'  # my gmail username
+ # my gmail password
+EMAIL_BCC='djsmanoj0000@gmail.com'
+EMAIL_HOST_USER='djsmanoj12345678910@gmail.com'
+  # my gmail username
+EMAIL_HOST_PASSWORD = 'Djsmanoj@1866' 
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+

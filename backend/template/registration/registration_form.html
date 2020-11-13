@@ -5,7 +5,7 @@
  <div class="col-md-6 offset-md-3">
     <div id="vue-app">
 
-                  <div class="container">
+                  <div class="container" id='signup'>
                     <h1>Signup</h1>
 
                     <form method="post" class="uniForm">
@@ -80,7 +80,7 @@
                   </div>
 
 
-      <h1>[[ u_progress ]]</h1>
+     
     </div>
     <script type="text/javascript">
       let app = new Vue({
@@ -131,6 +131,11 @@ padding:15px;
     box-shadow: 0 0 10px #719ECE;
 }
 
-
+#signup {
+  
+  box-shadow: 0 0.5px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  border-radius: 12px;
+}
 </style>
 {% endblock%}

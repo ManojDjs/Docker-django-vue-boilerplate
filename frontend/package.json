@@ -12,6 +12,8 @@
     "latest-version": "^5.1.0",
     "npm": "^6.14.8",
     "vue": "^3.0.0",
+    "vue-quick-menu": "^1.0.7",
+    "vue-router": "^4.0.0-rc.2",
     "vue-sidebar-menu": "^4.7.3",
     "wave-ui": "^2.6.0"
   },

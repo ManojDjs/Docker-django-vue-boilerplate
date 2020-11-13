@@ -14,27 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import include
+from django.urls import path
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 urlpatterns = [
+   
+    path('api/accounts/', include('authemail.urls')),
+    # url(r'^$',
+    #     TemplateView.as_view(template_name='index.html'),
+    #     name='index'),
 
-    url(r'^$',
-        TemplateView.as_view(template_name='index.html'),
-        name='index'),
+    # url(r'^accounts/',
+    #     include('registration.backends.default.urls')),
 
-    url(r'^accounts/',
-        include('registration.backends.default.urls')),
+    # url(r'^accounts/profile/',
+    #     TemplateView.as_view(template_name='profile.html'),
+    #     name='profile'),
 
-    url(r'^accounts/profile/',
-        TemplateView.as_view(template_name='profile.html'),
-        name='profile'),
-
-    url(r'^login/$',
-        auth_views.LoginView.as_view(
-            template_name='registration/login.html'),
-        name='login'),
+    # url(r'^login/$',
+    #     auth_views.LoginView.as_view(
+    #         template_name='registration/login.html'),
+    #     name='login'),
 # url(r'^register/$',
 #         auth_views.regs .as_view(
 #             template_name='registration/login.html'),
