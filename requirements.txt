@@ -14,7 +14,8 @@ djangorestframework
 django-registration-redux
 django-crispy-form
 django-rest-authemail
-
-
+django-cors-headers
+drf-registration
+drf_yasg
 #for removing the root access of django
 #sudo chmod -R a+rwX sneaky(project name)

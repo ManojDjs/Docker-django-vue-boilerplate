@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,26 +36,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'users'
     'crispy_forms',
-    
-    # 'django.contrib.admin',
-    
-    # 'dairy',
-    # DRF must be listed for the browseable API to work
     'rest_framework',
-    'accounts',
-    'authemail',
-    # Finally, the app itself
-	'rest_framework.authtoken',
+'rest_framework.authtoken',
+'drf_registration',
+'drf_yasg',
+    'users',
+    'corsheaders',
    
 ]
-AUTH_USER_MODEL = 'accounts.MyUser'
-AUTH_EMAIL_VERIFICATION=True
+AUTH_USER_MODEL = 'users.User'
+AUTHENTICATION_BACKENDS = [
+    'drf_registration.auth.MultiFieldsModelBackend',
+]
+
 
 REST_FRAMEWORK = {
 	'DEFAULT_AUTHENTICATION_CLASSES': (
 		'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
 	)
 }
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -68,18 +66,30 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
+
+####cross origin issues for security
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = False
+#
+# CORS_ORIGIN_WHITELIST = (
+#     'http//:localhost:8000',
+# )
 ROOT_URLCONF = 'backend.urls'
 
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+###templating
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'template'),
-        os.path.join(BASE_DIR, 'accounts/template')
+
 
         ], # add this
         'APP_DIRS': True,
@@ -146,23 +156,98 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-### registration
-# ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
-# REGISTRATION_EMAIL_SUBJECT_PREFIX = '[Django Registration Project]'
-# SEND_ACTIVATION_EMAIL = True
-# REGISTRATION_AUTO_LOGIN = False
-
-# # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_FROM = 'djsmanoj12345678910@gmail.com'
+#
+# EMAIL_FROM = 'djsmanoj12345678910@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
- # my gmail password
-EMAIL_BCC='djsmanoj0000@gmail.com'
+#  # my gmail password
+# EMAIL_BCC='djsmanoj0000@gmail.com'
 EMAIL_HOST_USER='djsmanoj12345678910@gmail.com'
-  # my gmail username
-EMAIL_HOST_PASSWORD = 'Djsmanoj@1866' 
+#   # my gmail username
+EMAIL_HOST_PASSWORD = 'Djsmanoj@1866'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+DRF_REGISTRATION = {
+
+
+    # User fields to register and response to profile
+    'USER_FIELDS': (
+        'id',
+        'username',
+        'email',
+        'password',
+        'first_name',
+        'last_name',
+        'is_active',
+    ),
+    'USER_READ_ONLY_FIELDS': (
+        'is_superuser',
+        'is_staff',
+        'is_active',
+    ),
+    'USER_WRITE_ONLY_FIELDS': (
+        'password',
+    ),
+
+    'USER_SERIALIZER': 'drf_registration.api.user.UserSerializer',
+
+    # User verify field
+    'USER_VERIFY_FIELD': 'is_active',
+
+    # Activate user by toiken sent to email
+    'USER_ACTIVATE_TOKEN_ENABLED': True,
+    'USER_ACTIVATE_SUCSSESS_TEMPLATE': '',
+    'USER_ACTIVATE_FAILED_TEMPLATE': '',
+    'USER_ACTIVATE_EMAIL_SUBJECT': 'Activate your account',
+    'USER_ACTIVATE_EMAIL_TEMPLATE': '',
+
+    # Profile
+    'PROFILE_SERIALIZER': 'drf_registration.api.profile.ProfileSerializer',
+    'PROFILE_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    # Register
+    'REGISTER_SERIALIZER': 'drf_registration.api.register.RegisterSerializer',
+    'REGISTER_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'REGISTER_SEND_WELCOME_EMAIL_ENABLED': True,
+    'REGISTER_SEND_WELCOME_EMAIL_SUBJECT': 'Welcome to the system',
+    'REGISTER_SEND_WELCOME_EMAIL_TEMPLATE': '',
+
+    # Login
+    'LOGIN_SERIALIZER': 'drf_registration.api.login.LoginSerializer',
+    'LOGIN_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    # For custom login username fields
+    'LOGIN_USERNAME_FIELDS': [ 'email','username'],
+
+    'LOGOUT_REMOVE_TOKEN': False,
+
+    # Change password
+    'CHANGE_PASSWORD_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'CHANGE_PASSWORD_SERIALIZER': 'drf_registration.api.change_password.ChangePasswordSerializer',
+
+    # Reset password
+    'RESET_PASSWORD_ENABLED': True,
+    'RESET_PASSWORD_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    # Social register/login
+    'FACEBOOK_LOGIN_ENABLED': False,
+    'GOOGLE_LOGIN_ENABLED': False,
+
+    # Set password in the case login by socials
+    'SET_PASSWORD_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'SET_PASSWORD_SERIALIZER': 'drf_registration.api.set_password.SetPasswordSerializer',
+}
