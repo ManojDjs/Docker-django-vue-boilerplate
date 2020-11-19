@@ -1,22 +1,31 @@
 <template>
  <div id='app'>
- <Menubar :model="items" v-bind:style="{ color: black, fontSize: '25'+ 'px' }">
+ <Menubar  :model="loggeditems" v-bind:style="{ color:'#00000', fontSize: '25'+ 'px' }" v-if="token">  
  <template #start>
-        <h3> WBD</h3>
+       <h3>WBD</h3>
+    </template>
+    <template #end v-if='token'>
+      <Button label="Logout" v-on:click='logout' icon="pi pi-power-off" :style="{'margin-left': '0 .5em'}"/>
+        
+    </template>
+    </Menubar>
+     <Menubar  :model="items" v-bind:style="{ color:'#00000', fontSize: '25'+ 'px' }" v-else>
+ <template #start>
+       <h3>WBD</h3>
     </template>
     <template #end>
-        <InputText placeholder="Search" type="text" />
+         
         
     </template>
     </Menubar>
       <router-view/>
 
-{{ token }}
+
 </div>
 </template>
 <script>
 import { useWindowSize } from 'vue-window-size';
-
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -30,13 +39,18 @@ export default {
       success: null,
     
       width_window:0,
-      token:'',
+
       visibleLeft: false,
       items: [
                 {label: 'Signup', icon: 'pi pi-fw pi-user-plus', to: '/'},
                 {label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/Login'},
                 
-            ]
+            ],
+      loggeditems:[
+        {label: 'My programs', icon: 'pi pi-fw pi-user-plus', to: '/Dashboard'},
+        {label: 'Profile', icon: 'pi pi-fw pi-sign-in', to: '/About'},
+
+      ]
   }
   },
   setup() {
@@ -48,12 +62,26 @@ export default {
     };
   },
   created(){
+
   },
   methods:{
+    logout(){
+      this.$router.push('/Logout')
+    }
   },
   mounted(){
-    this.token=this.$store.getters.gettoken;
-  }
+    
+  },
+  computed:{
+    ...mapState([
+      'token'
+    ])
+  },
+  watch:{
+
+    }
+
+  
 }
 </script>
 
@@ -85,5 +113,9 @@ export default {
 {
   align-self: centre;
   font-size: 1in;
+}
+.p-menubar{
+  color: black;
+
 }
 </style>

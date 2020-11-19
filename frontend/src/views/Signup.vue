@@ -8,20 +8,6 @@
         <Button type="button" label="Registration" icon="pi pi-users" class="p-button-warning p-d-block p-mx-auto" badgeClass="p-badge-danger" /> 
         
         <div class="p-grid">
-          <!-- <div class="p-col-12 p-md-6 p-lg-6 p-d-none p-d-md-inline-flex p-pt-20 p-mx-auto">
-                  <div class="box">
-                  <h1>Welcome to Well being Dairy</h1>
-                  <BlockUI />
-                  <Panel header="Godfather I" style="margin-top: 20px">
-                      <p>As with all food allergies and intolerances, if you think you or your baby have a milk allergy or intolerance, make an appointment to talk to a GP or another health ...</p>
-                  </Panel>
-                  </div>
-          </div> -->
-
-          
-          <!-- <div class="p-col-12 p-md-6 p-lg-6 p-offset-3">
-          <div class="p-m-2 p-p-2 p-m-lg-6 p-b-lg-6 p-mx-auto">
-               -->
             
             <div class="box p-mx-auto p-p-auto">
             <div class="p-fluid">
@@ -142,8 +128,8 @@ methods:{
         .catch(e=>{
           console.log(e.response.status)
           console.log(e.response.data['username'])
-          if(e.response.status==400 & e.response.data['username'][0]=='User with this username already exists'){
-              this.$toast.add({severity:'error', summary: 'User already exits', detail:'Try again with different username', life: 3000});
+          if(e.response.status==400){
+              this.$toast.add({severity:'error', summary: e.response.data, detail:'Try again with different username', life: 3000});
           }
           
         })
