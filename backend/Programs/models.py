@@ -1,19 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import User
+class ISQ_Questions(models.Model):
+    question_no=models.IntegerField()
+    question=models.CharField(max_length=5000)
 
-from django.conf import settings
-# Create your models here.
-class Programs(models.Model):
-    program_name=models.CharField(max_length=256)
-    program_startdate=models.DateTimeField(auto_now=True)
-    program_description=models.TextField()
-    # likes=models.ManyToManyField()
+    class Meta:
+        ordering=['question_no']
+    def __str__(self):
+        return self.question
+class Initial_ISQ(models.Model):
+    Answered_by=models.ForeignKey(User,on_delete=models.CASCADE,related_name='user',to_field="username",unique=True)
+    def __str__(self):
+        return self.Answered_by.username
 
+class ISQAnswer(models.Model):
+    main_question_set=models.ForeignKey(Initial_ISQ,on_delete=models.CASCADE,related_name='ISQ',default=1)
+    question_name=models.ForeignKey(ISQ_Questions,on_delete=models.CASCADE,related_name='question_nme_for_answer')
+    answer=models.PositiveIntegerField()
+    answer_by=models.ForeignKey(User,on_delete=models.CASCADE,related_name='answer_user')
     def __str__(self):
-        return self.program_name
-class EnrolledPrograms(models.Model):
-    enrolled_program=models.ForeignKey(Programs,related_name='program_enrolled',on_delete=models.CASCADE)
-    student=models.ForeignKey(django.contrib.auth.get_user_model(),related_name='student_enrolled',on_delete=models.CASCADE)
-    enrolled_date=models.DateTimeField(auto_now=True)
-    def __str__(self):
-        return self.enrolled_program
+        return self.question_name.question
