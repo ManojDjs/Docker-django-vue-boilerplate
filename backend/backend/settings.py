@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 'drf_registration',
 'drf_yasg',
     'users',
+    'Programs',
     'corsheaders',
    
 ]
