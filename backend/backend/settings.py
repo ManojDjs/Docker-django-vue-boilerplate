@@ -44,19 +44,22 @@ INSTALLED_APPS = [
     'users',
     'Programs',
     'corsheaders',
-   
+
 ]
 AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = [
     'drf_registration.auth.MultiFieldsModelBackend',
 ]
 
-
 REST_FRAMEWORK = {
 	'DEFAULT_AUTHENTICATION_CLASSES': (
 		'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-	)
+	),
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticated',
+        )
+
 }
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
@@ -156,6 +159,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_DIR=os.path.join(BASE_DIR,"static")
+STATICFILES_DIRS=[STATIC_DIR]
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL='/media/'
 
 #
 # EMAIL_FROM = 'djsmanoj12345678910@gmail.com'

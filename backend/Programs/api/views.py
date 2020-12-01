@@ -1,4 +1,5 @@
 from rest_framework import status
+from django.http import HttpResponse
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,6 +15,7 @@ class QuestionsAPI(generics.ListCreateAPIView):
     permission_classes = [IsAdminUser]
     queryset=ISQ_Questions.objects.all()
     serializer_class=Question_S
+
 class QuestionEditAPI(generics.RetrieveUpdateDestroyAPIView):
     permission_classes=[IsAdminUser]
     queryset = ISQ_Questions.objects.all()
@@ -23,7 +25,16 @@ class QuestionEditAPI(generics.RetrieveUpdateDestroyAPIView):
 class AnswersAPI(generics.ListCreateAPIView):
     queryset=ISQAnswer.objects.all()
     serializer_class=Answer_S
+class AnswersEditAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ISQAnswer.objects.all()
+    serializer_class = Answer_S
+    lookup_field='pk'
+
 class TotalAnswersAPI(generics.ListCreateAPIView):
     queryset=Initial_ISQ.objects.all()
     serializer_class=TotalAnswers_A
+
+    def get_queryset(self):
+        user = self.request.user
+        return Initial_ISQ.objects.filter(Answered_by=user)
 

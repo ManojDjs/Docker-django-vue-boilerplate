@@ -1,24 +1,49 @@
 <template>
- <div id='app'>
- <Menubar  :model="loggeditems" v-bind:style="{ color:'#00000', fontSize: '25'+ 'px' }" v-if="token">  
- <template #start>
-       <h3>WBD</h3>
-    </template>
-    <template #end v-if='token'>
-      <Button label="Logout" v-on:click='logout' icon="pi pi-power-off" :style="{'margin-left': '0 .5em'}"/>
+ <div class="p-d-flex p-flex-column" style="height:150px" id='app'>
+      <div>
+          <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:80px; background-color:#ECF0F1;position:fixed;width:100% ">
+          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-5" icon='pi pi-heart'/>
+          
+          <Button type='Button' icon="pi pi-sliders-h" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-success" />
+          <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
+        </div>
+
+
+
+
+        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:80px; background-color:#ECF0F1;position:fixed;width:100%,">
+          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-9" icon='pi pi-heart'/>
+        </div>
+
+          <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
+          <h3>Components</h3>
         
-    </template>
-    </Menubar>
-     <Menubar  :model="items" v-bind:style="{ color:'#00000', fontSize: '25'+ 'px' }" v-else>
- <template #start>
-       <h3>WBD</h3>
-    </template>
-    <template #end>
+            <Fieldset :toggleable="true">
+                <template #legend>
+                    Initial QA
+                </template>
+              <Button label="ISQ" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click="i_isq"/>
+              <Button label="Well-Being-NU" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Mental-Well-Being" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
+            </Fieldset>
+            <Fieldset :toggleable="true">
+            <template #legend>
+                Final QA
+            </template>
+              <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+        </Fieldset>
          
-        
-    </template>
-    </Menubar>
-      <router-view/>
+          </Sidebar>
+   </div>
+
+   <div v-bind:style="style" class="p-shadow-20" style="height:100%">
+       <Panel>
+      <router-view></router-view>
+       </Panel>
+   </div>
+  
 
 
 </div>
@@ -30,25 +55,25 @@ import { mapState } from 'vuex';
 export default {
   name: 'App',
   components: {
-    
-   
-
   },
   data(){
     return{
       success: null,
-    
+      padding:null,
+      visibleLeft: false,
+      
       width_window:0,
 
-      visibleLeft: false,
+      
+      iitems:null,
       items: [
                 {label: 'Signup', icon: 'pi pi-fw pi-user-plus', to: '/'},
                 {label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/Login'},
                 
             ],
       loggeditems:[
-        {label: 'My programs', icon: 'pi pi-fw pi-user-plus', to: '/Dashboard'},
-        {label: 'Profile', icon: 'pi pi-fw pi-sign-in', to: '/About'},
+        {label: 'Initia-QA', icon: 'pi pi-fw pi-user-plus',class:"p-button-success", to: '/Dashboard'},
+        {label: 'Analysis', icon: 'pi pi-fw pi-chart-line',class:"p-button-success", to: '/About'},
 
       ]
   }
@@ -56,66 +81,79 @@ export default {
   setup() {
     const { width, height } = useWindowSize();
     return {
-      windowWidth: width,
-      
+      windowWidth: width, 
       windowHeight: height,
     };
   },
   created(){
+    const { width } = useWindowSize();
+    this.width_window=width;
+    if(this.width_window<950){
+         this.padding=100
+       }
+      else if(this.width_window>1400){
+        this.padding=120
+      }
+       else{
+         this.padding=120
+       }
+     
 
   },
   methods:{
     logout(){
+
       this.$router.push('/Logout')
+    },
+    i_isq(){
+      this.$router.push('I_ISQ'),
+      this.visibleLeft=false;
     }
+    
   },
   mounted(){
+
+    
     
   },
   computed:{
     ...mapState([
-      'token'
-    ])
+      'token',
+      'user'
+    ]),
+    style(){
+      return{
+      "padding-top":this.padding+'px'
+    }
+    }
   },
   watch:{
-
-    }
+     windowWidth(){
+       if(this.windowWidth<950){
+         this.padding=100
+       }
+      else if(this.windowWidth>1400){
+        this.padding=100
+      }
+       else{
+         this.padding=120
+       }
+     }
+    },
+  
 
   
 }
 </script>
 
-<style>
+<style lang="scss">
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 6px;
-}
-#page{
-  padding:1in;
-}
-#tab{
-  height: 0.5in;
-}
-.router-link{
-  font-size: 1in;
-}
-.p-tabmenu{
-  align-self: center;
-}
-.p-tabmenu-nav{
-  align-self: center;
-}
-.p-tabmenuitem
-{
-  align-self: centre;
-  font-size: 1in;
-}
-.p-menubar{
-  color: black;
+  text-align: center; 
+  // background-color: #263539;
 
 }
 </style>

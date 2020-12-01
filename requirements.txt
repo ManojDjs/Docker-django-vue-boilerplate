@@ -3,7 +3,6 @@ psycopg2-binary
 requests
 flask
 Pillow
-django-crispy-forms
 asgiref
 channels
 channels_redis
@@ -11,9 +10,6 @@ channels_redis
 Twisted
 txaio
 djangorestframework
-django-registration-redux
-django-crispy-form
-django-rest-authemail
 django-cors-headers
 drf-registration
 drf_yasg

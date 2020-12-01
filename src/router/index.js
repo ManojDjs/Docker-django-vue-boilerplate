@@ -5,8 +5,14 @@ import Signup from "@/views/Signup.vue";
 import About from "@/views/About.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import RegistrationMessage from "@/views/RegistrationMessage.vue";
+import I_ISQ from "@/components/I_ISQ.vue";
 
 const routes = [
+  {
+    path: "/I_ISQ",
+    name: "I_ISQ",
+    component: I_ISQ,
+  },
   {
     path: "/",
     name: "Signup",

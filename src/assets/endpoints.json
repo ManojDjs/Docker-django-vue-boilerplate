@@ -1,0 +1,10 @@
+[
+    {
+        "ISQ":{
+            "Total":"QA/I_ISQ/",
+            "Questions":"QA/ISQ_Q",
+            "Answers":"QA/ISQ_A/",
+            "Edit":"QA/ISQ_A_EDIT/"
+        }
+    }
+]
