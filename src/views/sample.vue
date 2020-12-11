@@ -1,26 +1,47 @@
 <template>
- <div id='app'>
-   <div>
- <Menubar class='p-success'  :model="loggeditems" v-bind:style="{ color:'green', fontSize: '25'+ 'px' }" v-if="token">  
- <template #start>
-       <h3>WBD</h3>
-    </template>
-    <template #end v-if='token'>
-      <Button label="Logout" v-on:click='logout' icon="pi pi-power-off" :style="{'margin-left': '0 .5em'}"/>
+ <div class="p-d-flex p-flex-column" style="height:150px" id='app'>
+      <div style="position:fixed">
+          <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:80px; background-color:#ECF0F1;width:100% ">
+          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-5" icon='pi pi-heart'/>
+          
+          <Button type='Button' icon="pi pi-sliders-h" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-success" />
+          <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
+        </div>
+
+
+
+
+        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:80px; background-color:#ECF0F1;width:100%,">
+          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-9" icon='pi pi-heart'/>
+        </div>
+
+          <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
+          <h3>Components</h3>
         
-    </template>
-    </Menubar>
-     <Menubar class='p-success'   :model="items" v-bind:style="{ color:'green', fontSize: '25'+ 'px' }" v-else>
- <template #start>
-       <h3>WBD</h3>
-    </template>
-    <template #end>
-    </template>
-    </Menubar>
+            <Fieldset :toggleable="true">
+                <template #legend>
+                    Initial QA
+                </template>
+              <Button label="ISQ" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click="i_isq"/>
+              <Button label="Well-Being-NU" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Mental-Well-Being" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
+            </Fieldset>
+            <Fieldset :toggleable="true">
+            <template #legend>
+                Final QA
+            </template>
+              <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+        </Fieldset>
+         
+          </Sidebar>
    </div>
-   <div v-bind:style="{padding:padding+'px'}">
-      
-      <router-view/>
+
+   <div v-bind:style="style" class="p-shadow-20" style="height:100%">
+       <Panel>
+      <router-view></router-view>
+       </Panel>
    </div>
   
 
@@ -34,18 +55,17 @@ import { mapState } from 'vuex';
 export default {
   name: 'App',
   components: {
-    
-   
-
   },
   data(){
     return{
       success: null,
       padding:null,
-    
+      visibleLeft: false,
+      
       width_window:0,
 
-      visibleLeft: false,
+      
+      iitems:null,
       items: [
                 {label: 'Signup', icon: 'pi pi-fw pi-user-plus', to: '/'},
                 {label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/Login'},
@@ -69,7 +89,7 @@ export default {
     const { width } = useWindowSize();
     this.width_window=width;
     if(this.width_window<950){
-         this.padding=10
+         this.padding=100
        }
       else if(this.width_window>1400){
         this.padding=120
@@ -84,7 +104,12 @@ export default {
     logout(){
 
       this.$router.push('/Logout')
+    },
+    i_isq(){
+      this.$router.push('I_ISQ'),
+      this.visibleLeft=false;
     }
+    
   },
   mounted(){
 
@@ -95,15 +120,20 @@ export default {
     ...mapState([
       'token',
       'user'
-    ])
+    ]),
+    style(){
+      return{
+      "padding-top":this.padding+'px'
+    }
+    }
   },
   watch:{
      windowWidth(){
        if(this.windowWidth<950){
-         this.padding=10
+         this.padding=100
        }
       else if(this.windowWidth>1400){
-        this.padding=160
+        this.padding=100
       }
        else{
          this.padding=120
@@ -117,39 +147,51 @@ export default {
 </script>
 
 <style lang="scss">
-$menuBorder: 1px solid #dee2e6;
-$menuBg: #ffffff;
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #ffffff;
-}
-
-#tab{
-  height: 0.5in;
-}
-.router-link{
-  font-size: 1in;
-}
-.p-tabmenu{
-  align-self: center;
-}
-.p-tabmenu-nav{
-  align-self: center;
-}
-.p-tabmenuitem
-{
-  align-self: centre;
-  font-size: 1in;
-}
-.p-menubar{
-
-      position: fixed;
-      width:100%;
-      z-index: 102;
-      
+  text-align: center; 
+  // background-color: #263539;
 
 }
+::v-deep(.p-scrollpanel) {
+    p {
+        padding: .5rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    &.custombar1 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--surface-b);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--primary-color);
+            opacity: 1;
+            transition: background-color .2s;
+
+            &:hover {
+                background-color: #007ad9;
+            }
+        }
+    }
+
+    &.custombar2 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--surface-b);
+            border-bottom: 9px solid var(--surface-b);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--surface-d);
+            border-radius: 0;
+            opacity: 1;
+            transition: background-color .2s;
+        }
+    }  
+}
+
 </style>

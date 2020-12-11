@@ -43,7 +43,14 @@ INSTALLED_APPS = [
 'drf_yasg',
     'users',
     'Programs',
+'FPrograms',
     'corsheaders',
+    'Demographics',
+    'MentalWellbeing',
+'FMentalWellbeing',
+    'WellbeingModelNU',
+    'FWellbeingModelNU'
+
 
 ]
 AUTH_USER_MODEL = 'users.User'

@@ -1,8 +1,8 @@
 import { createApp ,h} from 'vue'
 import App from './App.vue'
 
-// import WaveUI from 'wave-ui'
-// import 'wave-ui/dist/wave-ui.css'
+import WaveUI from 'wave-ui'
+import 'wave-ui/dist/wave-ui.css'
 import router from '@/router/index.js' // <---
 import store from './store';
 
@@ -16,7 +16,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
-
+import SelectButton from 'primevue/selectbutton';
 import Menubar from 'primevue/menubar';
 import TabMenu from 'primevue/tabmenu';
 import BlockUI from 'primevue/blockui';
@@ -37,15 +37,17 @@ import Ripple from 'primevue/ripple';
 import ScrollPanel from 'primevue/scrollpanel';
 import Timeline from 'primevue/timeline';
 import Slider from 'primevue/slider';
-
+import InputNumber from 'primevue/inputnumber';
 
 const app = createApp({
   render: () => h(App)
 }).use(store).use(ToastService);
 
-// new WaveUI(app, {
-//   // Some Wave UI options.
-// })
+new WaveUI(app, {
+  // Some Wave UI options.
+})
+app.component('InputNumber',InputNumber)
+app.component('SelectButton',SelectButton)
 app.component('Slider',Slider)
 app.component('Timeline',Timeline)
 app.component('ScrollPanel',ScrollPanel)

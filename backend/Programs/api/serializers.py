@@ -6,18 +6,29 @@ class Question_S(serializers.ModelSerializer):
         model=ISQ_Questions
         fields='__all__'
 class Answer_S(serializers.ModelSerializer):
+    # question_name=Question_S()
+    # main_question_set=serializers.StringRelatedField()
+    # answer_by=serializers.StringRelatedField()
     class Meta:
         model=ISQAnswer
-        fields='__all__'
+        fields=("id","answer","main_question_set","question_name","answer_by",)
+
+class Answer_Eoboration(serializers.ModelSerializer):
+    question_name=Question_S()
+    class Meta:
+        model=ISQAnswer
+        fields=("id","answer","main_question_set","question_name","answer_by",)
+    # def get_question_type(self):
+
 
 class TotalAnswers_A(serializers.ModelSerializer):
-    ISQ=Answer_S(many=True,read_only=True)
+    ISQ=Answer_Eoboration(many=True,read_only=True)
     total_questions=serializers.SerializerMethodField()
     total_answers=serializers.SerializerMethodField()
 
     class Meta:
         model=Initial_ISQ
-        fields=('Answered_by','ISQ','total_answers','total_questions')
+        fields=('id','Answered_by','ISQ','total_answers','total_questions')
     def get_total_answers(self,instance):
         user = None
         request = self.context.get("request")

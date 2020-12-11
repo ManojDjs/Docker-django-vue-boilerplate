@@ -1,14 +1,10 @@
 <template>
 <div>
-    <router-view/>
-    <div class="p-m-2 p-p-20">
+    
       <Toast position="top-right" />
       
-        <Button type="button" label="Login" icon="pi pi-users" class="p-button-warning p-d-block p-mx-auto" badgeClass="p-badge-danger" /> 
-        
-        <div class="p-grid">
-         
-            <div class="box p-mx-auto p-p-auto">
+        <Button type="button" label="Login" icon="pi pi-users" class="p-button-warning p-d-block p-mx-auto" badgeClass="p-badge-danger" />        
+            <div>
             <div class="p-fluid">
               
                
@@ -35,8 +31,8 @@
               
            </div>
            </div>
-            </div>
-           </div>
+            
+           
 </div>
   
 </template>
@@ -89,7 +85,5 @@ watch : {
 }
 </script>
 <style scoped>
-.p-grid{
-  padding-top: 0.5in;
-}
+
 </style>

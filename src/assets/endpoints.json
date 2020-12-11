@@ -5,6 +5,26 @@
             "Questions":"QA/ISQ_Q",
             "Answers":"QA/ISQ_A/",
             "Edit":"QA/ISQ_A_EDIT/"
+        },
+        "DEMO":{
+            "Total":"Demo/DQ_Total/",
+            "Questions":"Demo/DQ",
+            "Answers":"Demo/DQ_A/",
+            "Edit":"Demo/DQ_A_EDIT/"
+        },
+        "MWB":{
+            "Total":"MWB/MWB_Total/",
+            "Questions":"MWB/MWB",
+            "Answers":"MWB/MWB_A/",
+            "Edit":"MWB/MWB_A_EDIT/"
+
+        },
+        "WBMNU":{
+            "Total":"WBMNU/WBMNU_Total/",
+            "Questions":"WBMNU/WBMNU",
+            "Answers":"WBMNU/WBMNU_A/",
+            "Edit":"WBMNU/WBMNU_A_EDIT/"
         }
+
     }
 ]

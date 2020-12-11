@@ -13,15 +13,18 @@ export default createStore({
     f_questions:[],
     edit_status:null,
     question_answers:[],
+    uid: localStorage.getItem('uid') || '',
+    mqid: localStorage.getItem('mqid') || ''
   },
   mutations: {
     auth_request(state){
       state.status = 'loading'
     },
-    auth_success(state, token, user){
+    auth_success(state, token, user,uid){
       state.status = 'success'
       state.token = token
       state.user = user
+      state.uid=uid
     },
     auth_error(state){
       state.status = 'error'
@@ -33,8 +36,9 @@ export default createStore({
     check_q_status(state,status){
       state.q_status=status
     },
-    get_qa(state,qa){
+    get_qa(state,qa,mqid){
       state.question_answers=qa
+      state.mqid=mqid
     },
     get_questions(state,qu){
       state.questions=qu
@@ -64,18 +68,31 @@ export default createStore({
           'Authorization': 'Token'+' '+this.state.token,
 
                   }
-                   console.log(headers)
+                  //  console.log(headers)
         axios.get('http://127.0.0.1:8000/'+link,{'headers':headers})
         .then(resp => {
           console.log(resp.data)
           if(resp.data.length==0){
-            commit('check_q_status','NR')
+            commit('check_q_status','NR')  //for no records found status
 
           }
           else{
-            commit('check_q_status','RF')
-            commit('get_qa',resp.data)
-
+            if(resp.data[0]['total_answers']==resp.data[0]['total_questions']){
+              const mqid=resp.data[0].id
+              localStorage.setItem('mqid', mqid)
+              console.log(mqid)
+              commit('check_q_status','EDIT') //for records found status
+              commit('get_qa',resp.data,mqid)
+            }
+            else{
+              const mqid=resp.data[0].id
+              localStorage.setItem('mqid', mqid)
+              console.log(mqid)
+              commit('check_q_status','RF') //for records found status
+              commit('get_qa',resp.data,mqid)
+  
+            }
+           
           }
         })
         .catch(err => {
@@ -88,7 +105,7 @@ export default createStore({
         'Authorization': 'Token'+' '+this.state.token,
 
                 }
-                 console.log(headers)
+                //  console.log(headers)
       axios.post('http://127.0.0.1:8000/'+link,
         {
         "Answered_by": this.state.user
@@ -111,13 +128,17 @@ export default createStore({
         console.log(err)
       })
     },
+
+
+
+
     questions_taker({commit},link){
       const headers={
          
         'Authorization': 'Token'+' '+this.state.token,
 
                 }
-                 console.log(headers)
+                //  console.log(headers)
       axios.get('http://127.0.0.1:8000/'+link,{'headers':headers})
       .then(resp => {
         console.log(resp.data)
@@ -127,6 +148,7 @@ export default createStore({
         }
         else{
           commit('get_questions',resp.data)
+          commit('check_q_status','RS')
 
         }
       })
@@ -134,9 +156,105 @@ export default createStore({
         console.log(err)
       })
   },
-  
+  submitanswers({commit},subparam){
+            console.log(subparam)
+            commit('check_q_status','RS')
+            const headers={
+                
+              'Authorization': 'Token'+' '+this.state.token,
 
+                      }
+            console.log(headers)
+      
+            var i
+            var check=0
+            console.log(subparam.submisiondata.length)
+            return new Promise((resolve, reject) => {
+            for(i=0;i<subparam.submisiondata.length;i++){
+              console.log(subparam.submisiondata[i]['answer'])
+              console.log( this.state.uid )
+              console.log( this.state.mqid )
+              
+            axios.post('http://127.0.0.1:8000/'+subparam.link,
+              {
+            "answer": subparam.submisiondata[i]['answer'],
+            "main_question_set": localStorage.getItem('mqid') ,
+            "question_name": subparam.submisiondata[i]['qid'],
+            "answer_by": this.state.uid
+                  
+              },
+              {'headers':headers})
+            .then(resp => {
+                    // console.log(resp.data)
+                    if(resp.data.length==0){
+                      check=check+1
+                    }
+                    else{
+                    // console.log(resp.data)
+                    commit('check_q_status','EDIT')
 
+                    }
+                    resolve(resp.data)
+                    commit('check_q_status','EDIT')
+                    
+                  })
+              
+              .catch(err => {
+                commit('check_q_sttaus',"saveerror")
+            
+                reject(err)
+              })
+            }
+            })
+  },
+ save({commit},subparam){
+          console.log(subparam)
+          // commit('check_q_status','RS')
+          const headers={
+              
+            'Authorization': 'Token'+' '+this.state.token,
+
+                    }
+          console.log(headers)
+          var i
+          var check=0
+          console.log(subparam.submisiondata.length)
+          return new Promise((resolve, reject) => {
+          for(i=0;i<subparam.submisiondata.length;i++){
+            // console.log(subparam.submisiondata[i]['answer'])
+            // console.log( this.state.uid )
+            // console.log( this.state.mqid )
+            
+          axios.put('http://127.0.0.1:8000/'+subparam.link+subparam.submisiondata[i]['editid'],
+            {
+          "id":subparam.submisiondata[i]['editid'],
+          "answer": subparam.submisiondata[i]['answer'],
+          "main_question_set": localStorage.getItem('mqid') ,
+          "question_name": subparam.submisiondata[i]['qid'],
+          "answer_by": this.state.uid
+                
+            },
+            {'headers':headers})
+          .then(resp => {
+                  // console.log(resp.data)
+                  if(resp.data.length==0){
+                    check=check+1
+                  }
+                  else{
+                  // console.log(resp.data)
+                  commit('check_q_status','EDIT')
+                  resolve(resp)
+                  }
+              
+                }) 
+                .catch(err => {
+                  commit('check_q_sttaus',"saveerror")
+              
+                  reject(err)
+                })
+              }
+              })
+ },
     // authentication modules
 
     login({commit}, user){
@@ -153,12 +271,14 @@ export default createStore({
           console.log(resp.data)
           const token = resp.data.token
           const user = resp.data.username
+          const uid=resp.data.id
           console.log(user)
           localStorage.setItem('token', token)
           localStorage.setItem('user', user)
-
+          localStorage.setItem('uid', uid)
+          console.log(uid),
           axios.defaults.headers.common['Authorization'] = token
-          commit('auth_success', token, user)
+          commit('auth_success', token, user,uid)
           resolve(resp)
         })
         .catch(err => {

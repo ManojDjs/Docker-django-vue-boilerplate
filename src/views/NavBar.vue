@@ -1,123 +1,68 @@
 <template>
-<div> 
-<!-- The navigation menu will get the value of the "active" variable as a class. -->
-
- <!-- To stops the page from jumping when a link is clicked 
-        we use the "prevent" modifier (short for preventDefault). -->
-
-          <nav v-bind:class="active"  :style=style v-on:click.prevent>
-
-            
-            <ul >
-            <li  v-if='window.width>800'><h1 class='namehead'>Vue<span class='name'>Jango</span></h1></li>
-            <li  ><router-link to='#'><b-icon-person-plus-fill variant="primary" :style=navlist class="h3 mb-2 blue-text"></b-icon-person-plus-fill></router-link></li>
-            <li ><router-link to='#'><b-icon-plus-circle variant="primary" :style=navlist class="h3 mb-2" ></b-icon-plus-circle></router-link></li>
-            <li ><router-link to='#'><b-icon-search variant="primary" :style=navlist  class="h3 mb-2 blue-text"></b-icon-search></router-link></li>
-            <li ><router-link to='#'><b-icon-chat-dots variant="primary" :style=navlist class="h3 mb-2"></b-icon-chat-dots></router-link></li>
-            <li ><router-link to='#'><b-icon-person-lines-fill variant="primary" :style=navlist class="h3 mb-2"></b-icon-person-lines-fill> </router-link></li>
-          </ul>
-          </nav>
+   <div>
+          <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:80px; background-color:#ECF0F1;width:100% ">
+          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-5" icon='pi pi-heart'/>
+          
+          <Button type='Button' icon="pi pi-sliders-h" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-success" />
+          <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
+        </div>
 
 
-</div>
+
+
+        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:80px; background-color:#ECF0F1;width:100%,">
+          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-9" icon='pi pi-heart'/>
+        </div>
+
+          <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
+          <h3>Components</h3>
+        
+            <Fieldset :toggleable="true">
+                <template #legend>
+                    Initial QA
+                </template>
+              <Button label="ISQ" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click="i_isq"/>
+              <Button label="Well-Being-NU" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Mental-Well-Being" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
+            </Fieldset>
+            <Fieldset :toggleable="true">
+            <template #legend>
+                Final QA
+            </template>
+              <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+        </Fieldset>
+         
+          </Sidebar>
+   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
+   data(){
+     return{
+        visibleLeft: false,
+      
+     }
+   },
+    computed:{
+    ...mapState([
+      'token',
+      'user'
+    ]),
+    },
+   methods:{
+    logout(){
+
+      this.$router.push('/Logout')
+    },
+    i_isq(){
+      this.$router.push('I_ISQ'),
+      this.visibleLeft=false;
+    }
     
+  },
 }
+
 </script>
-<style scoped>
- *{
-  margin:0;
-  padding:0;
-}
-
-body{
-  font:15px/1.3 'Open Sans', sans-serif;
-  color: #5e5b64;
-  text-align:center;
-}
-
-li, li:visited {
-  outline:none;
-  color:#5e5b64;
-}
-
-li:hover{
-  text-decoration:none;
-}
-
-section, footer, header, aside, nav{
-  display: block;
-}
-
-/*-------------------------
-  The menu
---------------------------*/
-
-nav{
-  display:inline-block;
-  margin:20px auto 15px;
-  background-color:#FFFFFF;
-  box-shadow:0 1px 1px #ccc;
-  border-radius:2px;
-  
-}
-
-nav ul li{
-  display:inline-block;
-  padding: 25px 30px;
-/*  color:#fff !important; */
-  font-weight:bold;
-  font-size:20px;
-  text-decoration:none !important;
-  line-height:1;
-  color:black;
-/*  text-transform: uppercase; */
-/*  background-color:transparent; */
-
-  -webkit-transition:background-color 0.25s;
-  -moz-transition:background-color 0.25s;
-  transition:background-color 0.25s;
-}
-
-nav ul li:first-child{
-  border-radius:2px 0 0 2px;
-}
-
-nav ul li:last-child{
-  border-radius:0 2px 2px 0;
-}
-
-
-
-p{
-  font-size:22px;
-  font-weight:bold;
-  color:#7d9098;
-}
-
-p b{
-  color:#ffffff;
-  display:inline-block;
-  padding:5px 10px;
-  background-color:#c4d7e0;
-  border-radius:2px;
-  text-transform:uppercase;
-  font-size:18px;
-}
-.home{
-  font-size:0.3in;
- 
-}
-.name{
-  color:#3756dd;
-  font-size: 0.875em;
-}
-.namehead{
-  color:#050101;
-  font-size: 1.875em;
-}
-
-
-</style>

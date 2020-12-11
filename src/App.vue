@@ -1,49 +1,63 @@
 <template>
- <div class="p-d-flex p-flex-column" style="height:150px" id='app'>
-      <div>
-          <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:80px; background-color:#ECF0F1;position:fixed;width:100% ">
-          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-5" icon='pi pi-heart'/>
-          
-          <Button type='Button' icon="pi pi-sliders-h" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-success" />
-          <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
-        </div>
+ <div  id='app'>
 
+   <Card style="width:100%;height:100%">
+    <template #header>
+      <div style="backgound-color:green">
+              <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:100px;background-color:#ECF0F1;width:100% ">
+              <Button type="Button" label='WBD' class="p-mr-2 p-button-help rounded p-shadow-5" icon='pi pi-heart'/>
+              
+              <Button type='Button' icon="pi pi-step-forward" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-help" />
+              <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
+            </div>
+        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:100px;position:fixed; background-color:#ECF0F1;width:100%">
+          <Button type="Button" label='WBD' class="p-mr-2 p-button-help p-shadow-9" icon='pi pi-heart'/>
 
-
-
-        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:80px; background-color:#ECF0F1;position:fixed;width:100%,">
-          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-9" icon='pi pi-heart'/>
+           <Button type="Button" icon="pi pi-sign-in" label="Login" v-on:click='login'  class="p-ml-auto p-button-danger p-shadow-5"/>
         </div>
 
           <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
           <h3>Components</h3>
         
             <Fieldset :toggleable="true">
+              
+            <template #legend>
+                INFORMATION
+            </template>
+              <Button label="Demographics"  v-on:click='dashboard' class="p-button-info p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Data Insights" class="p-button-info p-m-2 p-shadow-5" style="width:100%"/>
+            
+        </Fieldset>
+         <Fieldset :toggleable="true">
                 <template #legend>
                     Initial QA
                 </template>
               <Button label="ISQ" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click="i_isq"/>
-              <Button label="Well-Being-NU" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Mental-Well-Being" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Well-Being-NU" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click='i_wbmnu'/>
+              <Button label="Mental-Well-Being" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click='i_mwb'/>
             </Fieldset>
             <Fieldset :toggleable="true">
             <template #legend>
                 Final QA
             </template>
               <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_wbmnu'/>
+              <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_mwb'/>
         </Fieldset>
          
           </Sidebar>
    </div>
+  </template>
+ <template #title>
+       <h3 v-bind:style="headingstyle"> {{ Heading }}</h3>
+    </template>
+    <template #content>
 
-   <div v-bind:style="style" class="p-shadow-20" style="height:100%">
-       <Panel>
-      <router-view></router-view>
-       </Panel>
-   </div>
-  
+<ScrollPanel v-bind:style='style' class="custombar1">
+       <router-view/>
+</ScrollPanel>
+    </template>
+</Card>
 
 
 </div>
@@ -61,10 +75,9 @@ export default {
       success: null,
       padding:null,
       visibleLeft: false,
-      
-      width_window:0,
-
-      
+      listcolors:['orange','Tomato','DodgerBlue','MediumSeaGreen','SlateBlue','Violet'],
+      hcolor:'',
+      Heading:'',
       iitems:null,
       items: [
                 {label: 'Signup', icon: 'pi pi-fw pi-user-plus', to: '/'},
@@ -86,17 +99,19 @@ export default {
     };
   },
   created(){
-    const { width } = useWindowSize();
-    this.width_window=width;
-    if(this.width_window<950){
-         this.padding=100
-       }
-      else if(this.width_window>1400){
-        this.padding=120
-      }
-       else{
-         this.padding=120
-       }
+    this.set_color()
+    // const { width,height } = useWindowSize();
+    // this.width_window=width;
+    // this.height_window=height;
+    // if(this.width_window<950){
+    //      this.padding=100
+    //    }
+    //   else if(this.width_window>1400){
+    //     this.padding=120
+    //   }
+    //    else{
+    //      this.padding=120
+    //    }
      
 
   },
@@ -105,9 +120,49 @@ export default {
 
       this.$router.push('/Logout')
     },
+     login(){
+
+      this.$router.push('/Login')
+    },
     i_isq(){
       this.$router.push('I_ISQ'),
+       this.set_color()
+       this.Heading='Initial Immune System'
       this.visibleLeft=false;
+    },
+     i_mwb(){
+      this.$router.push('/I_MWB'),
+      this.set_color()
+      this.Heading='Initial Mental Wellbeing'
+      this.visibleLeft=false;
+    },
+     i_wbmnu(){
+      this.$router.push('/I_WBMNU'),
+      this.set_color()
+      this.Heading='wellbeing model NU',
+      this.visibleLeft=false;
+    },
+      f_mwb(){
+      this.$router.push('/F_MWB'),
+      this.set_color()
+      this.Heading='Initial Mental Wellbeing'
+      this.visibleLeft=false;
+    },
+     f_wbmnu(){
+      this.$router.push('/F_WBMNU'),
+      this.set_color()
+      this.Heading='wellbeing model NU',
+      this.visibleLeft=false;
+    },
+     dashboard(){
+      this.$router.push('/Dashboard'),
+      this.set_color()
+       this.Heading='Demographics'
+      this.visibleLeft=false;
+    },
+    set_color(){
+      this.hcolor=this.listcolors[Math.floor(Math.random() * this.listcolors.length)]
+      // console.log(this.hcolor)
     }
     
   },
@@ -123,10 +178,30 @@ export default {
     ]),
     style(){
       return{
-      "padding-top":this.padding+'px'
-    }
-    }
+      // "padding-top":this.padding+'px'
+      "width":this.windowWidth-50+'px',
+      "height":this.windowHeight-200+'px'
+      }
+    },
+    headingstyle(){
+
+      return{
+      "background-color":this.hcolor,
+      "border-radius": "5px",
+      "padding":"5px",
+      "color":"black"
+      }
+    },
+    windows(){
+       const { width, height } = useWindowSize();
+    return {
+      windowWidth: width, 
+      windowHeight: height,
+    };
+  }
+    
   },
+
   watch:{
      windowWidth(){
        if(this.windowWidth<950){
@@ -137,6 +212,14 @@ export default {
       }
        else{
          this.padding=120
+       }
+     },
+     token(){
+       if(this.token==''){
+         this.$router.push('/')
+       }
+       else{
+         this.$router.push("/Dashboard")
        }
      }
     },
@@ -156,4 +239,42 @@ export default {
   // background-color: #263539;
 
 }
+::v-deep(.p-scrollpanel) {
+    p {
+        padding: .5rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    &.custombar1 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--surface-b);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--primary-color);
+            opacity: 1;
+            transition: background-color .2s;
+
+            &:hover {
+                background-color: #007ad9;
+            }
+        }
+    }
+
+    &.custombar2 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--surface-b);
+            border-bottom: 9px solid var(--surface-b);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--surface-d);
+            border-radius: 0;
+            opacity: 1;
+            transition: background-color .2s;
+        }
+    }  
+}
+
 </style>

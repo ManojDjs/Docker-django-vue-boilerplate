@@ -9,3 +9,4 @@ urlpatterns=[
     path('I_ISQ/',TotalAnswersAPI.as_view(),name='total_answers'),
 
 ]
+
