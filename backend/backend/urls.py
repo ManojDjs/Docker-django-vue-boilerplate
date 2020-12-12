@@ -42,6 +42,7 @@ urlpatterns = [
     path('api/accounts/', include('drf_registration.urls')),
     path('QA/', include('Programs.api.urls')),
     path('FQA/', include('FPrograms.api.urls')),
+    path('USER/', include('users.api.urls')),
     path('Demo/',include('Demographics.api.urls')),
     path('MWB/',include('MentalWellbeing.api.urls')),
     path('FMWB/',include('FMentalWellbeing.api.urls')),

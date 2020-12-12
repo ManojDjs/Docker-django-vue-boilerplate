@@ -38,7 +38,10 @@ import ScrollPanel from 'primevue/scrollpanel';
 import Timeline from 'primevue/timeline';
 import Slider from 'primevue/slider';
 import InputNumber from 'primevue/inputnumber';
+import Divider from 'primevue/divider';
 
+import Avatar from 'primevue/avatar';
+import AvatarGroup from 'primevue/avatargroup';
 const app = createApp({
   render: () => h(App)
 }).use(store).use(ToastService);
@@ -46,6 +49,9 @@ const app = createApp({
 new WaveUI(app, {
   // Some Wave UI options.
 })
+app.component("Avatar",Avatar)
+app.component("AvatarGroup",AvatarGroup)
+app.component("Divider",Divider)
 app.component('InputNumber',InputNumber)
 app.component('SelectButton',SelectButton)
 app.component('Slider',Slider)

@@ -14,9 +14,14 @@ export default createStore({
     edit_status:null,
     question_answers:[],
     uid: localStorage.getItem('uid') || '',
-    mqid: localStorage.getItem('mqid') || ''
+    mqid: localStorage.getItem('mqid') || '',
+    heading:''
   },
   mutations: {
+    set_heading(state,heading){
+      state.heading=heading
+
+    },
     auth_request(state){
       state.status = 'loading'
     },
@@ -54,11 +59,16 @@ export default createStore({
     get_questions:state=>state.questions,
     get_f_questions:state=>state.f_questions,
     get_edit_status: state=>state.edit_status,
-    get_qa:state=>state.question_answers
+    get_qa:state=>state.question_answers,
+    get_heading:state=>state.heading,
 
     
   },
   actions: {
+    set_heading({commit},heading){
+      commit('set_heading',heading)
+
+    },
     //  questions
     check_q_status({commit},link){
       console.log(this.state.token)
@@ -168,6 +178,7 @@ export default createStore({
       
             var i
             var check=0
+            console.log("i am checking inside store")
             console.log(subparam.submisiondata.length)
             return new Promise((resolve, reject) => {
             for(i=0;i<subparam.submisiondata.length;i++){
@@ -185,7 +196,7 @@ export default createStore({
               },
               {'headers':headers})
             .then(resp => {
-                    // console.log(resp.data)
+                    console.log(resp.data)
                     if(resp.data.length==0){
                       check=check+1
                     }
@@ -218,7 +229,7 @@ export default createStore({
           console.log(headers)
           var i
           var check=0
-          console.log(subparam.submisiondata.length)
+          // console.log(subparam.submisiondata.length)
           return new Promise((resolve, reject) => {
           for(i=0;i<subparam.submisiondata.length;i++){
             // console.log(subparam.submisiondata[i]['answer'])

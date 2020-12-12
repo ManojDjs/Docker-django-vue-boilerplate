@@ -8,7 +8,7 @@
 
    </Panel>
    <div v-if="get_q_status=='RS'">
-        <div class="p-fluid p-formgrid p-grid" v-for='(item,index) in Answers_KV' :key='index' >
+        <div class="p-fluid p-formgrid p-grid" v-for='(item,index) in get_qa[0]["ISQ"]' :key='index' >
             
             <div class="p-field p-col" >
                     <h3>{{ item.question_name }}</h3>
@@ -43,7 +43,7 @@
          <Button type="button" v-on:click='save' label="Save" class="p-button-success p-button-lg"/>
           
    </div>
- {{ get_q_status }}
+ <!-- {{ get_q_status }} -->
  <!-- {{ get_qa[0]['total_answers'] }} -->
 </div>
 </template>

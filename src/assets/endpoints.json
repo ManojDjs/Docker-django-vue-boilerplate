@@ -19,11 +19,24 @@
             "Edit":"MWB/MWB_A_EDIT/"
 
         },
+        "FMWB":{
+            "Total":"FMWB/MWB_Total/",
+            "Questions":"FMWB/MWB",
+            "Answers":"FMWB/MWB_A/",
+            "Edit":"FMWB/MWB_A_EDIT/"
+
+        },
         "WBMNU":{
             "Total":"WBMNU/WBMNU_Total/",
             "Questions":"WBMNU/WBMNU",
             "Answers":"WBMNU/WBMNU_A/",
             "Edit":"WBMNU/WBMNU_A_EDIT/"
+        },
+        "FWBMNU":{
+            "Total":"FWBMNU/WBMNU_Total/",
+            "Questions":"FWBMNU/WBMNU",
+            "Answers":"FWBMNU/WBMNU_A/",
+            "Edit":"FWBMNU/WBMNU_A_EDIT/"
         }
 
     }

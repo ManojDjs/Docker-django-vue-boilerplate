@@ -30,7 +30,7 @@
             
             <div class="p-field p-col" >
                     <h3>{{ item.question_name }}</h3>
-                    <div class="demo-container p-pl-6 p-pr-6">
+                    <div class="demo-container p-pl-6 p-pr-6 p-pb-3">
 
                     <Dropdown v-model="item.answer" :options="oprions" optionLabel="name" placeholder="please indicate " v-if='item.question_type=="Options"'/>
                     <h3 v-if="item.question_type=='Slider'">Please Drage between [0,10] {{ item.answer }}</h3>
@@ -43,7 +43,7 @@
          <Button type="button" v-on:click='save' label="Save" class="p-button-success p-button-lg"/>
           
    </div>
- {{ get_q_status }}
+ <!-- {{ get_q_status }} -->
  <!-- {{ get_qa[0]['total_answers'] }} -->
 </div>
 </template>
@@ -525,6 +525,9 @@ export default {
                this.localedit=false
            }
 
+        },
+        mounted(){
+            this.check()
         }
        
     

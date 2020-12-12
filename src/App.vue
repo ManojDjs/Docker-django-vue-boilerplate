@@ -1,13 +1,14 @@
 <template>
  <div  id='app'>
-
+  
    <Card style="width:100%;height:100%">
     <template #header>
       <div style="backgound-color:green">
               <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:100px;background-color:#ECF0F1;width:100% ">
               <Button type="Button" label='WBD' class="p-mr-2 p-button-help rounded p-shadow-5" icon='pi pi-heart'/>
-              
+           
               <Button type='Button' icon="pi pi-step-forward" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-help" />
+              <Button type="Button" icon="pi pi-user" label="Profile" v-on:click='profile'  class="p-ml-auto p-button-danger p-button-rounded p-shadow-5" v-if='windowWidth>700'/>
               <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
             </div>
         <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:100px;position:fixed; background-color:#ECF0F1;width:100%">
@@ -18,12 +19,14 @@
 
           <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
           <h3>Components</h3>
+          
         
             <Fieldset :toggleable="true">
               
             <template #legend>
                 INFORMATION
             </template>
+              <Button  icon="pi pi-user" label="Profile" v-on:click='profile' style="width:100%" class="p-m-2 p-button-danger p-shadow-5" v-if='windowWidth<700'/>
               <Button label="Demographics"  v-on:click='dashboard' class="p-button-info p-m-2 p-shadow-5" style="width:100%"/>
               <Button label="Data Insights" class="p-button-info p-m-2 p-shadow-5" style="width:100%"/>
             
@@ -49,11 +52,12 @@
    </div>
   </template>
  <template #title>
-       <h3 v-bind:style="headingstyle"> {{ Heading }}</h3>
+       <h3 v-bind:style="headingstyle"> {{ heading }}</h3>
     </template>
     <template #content>
 
 <ScrollPanel v-bind:style='style' class="custombar1">
+  {{ windowWidth }}
        <router-view/>
 </ScrollPanel>
     </template>
@@ -100,25 +104,15 @@ export default {
   },
   created(){
     this.set_color()
-    // const { width,height } = useWindowSize();
-    // this.width_window=width;
-    // this.height_window=height;
-    // if(this.width_window<950){
-    //      this.padding=100
-    //    }
-    //   else if(this.width_window>1400){
-    //     this.padding=120
-    //   }
-    //    else{
-    //      this.padding=120
-    //    }
-     
-
+  
   },
   methods:{
     logout(){
 
       this.$router.push('/Logout')
+    },
+    profile(){
+       this.$router.push('/Profile')
     },
      login(){
 
@@ -174,7 +168,8 @@ export default {
   computed:{
     ...mapState([
       'token',
-      'user'
+      'user',
+      'heading'
     ]),
     style(){
       return{
@@ -192,28 +187,12 @@ export default {
       "color":"black"
       }
     },
-    windows(){
-       const { width, height } = useWindowSize();
-    return {
-      windowWidth: width, 
-      windowHeight: height,
-    };
-  }
+  
     
   },
 
   watch:{
-     windowWidth(){
-       if(this.windowWidth<950){
-         this.padding=100
-       }
-      else if(this.windowWidth>1400){
-        this.padding=100
-      }
-       else{
-         this.padding=120
-       }
-     },
+    
      token(){
        if(this.token==''){
          this.$router.push('/')

@@ -330,7 +330,7 @@ export default {
                             }
                         }
                         else {
-                            DomHandler.addClass(this.overlay.firstChild.firstChild, 'p-highlight');
+                            DomHandler.addClass(this.overlay.firstChild.firstElementChild, 'p-highlight');
                         }
 
                         event.preventDefault();
@@ -539,6 +539,7 @@ export default {
     overflow: hidden;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .p-autocomplete-token {

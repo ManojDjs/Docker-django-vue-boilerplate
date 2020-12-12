@@ -1,5 +1,5 @@
 <template>
-    <input :class="inputClass" v-bind="$attrs" :value="modelValue" @input="onInput" @focus="onFocus" @blur="onBlur"
+    <input :class="inputClass" v-bind="$attrs" @input="onInput" @focus="onFocus" @blur="onBlur"
         @keydown="onKeyDown" @keypress="onKeyPress" @paste="onPaste" />
 </template>
 
@@ -414,6 +414,11 @@ export default {
 
                 this.focusText = this.$el.value;
             }
+        },
+        isValueUpdated() {
+            return this.unmask ?
+                        (this.modelValue != this.getUnmaskedValue()) :
+                        (this.defaultBuffer !== this.$el.value && this.$el.value !== this.modelValue);
         }
     },
     mounted() {
@@ -464,11 +469,9 @@ export default {
         this.defaultBuffer = this.buffer.join('');
         this.updateValue();
     },
-    watch: {
-        value(newValue, oldValue) {
-            if (oldValue && oldValue !== newValue && this.$el.value !== newValue) {
-                this.updateValue();
-            }
+    updated() {
+        if (this.isValueUpdated()) {
+            this.updateValue();
         }
     },
     computed: {

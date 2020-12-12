@@ -12,9 +12,15 @@ import I_MWB from "@/components/I_MWB.vue";
 import I_WBMNU from "@/components/I_WBMNU.vue";
 import F_MWB from "@/components/F_MWB.vue";
 import F_WBMNU from "@/components/F_WBMNU.vue";
+import Profile from "@/components/Profile.vue";
 
 
 const routes = [
+  {
+    path: "/Profile",
+    name: "Profile",
+    component: Profile,
+  },
   {
     path: "/F_WBMNU",
     name: "F_WBMNU",
