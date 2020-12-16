@@ -181,7 +181,7 @@ export default {
       return{
       // "padding-top":this.padding+'px'
       "width":this.windowWidth-50+'px',
-      "height":this.windowHeight-200+'px'
+      "height":this.windowHeight-220+'px'
       }
     },
     headingstyle(){
