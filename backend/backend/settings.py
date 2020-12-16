@@ -36,18 +36,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
+    # 'crispy_forms',
     'rest_framework',
-'rest_framework.authtoken',
-'drf_registration',
-'drf_yasg',
+    'rest_framework.authtoken',
+    'drf_registration',
+    'drf_yasg',
     'users',
     'Programs',
-'FPrograms',
+    'FPrograms',
     'corsheaders',
     'Demographics',
     'MentalWellbeing',
-'FMentalWellbeing',
+    'FMentalWellbeing',
     'WellbeingModelNU',
     'FWellbeingModelNU'
 
@@ -69,7 +69,7 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT':"%d-%b-%Y-%I:%M%p"
 
 }
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

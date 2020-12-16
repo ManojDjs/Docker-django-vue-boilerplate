@@ -11,7 +11,7 @@
               <Button type="Button" icon="pi pi-user" label="Profile" v-on:click='profile'  class="p-ml-auto p-button-danger p-button-rounded p-shadow-5" v-if='windowWidth>700'/>
               <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
             </div>
-        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:100px;position:fixed; background-color:#ECF0F1;width:100%">
+        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:100px; background-color:#ECF0F1;width:100%">
           <Button type="Button" label='WBD' class="p-mr-2 p-button-help p-shadow-9" icon='pi pi-heart'/>
 
            <Button type="Button" icon="pi pi-sign-in" label="Login" v-on:click='login'  class="p-ml-auto p-button-danger p-shadow-5"/>

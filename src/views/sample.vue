@@ -1,197 +1,90 @@
 <template>
- <div class="p-d-flex p-flex-column" style="height:150px" id='app'>
-      <div style="position:fixed">
-          <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:80px; background-color:#ECF0F1;width:100% ">
-          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-5" icon='pi pi-heart'/>
-          
-          <Button type='Button' icon="pi pi-sliders-h" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-success" />
-          <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
-        </div>
-
-
-
-
-        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:80px; background-color:#ECF0F1;width:100%,">
-          <Button type="Button" label='WBD' class="p-mr-2 p-button-success p-shadow-9" icon='pi pi-heart'/>
-        </div>
-
-          <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
-          <h3>Components</h3>
-        
-            <Fieldset :toggleable="true">
-                <template #legend>
-                    Initial QA
-                </template>
-              <Button label="ISQ" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click="i_isq"/>
-              <Button label="Well-Being-NU" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Mental-Well-Being" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%"/>
-            </Fieldset>
-            <Fieldset :toggleable="true">
-            <template #legend>
-                Final QA
-            </template>
-              <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
-        </Fieldset>
-         
-          </Sidebar>
-   </div>
-
-   <div v-bind:style="style" class="p-shadow-20" style="height:100%">
-       <Panel>
-      <router-view></router-view>
-       </Panel>
-   </div>
-  
-
-
+<div>
+    
+      <Toast position="top-right" />
+      
+        <Button type="button" label="Login" icon="pi pi-users" class="p-button-warning p-d-block p-mx-auto" badgeClass="p-badge-danger" />        
+            <div>
+            <div class="p-fluid">
+              
+               
+                    <div class="p-field">
+                      <label for="Email address">Email Address</label>
+                      <div class="p-inputgroup">
+                    
+                          <!-- <i class="pi pi-envelope"></i> -->
+                          <Button icon="pi pi-envelope" v-bind:class='emailvald'/>
+                    
+              
+                      <InputText id="email" v-model="email"  type="text" />
+                    </div>
+                    </div>
+                    <div class="p-field">
+                        <label for="Password">Password</label>
+                      <div class="p-inputgroup">
+                      <Button icon="pi pi-key" class="p-button-success"/>
+                      <Password v-model="password" />
+                    </div>
+                    </div>
+               
+            <Button type="submit"  v-on:click="login" style="width:10rem" label="Log IN" icon="pi pi-chevron-circle-right" iconPos="right" class="p-button-md" />
+              
+           </div>
+           </div>
+           
+            
+           
 </div>
+  
 </template>
 <script>
-import { useWindowSize } from 'vue-window-size';
-import { mapState } from 'vuex';
-
+// import axios from 'axios'
 export default {
-  name: 'App',
-  components: {
-  },
-  data(){
-    return{
-      success: null,
-      padding:null,
-      visibleLeft: false,
-      
-      width_window:0,
 
-      
-      iitems:null,
-      items: [
-                {label: 'Signup', icon: 'pi pi-fw pi-user-plus', to: '/'},
-                {label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/Login'},
-                
-            ],
-      loggeditems:[
-        {label: 'Initia-QA', icon: 'pi pi-fw pi-user-plus',class:"p-button-success", to: '/Dashboard'},
-        {label: 'Analysis', icon: 'pi pi-fw pi-chart-line',class:"p-button-success", to: '/About'},
 
-      ]
-  }
-  },
-  setup() {
-    const { width, height } = useWindowSize();
-    return {
-      windowWidth: width, 
-      windowHeight: height,
-    };
-  },
-  created(){
-    const { width } = useWindowSize();
-    this.width_window=width;
-    if(this.width_window<950){
-         this.padding=100
-       }
-      else if(this.width_window>1400){
-        this.padding=120
-      }
-       else{
-         this.padding=120
-       }
-     
-
-  },
-  methods:{
-    logout(){
-
-      this.$router.push('/Logout')
-    },
-    i_isq(){
-      this.$router.push('I_ISQ'),
-      this.visibleLeft=false;
+data: () => ({
+  email:'',
+  emailvald:'p-button-warning',
+  password:''
+ 
+}),
+methods:{
+  login(){
+    if(this.email!=null &this.password!=null){
+    let email = this.email
+        let password = this.password
+        this.$store.dispatch('login', { email, password })
+       .then(() => this.$router.push('/Dashboard'))
+       .catch(err => console.log(err))
+    }
+    else{
+       this.$toast.add({severity:'warning', summary: 'Empty fields', detail:'All fields must be filled', life: 3000});
     }
     
   },
-  mounted(){
+  showSuccess() {
+            this.$toast.add({severity:'error', summary: 'Invalid credentials', detail:'if you dont have account try registration', life: 3000});
+            this.email='';
+            this.password=''
+        },
+
+},
+watch : {
+               email:function(email) {
+                  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if(re.test(email)){
+                  console.log('matched')
+                  this.emailvald='p-button-success'
+                }
+                else{
+                  this.emailvald='p-button-danger'
+                }
+               },
+}
 
     
-    
-  },
-  computed:{
-    ...mapState([
-      'token',
-      'user'
-    ]),
-    style(){
-      return{
-      "padding-top":this.padding+'px'
-    }
-    }
-  },
-  watch:{
-     windowWidth(){
-       if(this.windowWidth<950){
-         this.padding=100
-       }
-      else if(this.windowWidth>1400){
-        this.padding=100
-      }
-       else{
-         this.padding=120
-       }
-     }
-    },
-  
-
-  
 }
 </script>
-
-<style lang="scss">
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center; 
-  // background-color: #263539;
-
-}
-::v-deep(.p-scrollpanel) {
-    p {
-        padding: .5rem;
-        line-height: 1.5;
-        margin: 0;
-    }
-
-    &.custombar1 {
-        .p-scrollpanel-wrapper {
-            border-right: 9px solid var(--surface-b);
-        }
-
-        .p-scrollpanel-bar {
-            background-color: var(--primary-color);
-            opacity: 1;
-            transition: background-color .2s;
-
-            &:hover {
-                background-color: #007ad9;
-            }
-        }
-    }
-
-    &.custombar2 {
-        .p-scrollpanel-wrapper {
-            border-right: 9px solid var(--surface-b);
-            border-bottom: 9px solid var(--surface-b);
-        }
-
-        .p-scrollpanel-bar {
-            background-color: var(--surface-d);
-            border-radius: 0;
-            opacity: 1;
-            transition: background-color .2s;
-        }
-    }  
-}
+<style scoped>
 
 </style>

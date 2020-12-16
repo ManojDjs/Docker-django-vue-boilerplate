@@ -476,7 +476,7 @@ export default {
 
         },
         created(){
-            this.$store.dispatch("set_heading",'Inital Well being Model NU')
+            this.$store.dispatch("set_heading",'Inital Immune system questionnaire')
             this.check()
         }
 

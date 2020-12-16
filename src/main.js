@@ -42,9 +42,10 @@ import Divider from 'primevue/divider';
 import Badge from 'primevue/badge';
 import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
+import PrimeVue from 'primevue/config';
 const app = createApp({
   render: () => h(App)
-}).use(store).use(ToastService);
+}).use(store).use(ToastService).use(PrimeVue);
 
 new WaveUI(app, {
   // Some Wave UI options.

@@ -1,6 +1,6 @@
 <template>
 <div>
-    {{ localstatus }}
+    <!-- {{ localstatus }} -->
 
     <!-- initial record check -->
     <Toast position="center" />
@@ -303,7 +303,7 @@ export default {
 
         },
         created(){
-            this.$store.dispatch("set_heading",'Inital Well being Model NU')
+            this.$store.dispatch("set_heading",'Dashboard')
             this.check()
         }
 

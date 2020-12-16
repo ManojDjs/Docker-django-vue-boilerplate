@@ -8,7 +8,7 @@
             <div class="p-fluid">
               
                
-                    <div class="p-field">
+                    <div class="p-field p-mx-auto p-p-auto">
                       <label for="Email address">Email Address</label>
                       <div class="p-inputgroup">
                     
@@ -80,6 +80,9 @@ watch : {
                   this.emailvald='p-button-danger'
                 }
                },
+},
+created(){
+   this.$store.dispatch("set_heading",'Login page')
 }
 
     

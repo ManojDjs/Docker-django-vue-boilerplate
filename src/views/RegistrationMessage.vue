@@ -7,7 +7,9 @@
          
             <div class="box p-mx-auto p-p-auto">
             <div class="p-fluid">
+              <br>
                 <h1>Registration successfull</h1>
+                <br>
             <Fieldset legend="Congratulations" :toggleable="true">
                 <p>Email has been sent to the address you provided while Registration,you can click on the link to verify you account</p>
                      <Button type="submit"  style="width:10rem" v-on:click='back_to_login' label="Goto LOGIN" icon="pi pi-backward" iconPos="left" class="p-button-md" />
