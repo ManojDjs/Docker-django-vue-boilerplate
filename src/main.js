@@ -39,7 +39,7 @@ import Timeline from 'primevue/timeline';
 import Slider from 'primevue/slider';
 import InputNumber from 'primevue/inputnumber';
 import Divider from 'primevue/divider';
-
+import Badge from 'primevue/badge';
 import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
 const app = createApp({
@@ -49,6 +49,7 @@ const app = createApp({
 new WaveUI(app, {
   // Some Wave UI options.
 })
+app.component("Badge",Badge)
 app.component("Avatar",Avatar)
 app.component("AvatarGroup",AvatarGroup)
 app.component("Divider",Divider)

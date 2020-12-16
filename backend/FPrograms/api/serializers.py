@@ -22,7 +22,7 @@ class Answer_Eoboration(serializers.ModelSerializer):
 
 
 class TotalAnswers_A(serializers.ModelSerializer):
-    ISQ=Answer_Eoboration(many=True,read_only=True)
+    FISQ=Answer_Eoboration(many=True,read_only=True)
     total_questions=serializers.SerializerMethodField()
     total_answers=serializers.SerializerMethodField()
 

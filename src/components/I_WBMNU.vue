@@ -35,16 +35,23 @@
                     <Button type="button" v-on:click='edit_questions' label="EDIT" class="p-button-success p-button-lg"/>
                 
             </template>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="p-fluid p-formgrid p-grid" v-for='(item,index) in get_qa[0]["WBMNU"]' :key='index' >
+                         <Divider align="center" :type='dashed'/>
+                          <h3>{{ item.question_name.question }}</h3>
+                          <div class="demo-container p-pl-6 p-pr-6">
+                          <h3> Answer:  <Badge :value="item.answer"  severity="success"></Badge></h3>
+                          </div>
+
+                        
+
+                         
+            </div>
             </Panel>
             <div v-if="localedit==true">
                 
                 <div class="p-fluid p-formgrid p-grid" v-for='(item,index) in Answers_KV' :key='index' >
                          <Divider align="center" :type='dashed'>
-                            <span class="p-tag">{{ index}} </span>
+                            <span class="p-tag">{{ index +1}} </span>
                         </Divider>
                     <div class="p-field p-col p-p-4" >
                        

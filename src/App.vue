@@ -43,7 +43,7 @@
             <template #legend>
                 Final QA
             </template>
-              <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_isq'/>
               <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_wbmnu'/>
               <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_mwb'/>
         </Fieldset>
@@ -122,6 +122,12 @@ export default {
       this.$router.push('I_ISQ'),
        this.set_color()
        this.Heading='Initial Immune System'
+      this.visibleLeft=false;
+    },
+    f_isq(){
+      this.$router.push('F_ISQ'),
+       this.set_color()
+       this.Heading='Final Immune System'
       this.visibleLeft=false;
     },
      i_mwb(){

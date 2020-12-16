@@ -1,8 +1,6 @@
 <template>
-<div>
-    </div>
-    <router-view/>
-    <div class="p-m-2 p-p-20">
+
+    <div>
       <Toast position="top-right" />
       
         <Button type="button" label="Registration" icon="pi pi-users" class="p-button-warning p-d-block p-mx-auto" badgeClass="p-badge-danger" /> 
@@ -63,7 +61,6 @@
                     <label for="Password">Confirm Password</label>
                   <div class="p-inputgroup">
                    <Button icon="pi pi-key" v-bind:class="passwordvalid2"/>
-           
                    <Password v-model="password2" />
                 </div>
                 </div>
@@ -91,9 +88,9 @@ data: () => ({
   
   username:'',
   usernamevalid:'p-button-warning',
-   email:'',
+  email:'',
   emailvald:'p-button-warning',
-  password1:null,
+  password1:'',
   passwordvalid1:'p-button-warning',
   password2:'',
   passwordvalid2:'p-button-warning',
@@ -169,8 +166,8 @@ watch : {
       this.emailvald='p-button-danger'
     }
     },
-    password2:function(password2){
-      if(this.password1==password2){
+    password2:function(){
+      if(this.password1==this.password2){
         this.passwordvalid2='p-button-success'
       }
       else{
@@ -186,12 +183,13 @@ watch : {
     }
     },
     username:function(){
+
       if(this.username!=null){
         this.usernamevalid='p-button-success'
       }
       else{
       this.usernamevalid='p-button-danger'
-    }
+      }
     },
     firstname:function(){
       if(this.firstname!=null){

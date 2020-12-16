@@ -3,7 +3,9 @@ from users.models import User
 class UserDetails(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=["last_login",
+        fields=[
+        "id",
+        "last_login",
         "is_superuser",
         "is_staff",
         "is_active",

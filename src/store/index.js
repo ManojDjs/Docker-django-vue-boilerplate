@@ -1,9 +1,10 @@
 import { createStore } from 'vuex';
 import axios from 'axios'
-
+import Json from "@/assets/endpoints.json"
 export default createStore({
 
   state: {
+    server:Json[0]['SERVER']['SERVER'],
     status:'',
     token: localStorage.getItem('token') || '',
     user : localStorage.getItem('user') || '',
@@ -79,7 +80,7 @@ export default createStore({
 
                   }
                   //  console.log(headers)
-        axios.get('http://127.0.0.1:8000/'+link,{'headers':headers})
+        axios.get(this.state.server+link,{'headers':headers})
         .then(resp => {
           console.log(resp.data)
           if(resp.data.length==0){
@@ -116,7 +117,7 @@ export default createStore({
 
                 }
                 //  console.log(headers)
-      axios.post('http://127.0.0.1:8000/'+link,
+      axios.post(this.state.server+link,
         {
         "Answered_by": this.state.user
         },
@@ -149,7 +150,7 @@ export default createStore({
 
                 }
                 //  console.log(headers)
-      axios.get('http://127.0.0.1:8000/'+link,{'headers':headers})
+      axios.get(this.state.server+link,{'headers':headers})
       .then(resp => {
         console.log(resp.data)
         if(resp.data.length==0){
@@ -186,7 +187,7 @@ export default createStore({
               console.log( this.state.uid )
               console.log( this.state.mqid )
               
-            axios.post('http://127.0.0.1:8000/'+subparam.link,
+            axios.post(this.state.server+subparam.link,
               {
             "answer": subparam.submisiondata[i]['answer'],
             "main_question_set": localStorage.getItem('mqid') ,
@@ -236,7 +237,7 @@ export default createStore({
             // console.log( this.state.uid )
             // console.log( this.state.mqid )
             
-          axios.put('http://127.0.0.1:8000/'+subparam.link+subparam.submisiondata[i]['editid'],
+          axios.put(this.state.server+subparam.link+subparam.submisiondata[i]['editid'],
             {
           "id":subparam.submisiondata[i]['editid'],
           "answer": subparam.submisiondata[i]['answer'],
@@ -277,7 +278,7 @@ export default createStore({
                    }
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios.post('http://127.0.0.1:8000/api/accounts/login/',{username:user.email,password:user.password},config)
+        axios.post(this.state.server+'api/accounts/login/',{username:user.email,password:user.password},config)
         .then(resp => {
           console.log(resp.data)
           const token = resp.data.token

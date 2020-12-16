@@ -65,7 +65,8 @@ REST_FRAMEWORK = {
 	),
         'DEFAULT_PERMISSION_CLASSES': (
             'rest_framework.permissions.IsAuthenticated',
-        )
+        ),
+    'DATETIME_FORMAT':"%d-%b-%Y-%I:%M%p"
 
 }
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -176,7 +177,7 @@ MEDIA_URL='/media/'
 EMAIL_HOST = 'smtp.gmail.com'
 #  # my gmail password
 # EMAIL_BCC='djsmanoj0000@gmail.com'
-EMAIL_HOST_USER='djsmanoj12345678910@gmail.com'
+EMAIL_HOST_USER='applicationwellbeing@gmail.com'
 #   # my gmail username
 EMAIL_HOST_PASSWORD = 'Djsmanoj@1866'
 EMAIL_PORT = 587

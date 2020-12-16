@@ -5,15 +5,27 @@ from users.models import User
 class Demographic_Questions(models.Model):
     question_no=models.PositiveIntegerField()
     question=models.CharField(max_length=5000)
-    question_types = [
+    question_field_type  = [
         ('Optional', 'Optional'),
         ('Mandatory', 'Mandatory'),
 
     ]
+    question_types = [
+        ('Gender','Gender'),
+        ('Number', 'Number'),
+        ('YESNO', 'YES/NO'),
+        ('TEXT','TEXT'),
+
+    ]
+    question_field = models.CharField(
+        max_length=10,
+        choices=question_field_type,
+        default='Mandatory',
+    )
     question_type = models.CharField(
         max_length=10,
-        choices=question_types,
-        default='Mandatory',
+        choices= question_types,
+        default='TEXT',
     )
     class Meta:
         ordering=['question_no']

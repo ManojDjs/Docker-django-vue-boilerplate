@@ -1,10 +1,19 @@
 [
     {
+        "SERVER":{
+            "SERVER":"http://127.0.0.1:8000/"
+        },
         "ISQ":{
             "Total":"QA/I_ISQ/",
             "Questions":"QA/ISQ_Q",
             "Answers":"QA/ISQ_A/",
             "Edit":"QA/ISQ_A_EDIT/"
+        },
+        "FISQ":{
+            "Total":"FQA/I_ISQ/",
+            "Questions":"FQA/ISQ/",
+            "Answers":"FQA/ISQ_A/",
+            "Edit":"FQA/ISQ_A_EDIT/"
         },
         "DEMO":{
             "Total":"Demo/DQ_Total/",
@@ -37,6 +46,10 @@
             "Questions":"FWBMNU/WBMNU",
             "Answers":"FWBMNU/WBMNU_A/",
             "Edit":"FWBMNU/WBMNU_A_EDIT/"
+        },
+        "USER":{
+            "DETAILS":"USER/userdetails",
+            "EDIT":"USER/useredit"
         }
 
     }
