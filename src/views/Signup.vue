@@ -78,9 +78,11 @@
 </template>
 <script>
 import axios from 'axios';
+ import Json from "@/assets/endpoints.json"
 export default {
 data(){
   return{
+        server:Json[0]['SERVER']['SERVER'],
         val: '',
         firstname:'',
         fnvalid:'p-button-warning',
@@ -110,7 +112,7 @@ methods:{
                   'content-type':'application/json'
                 }
               }
-              axios.post('http://127.0.0.1:8000/api/accounts/register/',{
+              axios.post(this.server+'api/accounts/register/',{
                 username:this.username,
                 email:this.email,
                 password:this.password1,

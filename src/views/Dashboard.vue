@@ -55,7 +55,7 @@
                          <Divider align="center" :type='dashed'>
                             <span class="p-tag">{{ index +1}} </span>
                         </Divider>
-                    <div class="p-field p-col p-p-4" >
+                    <div class="p-field p-col p-p-2" >
                        
                             <h3>{{ item.question_name }}</h3>
                             <div class="demo-container p-pl-6 p-pr-6">

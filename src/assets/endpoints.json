@@ -11,13 +11,13 @@
         },
         "FISQ":{
             "Total":"FQA/I_ISQ/",
-            "Questions":"FQA/ISQ/",
+            "Questions":"FQA/ISQ_Q/",
             "Answers":"FQA/ISQ_A/",
             "Edit":"FQA/ISQ_A_EDIT/"
         },
         "DEMO":{
             "Total":"Demo/DQ_Total/",
-            "Questions":"Demo/DQ",
+            "Questions":"Demo/DQ_Q/",
             "Answers":"Demo/DQ_A/",
             "Edit":"Demo/DQ_A_EDIT/"
         },

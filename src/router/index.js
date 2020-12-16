@@ -13,9 +13,14 @@ import I_WBMNU from "@/components/I_WBMNU.vue";
 import F_MWB from "@/components/F_MWB.vue";
 import F_WBMNU from "@/components/F_WBMNU.vue";
 import Profile from "@/components/Profile.vue";
-
+import DV from "@/components/DV.vue";
 
 const routes = [
+  {
+    path: "/DV",
+    name: "DV",
+    component: DV,
+  },
   {
     path: "/Profile",
     name: "Profile",

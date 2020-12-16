@@ -28,7 +28,7 @@
             </template>
               <Button  icon="pi pi-user" label="Profile" v-on:click='profile' style="width:100%" class="p-m-2 p-button-danger p-shadow-5" v-if='windowWidth<700'/>
               <Button label="Demographics"  v-on:click='dashboard' class="p-button-info p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Data Insights" class="p-button-info p-m-2 p-shadow-5" style="width:100%"/>
+              <Button label="Data Insights" class="p-button-info p-m-2 p-shadow-5" style="width:100%" v-on:click='dv'/>
             
         </Fieldset>
          <Fieldset :toggleable="true">
@@ -113,6 +113,10 @@ export default {
     },
     profile(){
        this.$router.push('/Profile')
+    },
+    dv(){
+
+      this.$router.push('/DV')
     },
      login(){
 
