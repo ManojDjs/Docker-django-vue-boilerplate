@@ -1,17 +1,33 @@
 <template>
-<div class="ISQ">
-    
-	<Chart type="radar" :data="chartData" :options="options" />
-	<div class="p-col-12 p-md-6 ">Your Statistics:</div>
-	
- <Button label="IMMUNE_SYS" icon="pi pi-check"  class="p-button-lg p-button-success"/>
- <Panel header="Custom Header" class="dark-panel">
- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</Panel>
-    
+<div class="About p-shadow-5">
+	<div class="p-grid">
+			<div class="p-col-12 p-md-6 p-lg-6">
+			<img src="@/assets/WBDMAIN.jpg" style="width: 70%; display: block;" id="image" />
+			</div>
+			<div class="p-col-12 p-md-6 p-lg-6">
+				<div class="demo-container p-p-4" id="mark" >
+			<h1 class="p-d-block p-mx-auto" >Qigong Practice Research Project</h1>
+				</div>
+			</div>
+	</div>
+			<Divider/>
+	<div class="p-grid">
+			<div class="p-col-12 p-md-6 p-lg-6">
+
+			<Button label="Log In" icon="pi pi-check" class="p-button-lg p-d-block p-mx-auto" v-on:click="login" />
+			<Divider/>
+			<Button label="Create Account" icon="pi pi-check" class="p-button-lg p-d-block p-mx-auto"  v-on:click="signup"  />
+
+			</div>
+			<div class="p-col-12 p-md-6 p-lg-6 ">
+			<div class="demo-container p-p-4">
+			<h3 class="p-d-block p-mx-auto" id="mark">
+			No Account yet? Click ‘Create Account’ and type in your details
+			</h3>
+			</div>
+	</div>
+	<Divider/>
+</div>
 </div>
 </template>
 <script>
@@ -23,41 +39,36 @@ export default {
                 height:1000
 
             },
-			chartData: {
-				labels: ['Fever', 'Diarrhea', 'HeadAch', 'Skin problems', 'Muscle and joint pain', 'Common cold', 'coughing'],
-				datasets: [
-					{
-						label: 'ISQ 1',
-						backgroundColor: 'rgba(179,181,198,0.2)',
-						borderColor: '#cb4335',
-						pointBackgroundColor: 'rgba(179,181,198,1)',
-						pointBorderColor: '#E9967A',
-						pointHoverBackgroundColor: '#fff',
-						pointHoverBorderColor: 'rgba(179,181,198,1)',
-						data: [1, 4, 5, 1, 5, 5, 4]
-					},
-					{
-						label: 'ISQ 2',
-						backgroundColor: 'rgba(255,99,132,0.2)',
-						borderColor: ' #2874a6 ',
-						pointBackgroundColor: 'rgba(255,99,132,1)',
-						pointBorderColor: '#E9967A',
-						pointHoverBackgroundColor: '#fff',
-						pointHoverBorderColor: 'rgba(255,99,132,1)',
-						data: [5, 4, 3, 5, 3, 3, 3]
-					}
-				]
 			}
-		}
+	},
+	methods:{
+		login(){
+
+      this.$router.push('/Login')
+    },
+	signup(){
+
+      this.$router.push('/Signup')
+    },
 	}
 }
 </script>
 
-<style lang="scss" scoped>
-::v-deep(.dark-panel) {
-    
-        background: #ff0033;
-    }
-
-
+<style >
+.About{
+	text-align: center;
+}
+#image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+#mark{
+	padding-top:30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
 </style>

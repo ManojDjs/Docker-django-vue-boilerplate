@@ -1,21 +1,18 @@
 <template>
- <div  id='app'>
-  
-   <Card style="width:100%;height:100%">
-    <template #header>
-      <div style="backgound-color:green">
-              <div class="p-d-flex p-p-3 card p-shadow-5" v-if='token' style="height:100px;background-color:#ECF0F1;width:100% ">
-              <Button type="Button" label='WBD' class="p-mr-2 p-button-help rounded p-shadow-5" icon='pi pi-heart'/>
-           
-              <Button type='Button' icon="pi pi-step-forward" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-help" />
-              <Button type="Button" icon="pi pi-user" label="Profile" v-on:click='profile'  class="p-ml-auto p-button-danger p-button-rounded p-shadow-5" v-if='windowWidth>700'/>
-              <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
-            </div>
-        <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:100px; background-color:#ECF0F1;width:100%">
-          <Button type="Button" label='WBD' class="p-mr-2 p-button-help p-shadow-9" icon='pi pi-heart'/>
+ <div  id='app' :style="fontstyle">
 
-           <Button type="Button" icon="pi pi-sign-in" label="Login" v-on:click='login'  class="p-ml-auto p-button-danger p-shadow-5"/>
-        </div>
+      <div v-if="windowWidth>780">
+      <div class="p-d-flex p-p-3 p-shadow-5" v-if='token' style="height:100px;width:100%" id="navbar">
+              <!-- <Button type="Button" label='WBD' class="p-mr-2 p-button-primary rounded p-shadow-5" icon='pi pi-heart'/> -->
+              <Button type='Button' icon="pi pi-step-forward" @click="visibleLeft = true" class="p-mr-2 p-d-inline p-shadow-5 p-button-primary" />
+              <Button type="Button" icon="pi pi-user" label="PROFILE" v-on:click='profile'  class="p-ml-auto p-button-primary p-button-rounded p-shadow-5" v-if='windowWidth>700'/>
+              <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout'  class="p-ml-auto p-button-danger p-shadow-5"/>
+      </div>
+      <div class="p-d-flex p-p-3 card p-shadow-5" v-else style="height:100px; background-color:#ECF0F1;width:100%" id="navbar">
+        <!-- <Button type="Button" label='WBD' class="p-mr-2 p-button-help p-shadow-9" icon='pi pi-heart'/> -->
+
+           <!-- <Button type="Button" icon="pi pi-sign-in" label="Login" v-on:click='login'  class="p-ml-auto p-button-danger p-shadow-5"/> -->
+      </div>
 
           <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
           <h3>Components</h3>
@@ -26,53 +23,55 @@
             <template #legend>
                 INFORMATION
             </template>
-              <Button  icon="pi pi-user" label="Profile" v-on:click='profile' style="width:100%" class="p-m-2 p-button-danger p-shadow-5" v-if='windowWidth<700'/>
-              <Button label="Demographics"  v-on:click='dashboard' class="p-button-info p-m-2 p-shadow-5" style="width:100%"/>
-              <Button label="Data Insights" class="p-button-info p-m-2 p-shadow-5" style="width:100%" v-on:click='dv'/>
-            
-        </Fieldset>
-         <Fieldset :toggleable="true">
-                <template #legend>
-                    Initial QA
-                </template>
-              <Button label="ISQ" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click="i_isq"/>
-              <Button label="Well-Being-NU" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click='i_wbmnu'/>
-              <Button label="Mental-Well-Being" class="p-button-secondary p-m-2 p-shadow-5" style="width:100%" v-on:click='i_mwb'/>
-            </Fieldset>
-            <Fieldset :toggleable="true">
-            <template #legend>
-                Final QA
-            </template>
-              <Button label="ISQ" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_isq'/>
-              <Button label="Well-Being-NU" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_wbmnu'/>
-              <Button label="Mental-Well-Being" class="p-button-help p-m-2 p-shadow-5" style="width:100%" v-on:click='f_mwb'/>
-        </Fieldset>
-         
+              <Button  icon="pi pi-user" label="Profile" v-on:click='profile' style="width:100%" class="p-m-2 p-button-primary p-shadow-25" />
+              <Button icon="pi pi-book" label="Demographics"  v-on:click='demo' class="p-button-primary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button icon="pi pi-book" label="Dairy"  v-on:click='dashboard' class="p-button-primary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button icon="pi pi-video" label="Videos" class="p-button-primary p-m-2 p-shadow-5" style="width:100%" v-on:click='videos'/>
+              <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout' style="width:100%"  class="p-m-2  p-button-danger p-shadow-5"/>
+            </Fieldset>      
           </Sidebar>
-   </div>
-  </template>
- <template #title>
-       <h3 v-bind:style="headingstyle"> {{ heading }}</h3>
-    </template>
-    <template #content>
-
-<ScrollPanel v-bind:style='style' class="custombar1">
-  {{ windowWidth }}
+           <div class="p-p-5">
+    <ScrollPanel :style=style class="custombar1">
+    
        <router-view/>
-</ScrollPanel>
-    </template>
-</Card>
-
-
+       </ScrollPanel>
+  </div>
+      </div>
+      <div v-else>
+        <div class="p-m-3" id='navbtn'>
+        <Button type='Button'   icon="pi pi-step-forward" @click="visibleLeft = true" class="p-m-8 p-shadow-25 p-button-primary" style=" height:70px;width:70px;"/>
+        </div>
+         <Sidebar v-model:visible="visibleLeft"   :baseZIndex="1000" class="p-sidebar-sm">
+          <h3>Components</h3>
+            <Fieldset :toggleable="true">
+              
+            <template #legend>
+                INFORMATION
+            </template>
+            <Button  icon="pi pi-user" label="Profile" v-on:click='profile' style="width:100%" class="p-m-2 p-button-primary p-shadow-25" />
+            <Button icon="pi pi-book" label="Demographics"  v-on:click='demo' class="p-button-primary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button icon="pi pi-book" label="Dairy"  v-on:click='dashboard' class="p-button-primary p-m-2 p-shadow-5" style="width:100%"/>
+              <Button icon="pi pi-video" label="Video" class="p-button-primary p-m-2 p-shadow-5" style="width:100%" v-on:click='videos'/>
+              <Button type="Button" icon="pi pi-sign-out" label="Logout" v-on:click='logout' style="width:100%"  class="p-m-2  p-button-danger p-shadow-5"/>
+           
+            </Fieldset>
+            
+          
+          </Sidebar>
+          <router-view/>
+      </div>
+  
 </div>
 </template>
 <script>
 import { useWindowSize } from 'vue-window-size';
 import { mapState } from 'vuex';
+// import Navbar from "@/views/NavBar.vue";
 
 export default {
   name: 'App',
   components: {
+    
   },
   data(){
     return{
@@ -107,16 +106,25 @@ export default {
   
   },
   methods:{
-    logout(){
+    
+    set_color(){
+      this.hcolor=this.listcolors[Math.floor(Math.random() * this.listcolors.length)]
+      this.height=this.windowWidth;
+      // console.log(this.hcolor)
+    },
+     logout(){
 
       this.$router.push('/Logout')
+      this.visibleLeft=false;
     },
     profile(){
-       this.$router.push('/Profile')
+      this.$router.push('/Profile')
+      this.visibleLeft=false;
     },
-    dv(){
+    videos(){
 
-      this.$router.push('/DV')
+      this.$router.push('/Videos')
+      this.visibleLeft=false;
     },
      login(){
 
@@ -159,15 +167,15 @@ export default {
       this.visibleLeft=false;
     },
      dashboard(){
-      this.$router.push('/Dashboard'),
+      this.$router.push('/Dairy'),
       this.set_color()
-       this.Heading='Demographics'
-      this.visibleLeft=false;
+      
     },
-    set_color(){
-      this.hcolor=this.listcolors[Math.floor(Math.random() * this.listcolors.length)]
-      // console.log(this.hcolor)
-    }
+     demo(){
+      this.$router.push('/Demo'),
+      this.set_color()
+      
+    },
     
   },
   mounted(){
@@ -179,13 +187,19 @@ export default {
     ...mapState([
       'token',
       'user',
-      'heading'
+      'heading',
+      'height'
     ]),
     style(){
       return{
       // "padding-top":this.padding+'px'
       "width":this.windowWidth-50+'px',
-      "height":this.windowHeight-220+'px'
+      "height":this.windowHeight-200+'px',
+      }
+    },
+    fontstyle(){
+      return{
+        "font-size":'20px'
       }
     },
     headingstyle(){
@@ -219,14 +233,16 @@ export default {
 </script>
 
 <style lang="scss">
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center; 
-  // background-color: #263539;
+  font-size:20px;
+  // background-color: #f0e6eb;
 
+}
+html {
+    font-size: 16px;
 }
 ::v-deep(.p-scrollpanel) {
     p {
@@ -265,5 +281,9 @@ export default {
         }
     }  
 }
-
+#navbtn{
+position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
 </style>

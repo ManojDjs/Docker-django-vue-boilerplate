@@ -1,109 +1,291 @@
 <template>
-<div>
+<div class="profile">
+	<h2 class="p-m-2"> PROFILE INFORMATION</h2>
+	<hr style="height:20px">
 	<Toast position="center" />
-	<span >
-   
+    <Dialog header="Change Password" v-model:visible="display" style="height:600px;width:500px" modal='true'>
+		<div class="p-col-6 p-offset-3 " style="text-align:center">
+		<h1>Old Password:</h1>
+		<Password v-model="value" class="p-invalid" />
+			</div>
+			<div class="p-col-6 p-offset-3 "  style="text-align:center">
+				<h1>New Password:</h1>
+		<Password v-model="value" class="p-invalid" v-tooltip.focus="'Enter your username'" />
+			</div>
+			<div class="p-col-6 p-offset-3 "  style="text-align:center">
+		<Button label="Change" icon="pi pi-key"  class="p-button-lg p-m-3" v-on:click='openpassword' style="width:100%" />
+			</div>
+		<p>
+		At least one lowercase,
+		At least one uppercase,
+		At least one numeric,
+		Minimum 8 characters
+		</p>
+   </Dialog>
+<div class="p-grid p-d-none p-d-lg-inline-flex "> 
+<div class="p-col-6 p-offset-3 ">
+    <div class="p-grid p-mt-5">
+			<div class="p-col-fixed p-mr-5" style="width:200px">
+				<Avatar v-bind:label="get_user_name" class=" p-m-2" size="large" style="background-color:#2196F3; color: #ffffff; height:75px;width:75px" shape="circle"/>
+				<h2 class="p-m-3">{{ username.toUpperCase() }}</h2>
+				
+					<Button label="INFO" icon="pi pi-info-circle" class="p-button-lg p-m-3" v-on:click='get_details' style="width:100%"/>
+					
+					<Button label="EDIT" icon="pi pi-user-edit"  class="p-button-lg p-m-3" v-on:click='edit_user' style="width:100%" />
+					<Button label="PASSWORD" icon="pi pi-key"  class="p-button-lg p-m-3" v-on:click='openpassword' style="width:100%" />
+			</div>
+					<div class="p-col p-mt-10">
+										<div class="p-grid p-pt-5" v-if="info" >
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>USERNAME</h2>
+													<Divider :type='solid' />
+													<h2>{{ username }}</h2>
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>FIRSTNAME</h2>
+														<Divider :type='solid' />
+													<h2>{{ first_name }}</h2>
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>LASTNAME</h2>
+													<Divider :type='solid' />
+													<h2>{{ last_name}}</h2>
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>EMAIL-ID</h2>
+													<Divider :type='solid' />
+													<h2>{{ email }}</h2>
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>DATE-JOINED</h2>
+													<Divider :type='solid' />
+													<h2>{{ date_joined }}</h2>
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>LASTLOGIN</h2>
+													<Divider :type='solid' />
+													<h2>{{ last_login }}</h2>	
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>IS-STAFF</h2>
+													<Divider :type='solid' />
+													<h2>{{ is_staff }}</h2>
+													</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>IS-SUPERUSER</h2>
+													<Divider :type='solid' />
+													<h2>{{ is_superuser }}</h2>
+												</div>
+											</div>
+											
+									</div>
+					
+					<!-- edit -->
+						<div class="p-grid p-pt-5" v-if="edit" >
+										<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>USERNAME</h2>
+													<h3>{{ username }}</h3>
+													<Divider :type='solid' />
+												</div>
+										</div>
+										<div class="p-col-12 p-md-6 p-lg-6">
+											<div class="box "> 
+												<h2>EMAIL-ID</h2>
+												<h3>{{ email }}</h3>
+												<Divider :type='solid' />
+												
+											</div>
+										</div>
+										<div class="p-col-12 p-md-6 p-lg-6">
+											<div class="box "> 
+												<h2>FIRSTNAME</h2>
+												<h3>{{ first_name }}</h3>
+												<InputText type="text" class="p-inputtext-md p-invalid" v-model="first_name"  placeholder="Large" />
+												<Divider :type='solid' />
+												
+											</div>
+										</div>
+										<div class="p-col-12 p-md-6 p-lg-6">
+											<div class="box "> 
+												<h2>LASTNAME</h2>
+												<h3>{{ last_name}}</h3>
+												<InputText type="text" class="p-inputtext-md p-invalid" v-model="last_name"  placeholder="Large" />
+												<Divider :type='solid' />
+											</div>
+										</div>
+										
+										<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>DATE-JOINED</h2>
+													<h3>{{ date_joined }}</h3>
+													<Divider :type='solid' />
+												</div>
+										</div>
+										<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>LASTLOGIN</h2>
+													<h3>{{ last_login }}</h3>
+													<Divider :type='solid' />
+													
+												</div>
+										</div>
+										<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>IS-STAFF</h2>
+													<h3>{{ is_staff }}</h3>
+													<Divider :type='solid' />
+												</div>
+										</div>
+										<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>IS-SUPERUSER</h2>
+													<h3>{{ is_superuser }}</h3>
+													<Divider :type='solid' />
+												
+												</div>
+										</div>
+											
+										<div class="p-col-6 p-offset-3 " style="text-align:center">
+											
+												<Button label="save" icon="pi pi-check"  style="width:100%" class="p-button-success p-button-lg " iconPos="right" v-on:click='save'/>
+											
+										</div>
+						</div>
 
-	<Avatar v-bind:label="get_user_name" class="p-mr-2" size="large" style="background-color:#2196F3; color: #ffffff; height:75px;width:75px" shape="circle"  v-if='info'/>
-	<Avatar v-bind:label="get_user_name" class="p-mr-2" size="large" style="background-color:#2196F3; color: #ffffff ;height:75px;width:75px" shape="circle"  v-if='edit'/>
-  </span>
-    <h2> Profile INFORMATION</h2>
-<span class="p-buttonset">
-    <Button label="Information" icon="pi pi-info-circle" class="p-button-lg" v-on:click='get_details'/>
-    <Button label="Edit INFO" icon="pi pi-user-edit"  class="p-button-lg" v-on:click='edit_user'/>
-   
-</span>
-   <div class="p-grid p-pt-5" v-if="info" >
-	<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>USERNAME</h2>
-			<h3>{{ username }}</h3>
-			<Divider :type='solid' />
-		</div>
-    </div>
-	<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>FIRSTNAME</h2>
-			<h3>{{ first_name }}</h3>
-			<Divider :type='solid' />
-			
-		</div>
-	</div>
-    <div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>LASTNAME</h2>
-			<h3>{{ last_name}}</h3>
-			<Divider :type='solid' />
-		</div>
-    </div>
-	<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>EMAIL-ID</h2>
-			<h3>{{ email }}</h3>
-			<Divider :type='solid' />
-			
-		</div>
-	</div>
-	<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>DATE-JOINED</h2>
-			<h3>{{ date_joined }}</h3>
-			<Divider :type='solid' />
-		</div>
-    </div>
-	<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>LASTLOGIN</h2>
-			<h3>{{ last_login }}</h3>
-			<Divider :type='solid' />
-			
-		</div>
-	</div>
-	<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>IS-STAFF</h2>
-			<h3>{{ is_staff }}</h3>
-			<Divider :type='solid' />
-		</div>
-    </div>
-		<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>IS-SUPERUSER</h2>
-			<h3>{{ is_superuser }}</h3>
-			<Divider :type='solid' />
+						
+				</div>
 		
-		</div>
+		
 	</div>
-	
 </div>
-<!-- edit -->
- <div class="p-grid" v-if="edit" >
-	
-	<div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>FIRSTNAME</h2>
-			<h3>{{ first_name }}</h3>
-			<InputText type="text" class="p-inputtext-lg" v-model="first_name"  placeholder="Large" />
-			<Divider :type='solid' />
-			
-		</div>
-	</div>
-    <div class="p-col-12 p-md-6 p-lg-6">
-		<div class="box "> 
-			<h2>LASTNAME</h2>
-			<h3>{{ last_name}}</h3>
-			<InputText type="text" class="p-inputtext-lg" v-model="last_name"  placeholder="Large" />
-			<Divider :type='solid' />
-		</div>
-    </div>
-	<div class="demo-container p-p-4">
-		
-			<Button label="save" icon="pi pi-check"  style="width:100%" class="p-button-success p-button-lg " iconPos="right" v-on:click='save'/>
-		
-    </div>
+</div>
 
-	
-</div>
+<div class="p-d-lg-none">
+<span class=" p-m-3">
+		<Avatar v-bind:label="get_user_name" class="p-m-5" size="large" style="background-color:#2196F3; color: #ffffff; height:75px;width:75px" shape="circle"  v-if='info'/>
+		<Avatar v-bind:label="get_user_name" class="p-m-5" size="large" style="background-color:#2196F3; color: #ffffff ;height:75px;width:75px" shape="circle"  v-if='edit'/>
+		</span>
+		
+			
+			<br>
+		<span class="p-buttonset p-m-3">
+			<Button  icon="pi pi-info-circle" class="p-button-lg" v-on:click='get_details'/>
+			<Button  icon="pi pi-user-edit"  class="p-button-lg" v-on:click='edit_user'/>
+		
+		</span>
+		<div class="p-grid p-pt-5" v-if="info" >
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>USERNAME</h2>
+													<Divider :type='solid' />
+													<h2>{{ username }}</h2>
+													
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>FIRSTNAME</h2>
+														<Divider :type='solid' />
+													<h2>{{ first_name }}</h2>
+												
+													
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>LASTNAME</h2>
+													<Divider :type='solid' />
+													<h2>{{ last_name}}</h2>
+													
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>EMAIL-ID</h2>
+													<Divider :type='solid' />
+													<h2>{{ email }}</h2>
+													
+													
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>DATE-JOINED</h2>
+													<Divider :type='solid' />
+													<h2>{{ date_joined }}</h2>
+													
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>LASTLOGIN</h2>
+													<Divider :type='solid' />
+													<h2>{{ last_login }}</h2>
+													
+													
+												</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>IS-STAFF</h2>
+													<Divider :type='solid' />
+												
+													<h2>{{ is_staff }}</h2>
+													</div>
+											</div>
+											<div class="p-col-12 p-md-6 p-lg-6">
+												<div class="box "> 
+													<h2>IS-SUPERUSER</h2>
+													<Divider :type='solid' />
+													<h2>{{ is_superuser }}</h2>
+													
+												
+												</div>
+											</div>
+		</div>
+		<!-- edit -->
+		<div class="p-grid p-m-5" v-if="edit"  style="text-align:center">
+			
+					<div class="p-col-12 p-md-6 p-lg-6">
+						<div class="box "> 
+							<h2>FIRSTNAME</h2>
+							<h3>{{ first_name }}</h3>
+							<InputText type="text" class="p-inputtext-lg" v-model="first_name"  placeholder="Large" />
+							<Divider :type='solid' />
+							
+						</div>
+					</div>
+					<div class="p-col-12 p-md-6 p-lg-6">
+						<div class="box "> 
+							<h2>LASTNAME</h2>
+							<h3>{{ last_name}}</h3>
+							<InputText type="text" class="p-inputtext-lg" v-model="last_name"  placeholder="Large" />
+							<Divider :type='solid' />
+						</div>
+					</div>
+						<div class="p-col-6 p-offset-3 " style="text-align:center">
+											
+												<Button label="save" icon="pi pi-check"  style="width:100%" class="p-button-success p-button-lg " iconPos="right" v-on:click='save'/>
+											
+						</div>
+		</div>
+</div>	
 </div>
 </template>
 <script>
@@ -131,6 +313,7 @@ export default {
 			is_staff:'',
 			last_login:'',
 			fid:'',
+			display: false
 			}
 		
 		},
@@ -147,6 +330,9 @@ export default {
 		},
 
 	methods:{
+		openpassword() {
+            this.display = true;
+        },
 			get_details(){
 				this.edit=false,
 				this.info=true
@@ -206,3 +392,8 @@ export default {
 		}
 }
 </script>
+<style scoped>
+.profile{
+	text-align: center;
+}
+</style>

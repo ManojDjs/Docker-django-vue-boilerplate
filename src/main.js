@@ -11,8 +11,17 @@ import Button from 'primevue/button';
 // import Sidebar from 'primevue/sidebar';
 
 import Panel from 'primevue/panel';
+//import 'primevue/resources/themes/bootstrap4-dark-blue/theme.css';
+// import 'primevue/resources/themes/saga-blue/theme.css';
 
-import 'primevue/resources/themes/saga-blue/theme.css';
+// primevue/resources/themes/bootstrap4-light-blue/theme.css
+//import 'primevue/resources/themes/bootstrap4-light-purple/theme.css';//nice one 
+
+//import 'primevue/resources/themes/md-light-indigo/theme.css';//nice
+import 'primevue/resources/themes/md-light-deeppurple/theme.css';
+// primevue/resources/themes/md-dark-indigo/theme.css
+// primevue/resources/themes/md-dark-deeppurple/theme.css
+// primevue/resources/themes/mdc-light-indigo/theme.css
 import 'primevue/resources/primevue.min.css';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
@@ -43,6 +52,12 @@ import Badge from 'primevue/badge';
 import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
 import PrimeVue from 'primevue/config';
+import Dialog from 'primevue/dialog';
+import Tooltip from 'primevue/tooltip';
+import Splitter from 'primevue/splitter';
+import SplitterPanel from 'primevue/splitterpanel';
+import Textarea from 'primevue/textarea';
+import Checkbox from 'primevue/checkbox';
 const app = createApp({
   render: () => h(App)
 }).use(store).use(ToastService).use(PrimeVue);
@@ -50,6 +65,11 @@ const app = createApp({
 new WaveUI(app, {
   // Some Wave UI options.
 })
+app.component("Checkbox",Checkbox)
+app.component("Textarea",Textarea)
+app.component("Splitter",Splitter)
+app.component("SplitterPanel",SplitterPanel)
+app.component("Dialog",Dialog)
 app.component("Badge",Badge)
 app.component("Avatar",Avatar)
 app.component("AvatarGroup",AvatarGroup)
@@ -78,4 +98,6 @@ app.component('Sidebar',Sidebar)
 app.component('Button',Button)
 app.component('Menubar',Menubar)
 app.directive('ripple', Ripple);
+app.directive('tooltip', Tooltip);
 app.use(router).mount('#app')
+

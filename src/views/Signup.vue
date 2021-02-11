@@ -1,14 +1,16 @@
 <template>
 
-    <div>
-      <Toast position="top-right" />
+<div class="Signup">
+<Toast position="top-right" />
       <!-- <Password v-model="val" /> -->
       
-        <Button type="button" label="Registration" icon="pi pi-users" class="p-button-warning p-button-lg p-d-block p-mx-auto" badgeClass="p-badge-danger" /> 
-        
-        <div class="p-grid">
+<Button type="button" label="Registration" icon="pi pi-users" class=" p-button-lg p-d-block p-mx-auto p-button-text " badgeClass="p-badge-danger" /> 
+<div class="p-grid">
+<div class="p-col-12 p-md-6 p-lg-6">
+      <img src="@/assets/WBDMAIN.jpg" style="width: 70%; display: block;" id="image"/>
+</div>
             
-            <div class="box p-mx-auto p-p-auto">
+<div class="p-col-12 p-md-6 p-lg-6">
             <div class="p-fluid">
               <div class="p-field">
                   <label for="Username">First Name</label>
@@ -68,12 +70,14 @@
             <Button type="submit" v-on:click="register"  style="width:10rem" label="Register" icon="pi pi-user-plus" iconPos="right" class="p-button-md" />
               
            </div>
-           </div>
+           <Button  class="p-button-text" v-on:click="to_signup">
+            Already have account? click here.
+            </Button>
+
+</div>
            
           
-         
-        </div>
-   
+</div>   
 </div>
 </template>
 <script>
@@ -104,6 +108,9 @@ data(){
    }
    },
 methods:{
+  to_signup(){
+this.$router.push('/Login')
+  },
   register(){
     if(this.username!=null&this.firstname!=null&this.lastname!=null&this.password1!=null&this.email!=null){
       if(this.password1==this.password2){
@@ -226,6 +233,9 @@ watch : {
   height: 50px;
   background-color: black;
   padding:10px;
+}
+.Signup{
+  text-align: center;
 }
 #username{
   height: 0.4in;

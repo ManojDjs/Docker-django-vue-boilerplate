@@ -1,11 +1,5 @@
 <template>
-<div>
-    <router-view/>
-    
-
-
-
-</div><div class="p-m-2 p-p-20">
+<div class="p-m-2 p-p-20" id="logout">
       <Toast position="top-right" />
        
         <div class="p-grid">
@@ -49,5 +43,8 @@ methods:{
 <style scoped>
 .p-grid{
   padding-top: 0.5in;
+}
+#logout{
+  text-align: center;
 }
 </style>

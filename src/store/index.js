@@ -16,11 +16,18 @@ export default createStore({
     question_answers:[],
     uid: localStorage.getItem('uid') || '',
     mqid: localStorage.getItem('mqid') || '',
-    heading:''
+    heading:'',
+    height:'',
+    course:localStorage.getItem('course') || '',
+    weeks:[],
   },
   mutations: {
     set_heading(state,heading){
       state.heading=heading
+
+    },
+    set_course(state,course){
+      state.course=course
 
     },
     auth_request(state){
@@ -62,6 +69,7 @@ export default createStore({
     get_edit_status: state=>state.edit_status,
     get_qa:state=>state.question_answers,
     get_heading:state=>state.heading,
+    get_course:state=>state.course,
 
     
   },
@@ -70,6 +78,11 @@ export default createStore({
       commit('set_heading',heading)
 
     },
+      set_course({commit},course){
+        commit('set_course',course)
+        localStorage.setItem('course', course)
+  
+      },
     //  questions
     check_q_status({commit},link){
       console.log(this.state.token)

@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     # 'crispy_forms',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'drf_registration',
+
     'drf_yasg',
     'users',
     'Programs',
@@ -49,7 +51,9 @@ INSTALLED_APPS = [
     'MentalWellbeing',
     'FMentalWellbeing',
     'WellbeingModelNU',
-    'FWellbeingModelNU'
+    'FWellbeingModelNU',
+    'Courses',
+    'Questions'
 
 
 ]
@@ -66,7 +70,8 @@ REST_FRAMEWORK = {
         'DEFAULT_PERMISSION_CLASSES': (
             'rest_framework.permissions.IsAuthenticated',
         ),
-    'DATETIME_FORMAT':"%d-%b-%Y-%I:%M%p"
+    'DATETIME_FORMAT':"%d-%b-%Y-%I:%M%p",
+'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 
 }
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'

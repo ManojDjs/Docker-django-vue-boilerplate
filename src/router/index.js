@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Login from "@/views/Login.vue";
 import LogOut from "@/views/LogOut.vue";
 import Signup from "@/views/Signup.vue";
+import Course from "@/views/Course.vue";
 import About from "@/views/About.vue";
 import NavBar from "@/views/NavBar.vue";
 import Dashboard from "@/views/Dashboard.vue";
@@ -14,12 +15,35 @@ import F_MWB from "@/components/F_MWB.vue";
 import F_WBMNU from "@/components/F_WBMNU.vue";
 import Profile from "@/components/Profile.vue";
 import DV from "@/components/DV.vue";
+import Videos from "@/views/Videos.vue";
+import Demo from "@/views/Demo.vue";
+import Dairy from "@/views/Dairy.vue";
 
 const routes = [
+  {
+    path: "/Videos",
+    name: "Videos",
+    component: Videos,
+  },
+  {
+    path: "/Dairy",
+    name: "Dairy",
+    component: Dairy,
+  },
+  {
+    path: "/Demo",
+    name: "Demo",
+    component: Demo,
+  },
   {
     path: "/DV",
     name: "DV",
     component: DV,
+  },
+  {
+    path: "/Course",
+    name: "Course",
+    component: Course,
   },
   {
     path: "/Profile",
@@ -62,14 +86,16 @@ const routes = [
     component: I_ISQ,
   },
   {
-    path: "/",
+    path: "/Signup",
     name: "Signup",
     component: Signup,
+   
   },
   {
     path: "/Dashboard",
     name: "Dashboard",
     component: Dashboard,
+    props:true
   },
   {
     path: "/Login",
@@ -77,7 +103,7 @@ const routes = [
     component: Login,
   },
   {
-    path: "/About",
+    path: "/",
     name: "About",
     component: About,
   },

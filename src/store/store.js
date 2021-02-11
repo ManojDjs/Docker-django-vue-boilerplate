@@ -1,9 +1,10 @@
 import { createStore } from 'vuex';
 import axios from 'axios'
-
+import Json from "@/assets/endpoints.json"
 export default createStore({
 
   state: {
+    server:Json[0]['SERVER']['SERVER'],
     status:'',
     token: localStorage.getItem('token') || '',
     user : localStorage.getItem('user') || '',
@@ -14,9 +15,20 @@ export default createStore({
     edit_status:null,
     question_answers:[],
     uid: localStorage.getItem('uid') || '',
-    mqid: localStorage.getItem('mqid') || ''
+    mqid: localStorage.getItem('mqid') || '',
+    heading:'',
+    height:'',
+    course:localStorage.getItem('course') || '',
   },
   mutations: {
+    set_heading(state,heading){
+      state.heading=heading
+
+    },
+    set_course(state,course){
+      state.course=course
+
+    },
     auth_request(state){
       state.status = 'loading'
     },
@@ -54,11 +66,22 @@ export default createStore({
     get_questions:state=>state.questions,
     get_f_questions:state=>state.f_questions,
     get_edit_status: state=>state.edit_status,
-    get_qa:state=>state.question_answers
+    get_qa:state=>state.question_answers,
+    get_heading:state=>state.heading,
+    get_course:state=>state.course,
 
     
   },
   actions: {
+    set_heading({commit},heading){
+      commit('set_heading',heading)
+
+    },
+      set_course({commit},course){
+        commit('set_course',course)
+        localStorage.setItem('course', course)
+  
+      },
     //  questions
     check_q_status({commit},link){
       console.log(this.state.token)
@@ -69,7 +92,7 @@ export default createStore({
 
                   }
                   //  console.log(headers)
-        axios.get('http://127.0.0.1:8000/'+link,{'headers':headers})
+        axios.get(this.state.server+link,{'headers':headers})
         .then(resp => {
           console.log(resp.data)
           if(resp.data.length==0){
@@ -106,7 +129,7 @@ export default createStore({
 
                 }
                 //  console.log(headers)
-      axios.post('http://127.0.0.1:8000/'+link,
+      axios.post(this.state.server+link,
         {
         "Answered_by": this.state.user
         },
@@ -139,7 +162,7 @@ export default createStore({
 
                 }
                 //  console.log(headers)
-      axios.get('http://127.0.0.1:8000/'+link,{'headers':headers})
+      axios.get(this.state.server+link,{'headers':headers})
       .then(resp => {
         console.log(resp.data)
         if(resp.data.length==0){
@@ -165,14 +188,18 @@ export default createStore({
 
                       }
             console.log(headers)
+      
             var i
             var check=0
+            console.log("i am checking inside store")
+            console.log(subparam.submisiondata.length)
+            return new Promise((resolve, reject) => {
             for(i=0;i<subparam.submisiondata.length;i++){
               console.log(subparam.submisiondata[i]['answer'])
               console.log( this.state.uid )
               console.log( this.state.mqid )
               
-            axios.post('http://127.0.0.1:8000/'+subparam.link,
+            axios.post(this.state.server+subparam.link,
               {
             "answer": subparam.submisiondata[i]['answer'],
             "main_question_set": localStorage.getItem('mqid') ,
@@ -187,17 +214,22 @@ export default createStore({
                       check=check+1
                     }
                     else{
-                    console.log(resp.data)
+                    // console.log(resp.data)
+                    commit('check_q_status','EDIT')
 
                     }
+                    resolve(resp.data)
+                    commit('check_q_status','EDIT')
                     
                   })
-
-                }
-                if(check==0){
-                  commit('check_q_status','EDIT')
-                }
-
+              
+              .catch(err => {
+                commit('check_q_sttaus',"saveerror")
+            
+                reject(err)
+              })
+            }
+            })
   },
  save({commit},subparam){
           console.log(subparam)
@@ -210,14 +242,16 @@ export default createStore({
           console.log(headers)
           var i
           var check=0
+          // console.log(subparam.submisiondata.length)
+          return new Promise((resolve, reject) => {
           for(i=0;i<subparam.submisiondata.length;i++){
-            console.log(subparam.submisiondata[i]['answer'])
-            console.log( this.state.uid )
-            console.log( this.state.mqid )
+            // console.log(subparam.submisiondata[i]['answer'])
+            // console.log( this.state.uid )
+            // console.log( this.state.mqid )
             
-          axios.put('http://127.0.0.1:8000/'+subparam.link+subparam.submisiondata[i]['editid'],
+          axios.put(this.state.server+subparam.link+subparam.submisiondata[i]['editid'],
             {
-              "id":subparam.submisiondata[i]['editid'],
+          "id":subparam.submisiondata[i]['editid'],
           "answer": subparam.submisiondata[i]['answer'],
           "main_question_set": localStorage.getItem('mqid') ,
           "question_name": subparam.submisiondata[i]['qid'],
@@ -226,23 +260,24 @@ export default createStore({
             },
             {'headers':headers})
           .then(resp => {
-                  console.log(resp.data)
+                  // console.log(resp.data)
                   if(resp.data.length==0){
                     check=check+1
                   }
                   else{
-                  console.log(resp.data)
+                  // console.log(resp.data)
                   commit('check_q_status','EDIT')
-
+                  resolve(resp)
                   }
-                  
+              
+                }) 
+                .catch(err => {
+                  commit('check_q_sttaus',"saveerror")
+              
+                  reject(err)
                 })
-
               }
-              if(check==0){
-                commit('check_q_status','EDIT')
-              }
-
+              })
  },
     // authentication modules
 
@@ -255,7 +290,7 @@ export default createStore({
                    }
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios.post('http://127.0.0.1:8000/api/accounts/login/',{username:user.email,password:user.password},config)
+        axios.post(this.state.server+'api/accounts/login/',{username:user.email,password:user.password},config)
         .then(resp => {
           console.log(resp.data)
           const token = resp.data.token

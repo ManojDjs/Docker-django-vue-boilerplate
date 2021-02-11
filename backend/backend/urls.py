@@ -43,6 +43,8 @@ urlpatterns = [
     path('QA/', include('Programs.api.urls')),
     path('FQA/', include('FPrograms.api.urls')),
     path('USER/', include('users.api.urls')),
+    path('Course/', include('Courses.api.urls')),
+    path('Questions/', include('Questions.api.urls')),
     path('Demo/',include('Demographics.api.urls')),
     path('MWB/',include('MentalWellbeing.api.urls')),
     path('FMWB/',include('FMentalWellbeing.api.urls')),
