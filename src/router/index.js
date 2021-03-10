@@ -7,7 +7,7 @@ import About from "@/views/About.vue";
 import NavBar from "@/views/NavBar.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import RegistrationMessage from "@/views/RegistrationMessage.vue";
-import I_ISQ from "@/components/I_ISQ.vue";
+import ISQ from "@/components/ISQ.vue";
 import F_ISQ from "@/components/F_ISQ.vue";
 import I_MWB from "@/components/I_MWB.vue";
 import I_WBMNU from "@/components/I_WBMNU.vue";
@@ -81,9 +81,9 @@ const routes = [
     component: F_ISQ,
   },
   {
-    path: "/I_ISQ",
-    name: "I_ISQ",
-    component: I_ISQ,
+    path: "/ISQ",
+    name: "ISQ",
+    component: ISQ,
   },
   {
     path: "/Signup",

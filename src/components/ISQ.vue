@@ -1,113 +1,242 @@
 <template>
-<div>
-    {{ localstatus }}
-
-    <!-- initial record check -->
-    <Toast position="center" />
-    <Panel header="Message" v-if="get_q_status=='NR'">
-	<h1> No Reocrds found for you</h1>
-     <div class="p-m-2"> <h3>click below button to start questionnaire</h3></div>
-     <Button type="button" v-on:click='register_user_qa' label="Start" class="p-button-success"/>
-   </Panel>
-   <!-- Record settting -->
-   <div v-if="get_q_status=='RS'">
-        <div class="p-fluid p-formgrid p-grid" v-for='(item,index) in Answers_KV' :key='index' >
-            
-            <div class="p-field p-col" >
-                    <h3>{{ item.question_name }}</h3>
-                    <div class="demo-container p-pl-6 p-pr-6">
-
-                    <Dropdown v-model="item.answer" :options="oprions" optionLabel="name" placeholder="please indicate " v-if='item.question_type=="Options"'/>
-                    <h3 v-if="item.question_type=='Slider'">Please Drage between [0,10] {{ item.answer }}</h3>
-                    <Slider v-model="item.answer" v-if="item.question_type=='Slider'" :step="1" :min="1" :max="10"   class="p-p-2"/>
-                    
-                    <SelectButton class='p-button-primary' v-model="item.answer" :options="yesno" v-if="item.question_type=='YESNO'" />
-                    </div>
-            </div>
-         </div>
-           <Button type="button" v-on:click='submit' label="Submit" class="p-button-success p-button-lg"/>
-   </div>
-
-   <!-- Editing question -->
-   <div v-if="get_q_status=='EDIT'">
-            <Panel  v-if="localedit==false" header="You Already have you answers">
-            <template #icons>
-                    <Button type="button" v-on:click='edit_questions' label="EDIT" class="p-button-success p-button-lg"/>
-                
-            </template>
-            <div class="p-fluid p-formgrid p-grid" v-for='(item,index) in get_qa[0]["WBMNU"]' :key='index' >
-                         <Divider align="center" :type='dashed'/>
-                          <h3>{{ item.question_name.question }}</h3>
-                          <div class="demo-container p-pl-6 p-pr-6">
-                          <h3> Answer:  <Badge :value="item.answer"  severity="success"></Badge></h3>
-                          </div>
-
-                        
-
-                         
-            </div>
-            </Panel>
-            <div v-if="localedit==true">
-                
-                <div class="p-fluid p-formgrid p-grid" v-for='(item,index) in Answers_KV' :key='index' >
-                         <Divider align="center" :type='dashed'>
-                            <span class="p-tag">{{ index +1}} </span>
-                        </Divider>
-                    <div class="p-field p-col p-p-4" >
-                       
-                            <h3>{{ item.question_name }}</h3>
-                            <div class="demo-container p-pl-6 p-pr-6">
-
-                            <Dropdown v-model="item.answer" :options="oprions" optionLabel="name" placeholder="please indicate " v-if='item.question_type=="Options"'/>
-                            <h3 v-if="item.question_type=='Slider'">Please Drage between [0,10] {{ item.answer }}</h3>
-                            <Slider v-model="item.answer" v-if="item.question_type=='Slider'" :step="1" :min="1" :max="10"   class="p-p-2"/>
-                            
-                            <SelectButton class='p-button-primary' v-model="item.answer" :options="yesno" v-if="item.question_type=='YESNO'" />
-                            </div>
-                    </div>
-                      
-                </div>
-                <Button type="button" v-on:click='save' label="Save" class="p-button-success p-button-lg"/>
-              
-                
+<div class="Demo">
+    <h1>Base Line Questionnaire</h1>
+    {{status }}
+    <div class="p-grid" >
+        <div class="p-col-12 p-md-6 p-lg-6">
+            <img src="@/assets/Dash.jpeg" style="width:60%; display: block;" id="image" class="p-mr-2"/>
         </div>
-   </div>
+        <div class="p-col-12 p-md-6 p-lg-6" v-if="status=='RS'">
+        {{ status }}
+        <!-- {{ demodata }} -->
+        <!-- {{ demoquesions }} -->
+        <!-- {{ Answers_KV }} -->
+        {{ mqid }}
+        <!-- <h1>Please complete Base Line Questionnaire:</h1> -->
+         <h1>Your Physical Health in general terms:</h1>
+         <div v-for='(item,index) in Answers_KV' :key='index'>
+             <div v-if="item .question_no==1">
+                <h2>{{ item.question }}</h2> 
+                <Divider />
+                <Textarea v-model="item.answer" :autoResize="true" rows="5" cols="20" />
+                <Divider />
+                 </div>
+                  <div v-if="item .question_no==2">
+                  <h2>{{ item.question }}</h2>
+                  <Divider />
+                   <Slider v-model="item.answer"  :step="1" :min="1" :max="100"   class="p-p-2"/>
+                  <Divider />
+                 </div>
+                  <div v-if="item .question_no==3">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="yesno" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                  <div v-if="item .question_no==4">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="yesno" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                  <div v-if="item .question_no==5">
+                <h3>Can you look at the following list. To the best of your memory can you rate your experience of each of them in roughly the last three months:</h3>
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                
+                 <div v-if="item .question_no==6">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options2" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                 <div v-if="item .question_no==7">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options3" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                 <div v-if="item .question_no==8">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options4" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                 <div v-if="item .question_no==9">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options5" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                 <div v-if="item .question_no==10">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options6" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                 <div v-if="item .question_no==11">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options7" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                 <div v-if="item .question_no==12">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="options8" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                 
 
- <!-- {{ get_qa[0]['total_answers'] }} -->
+         </div>
+
+                <Button v-on:click="submit">Submit</Button>
+
+        </div>
+         <div class="p-col-12 p-md-6 p-lg-6" v-if="status=='EDIT'">
+        <h1>Please Observe carefully your answers below:</h1>
+
+         <div v-for='(item,index) in demodata[0]["Demo"]' :key='index'>
+             <div v-if="item.question_name['id']==1">
+                <h2>{{ item.question_name['question'] }}</h2> 
+                <Divider />
+                <h3>{{ item.answer}}</h3>
+                <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==2">
+                 <h2>{{ item.question_name['question'] }}</h2> 
+                  <Divider />
+                  <h3>{{ item.answer}}</h3>
+                  <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==3">
+                   <h2>{{ item.question_name['question'] }}</h2> 
+                   <Divider />
+                  <h3>{{ item.answer}}</h3>
+                   <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==4">
+                   <h2>{{ item.question_name['question'] }}</h2> 
+                   <Divider />
+                   <h3>{{ item.answer}}</h3>
+                   <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==5">
+                   <h2>{{ item.question_name['question'] }}</h2> 
+                   <Divider />
+                   <h3>{{ item.answer}}</h3>
+                   <Divider />
+                 </div>
+
+         </div>
+                
+                <Button v-on:click="Continue">Continue</Button>
+
+        </div>
+    </div>
+
 </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
  import Json from "@/assets/endpoints.json"
+ import axios from 'axios'
 // import { computed } from 'vue'
 export default {
     data(){
         return{
+            server:Json[0]['SERVER']['SERVER'],
             isq_link:Json[0]['ISQ'],
             total:Json[0]['ISQ']['Total'],
             questionlink:Json[0]['ISQ']['Questions'],
             submission_link:Json[0]['ISQ']['Answers'],
             edit:Json[0]['ISQ']['Edit'],
             sublink:'ISQ',
-            status:this.$store.getters.get_q_status,
-            value: [0],
-            localstatus:'',
+            status:'',
+            mqid:0,
+            demodata:[],
+            demoquesions:[],
+            pages:[1,2,3,4],
+            yesno:[
+                {name:'yes',key:"yes"},
+                {name:'no',key:"no"},
+               ],
+            options:[
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this occaisionally but hard to say how often',key:"I notice this occaisionally but hard to say how often"},
+                {name:'I do not experience this at all',key:"I do not experience this at all"},
+                {name:'Exisitng Condition',key:"Exisitng Condition"},
+                ],
+                options2:[
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this occaisionally but hard to say how often',key:"I notice this occaisionally but hard to say how often"},
+                {name:'I do not experience this at all',key:"I do not experience this at all"},
+                {name:'Exisitng Condition',key:"Exisitng Condition"},
+                ],
+                options3:[
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this occaisionally but hard to say how often',key:"I notice this occaisionally but hard to say how often"},
+                {name:'I do not experience this at all',key:"I do not experience this at all"},
+                {name:'Exisitng Condition',key:"Exisitng Condition"},
+                ],
+                options4:[
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this occaisionally but hard to say how often',key:"I notice this occaisionally but hard to say how often"},
+                {name:'I do not experience this at all',key:"I do not experience this at all"},
+                {name:'Exisitng Condition',key:"Exisitng Condition"},
+                ],
+                options5:[
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this occaisionally but hard to say how often',key:"I notice this occaisionally but hard to say how often"},
+                {name:'I do not experience this at all',key:"I do not experience this at all"},
+                {name:'Exisitng Condition',key:"Exisitng Condition"},
+                ],
+                options6:[
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this occaisionally but hard to say how often',key:"I notice this occaisionally but hard to say how often"},
+                {name:'I do not experience this at all',key:"I do not experience this at all"},
+                {name:'Exisitng Condition',key:"Exisitng Condition"},
+                ],
+                options7:[
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this nearly every day at the moment',key:"I notice this nearly every day at the moment"},
+                {name:'I notice this occaisionally but hard to say how often',key:"I notice this occaisionally but hard to say how often"},
+                {name:'I do not experience this at all',key:"I do not experience this at all"},
+                {name:'Exisitng Condition',key:"Exisitng Condition"},
+                ],
+
+            options8:[
+                {name:'Less than 15 seconds',key:"Less than 15 seconds"},
+                {name:'15 - 30 Seconds',key:"15 - 30 Seconds"},
+                {name:'30 Seconds to a minute',key:"30 Seconds to a minute"},
+                {name:'Over a minute',key:"Over a minute"},
+               ],
+         work:[
+                {name:'Desk based',key:"Desk based"},
+                {name:'Driver',key:"Driver"},
+                {name:'Educator',key:"Educator"},
+                {name:'Home worker',key:"Home worker"},
+                {name:'Retired',key:"Retired"},
+                {name:'Studying',key:"Studying"}],
+        experience:[
+                {name:'No prior experience',key:"No prior experience"},
+                {name:'Some prior experience',key:"Some prior experience"},
+                {name:'Professional practitioner of Qigong',key:"Professional practitioner of Qigong"},
+                {name:'Prior experience of Tai Chi',key:"Prior experience of Tai Chi"},
+                {name:'Prior experience of other form of slow movement exercise',key:"Prior experience of other form of slow movement exercise"},
+                ],
+            selectedage:'',
             Answers_KV:[],
-            Submisions:[],
-            submitstatus:false,
-            yesno: ['YES', 'NO'],
-            yesnoanswer:null,
-            selected:null,
-            oprions: [
-			{name: 'None of the time', value: 1},
-			{name: 'Rarely', value: 2},
-			{name: 'Some of the time', value: 3},
-			{name: 'Often', value: 4},
-            {name: 'All of the Time', value: 5}
-            
-        ],
-        take_questions:false,
-        localedit:false
+            Submisions:[]
         }
         },
         computed:{
@@ -117,346 +246,129 @@ export default {
                 'get_qa',
                 'getuser'
             ]),
+            ...mapState([
+                'token',
+                'uid',
+                'user'
+            ])
            
         },
         methods:{
+            Continue(){
+                this.$router.push('/Videos')
+            },
             check(){
-                    let link=this.total
-                    this.$store.dispatch('check_q_status',link)
+                console.log(this.token)
+                const headers={'Authorization': 'Token'+' '+this.token, }
+                    axios.get(this.server+this.total,{'headers':headers})
+                    .then(resp => {
+                    console.log(" i am at initial check")
+                    console.log(resp.data)
+                    this.demodata=resp.data
+                    if(this.demodata.length==0){
+                        console.log("no answers taken so far")
+                        axios.post(this.server+this.total,{"Answered_by": this.user},{'headers':headers})
+                        .then(resp => {
+                            console.log(resp.data)
+                            if(resp.data.length==0){
+                                  this.check()
+                            }
+                            else{
+                                this.status='RS'
+                                this.check()
+                            }
 
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                    }
+                    else{
+                        this.mqid=resp.data[0]['id']
+                        
+                        if(resp.data[0]['total_answers']==0){
+                            console.log("i am at total answers 0 ")
+                            this.status='RS'
+                            this.take_demo()
+                        }
+                        if(resp.data[0]['total_answers']==resp.data[0]['total_questions']){
+                            console.log("i am enabeling edit mode")
+                            this.status='EDIT'
+                            this.demodata=resp.data
+                        }
+                    }
+
+                    })
+                    .catch(err => {
+                    console.log(err)
+                    })
                     },
-           register_user_qa(){
-                            console.log("you clicked")
-                            if(this.get_q_status=='NR'){
-                                    this.$store.dispatch('registeruser',this.total)
-                                    this.$router.go()
-                                }
-                              },
-          create_object(){
+            take_demo(){
+                 const headers={'Authorization': 'Token'+' '+this.token, }
+                    axios.get(this.server+this.questionlink,{'headers':headers})
+                    .then(resp => {
+                    // console.log(resp.data)
+                    this.demoquesions=resp.data
+                    this.create_object()
 
-                     var i;
-                // console.log(this.get_questions.data) checking questions
-                    for(i=0;i<this.get_questions.length;i++){
+                    })
+                    .catch(err => {
+                    console.log(err)
+                    })
+                    },
+            submit(){
+                console.log(this.Answers_KV)
+                 var i;
+              var checking=0
+                console.log(this.server+this.submission_link)
+                    for(i=0;i<this.Answers_KV.length;i++){
+                            // try{
+                                const headers={'Authorization': 'Token'+' '+this.token }
+                                // const headers={'Authorization': 'Token'+' '+this.token }
+                                // console.log(headers)
+                                axios.post(this.server+this.submission_link,{
+                                            "answer": this.Answers_KV[i]['answer']['key'],
+                                            "main_question_set": this.mqid,
+                                            "question_name":this.Answers_KV[i]['qid'],
+                                            "answer_by": this.uid},
+                                            {'headers':headers}).then(resp => {
+                                            console.log(resp.data)
+                                            console.log(resp.status)
+                                            checking=checking+1
+                                        })  
+                                    // }
+                                    // catch(err){
+                                    //     console.log(err)
+                                    // }
+                                
+                                }
+                            if(checking==this.Answers_KV.length){
+                                this.check()
+                            }
+                                
+
+                        
+                },
+                create_object(){
+
+                        var i;
+                    // console.log(this.get_questions.data) checking questions
+                    for(i=0;i<this.demoquesions.length;i++){
                     
                         
                         this.Answers_KV.push({
-                            "qid":this.get_questions[i]['id'],
-                            "answer": 0,
-                            // "main_question_set":this.getuser,
-                            "question_name": this.get_questions[i]['question'],
-                            "question_type":this.get_questions[i]['question_type'],
-                            // "answer_by": this.getuser
+                            "qid":this.demoquesions[i]['id'],
+                            "answer": "",
+                            "question": this.demoquesions[i]['question'],
+                            "question_no":this.demoquesions[i]['question_no'],
+                            
                         })
                       }
                       console.log(this.Answers_KV)
-                      },
-        submit(){
-           var i;
-              var checking=0;
-              console.log(checking)
-                // console.log(this.get_questions.data) checking questions
-                    for(i=0;i<this.Answers_KV.length;i++){
-                    
-                        if(this.Answers_KV[i]['question_type']=='Options'){
-                            try{
-                                if(this.Answers_KV[i]['answer']){
-                            //    this.Answers_KV[i]['answer']=this.Answers_KV[i]['answer']['value']
-                                    this.Submisions.push({
-                                            'answer':this.Answers_KV[i]['answer']['value'],
-                                            'editid':this.Answers_KV[i]['editid'],
-                                            'qid':this.Answers_KV[i]['qid'],
-                                            'question_name':this.Answers_KV[i]['question_name'],
-                                            'question_type':this.Answers_KV[i]['question_type']
-                                        })
-                                        console.log(this.Answers_KV[i])
-                                             }
-                                        if(!this.Answers_KV[i]['answer'])
-                                        {
-                                                // this.$toast.add({severity:'error', summary: 'Empty fields', detail:'please fill your Answer for '+this.Answers_KV[i]['question_name'], life: 5000});
-                                            checking=checking+1
-                                        }
-                                    }
-                                    catch(err){
-                                        console.log(err)
-                                    }
-                            
-                              }
-                            if(this.Answers_KV[i]['question_type']=='Slider'){
-                            try{
-                                if(this.Answers_KV[i]['answer']){
-                            //    this.Answers_KV[i]['answer']=this.Answers_KV[i]['answer']['value']
-                                                                this.Submisions.push(
-                                                                {
-                                                                    'answer':this.Answers_KV[i]['answer'],
-                                                                    'editid':this.Answers_KV[i]['editid'],
-                                                                    'qid':this.Answers_KV[i]['qid'],
-                                                                    'question_name':this.Answers_KV[i]['question_name'],
-                                                                    'question_type':this.Answers_KV[i]['question_type']
-                                                                })
-                                                                console.log(this.Answers_KV[i])
-                                                                }
-                                if(!this.Answers_KV[i]['Slider'])
-                                                                {
-                                        // this.$toast.add({severity:'error', summary: 'Empty fields', detail:'please fill your Answer for '+this.Answers_KV[i]['question_name'], life: 5000});
-                                                                checking=checking+1
-                                                                }
-                                                                }
-                            catch(err){
-                                console.log(err)
-                                      }
-                            
-                           }
-                        if(this.Answers_KV[i]['question_type']=='YESNO'){
-                            try{
-                                if(this.Answers_KV[i]['answer']){
-                                    if(this.Answers_KV[i]['answer']=='YES')
-                                    {
-                                                        this.Submisions.push(
-                                                        {
-                                                    'answer':1,
-                                                    'editid':this.Answers_KV[i]['editid'],
-                                                    'qid':this.Answers_KV[i]['qid'],
-                                                    'question_name':this.Answers_KV[i]['question_name'],
-                                                    'question_type':this.Answers_KV[i]['question_type']
-                                                    })
-
-                                    }
-                                    else{
-                                                                this.Submisions.push(
-                                                        {
-                                                            'answer':0,
-                                                            'editid':this.Answers_KV[i]['editid'],
-                                                            'qid':this.Answers_KV[i]['qid'],
-                                                            'question_name':this.Answers_KV[i]['question_name'],
-                                                            'question_type':this.Answers_KV[i]['question_type']
-                                                        })
-                                    }
-                                }
-                                if(!this.Answers_KV[i]['Slider'])
-                                {
-                                        
-                                    checking=checking+1
-                                }
-                            }
-                            catch(err){
-                                console.log(err)
-                            }
-                            
-                        }
-                        
-                        
-                    }
-            // console.log(this.Submisions)
-                    if(this.get_q_status=='RS'){
-                            if(this.Submisions.length!=this.Answers_KV.length){
-                                var q=this.Answers_KV.length
-                                var b=this.Submisions.length
-                                var len=q-b
-                                    this.$toast.add({severity:'error', summary: 'Empty fields', detail:'there are  '+len+'empty fields', life: 5000});
-                                    this.Submisions=[]
-                                }
-                            else{
-                                console.log('no empty fields')
-                                console.log('I am calling store ')
-                                console.log(this.Submisions)
-                                let link=this.submission_link
-                                let submisiondata=this.Submisions
-                                console.log("iam checking length")
-                                 console.log(this.Submisions.length)
-                                
-                                this.$store.dispatch('submitanswers',{link,submisiondata})
-                                .then(() =>  this.$toast.add({severity:'success', summary: 'Answers submitted', detail:'submitted your answers , absorb below', life: 3000},
-                                this.check(),
-                                this.localedit=true,
-                                ))
-                                
-                                .catch(err => console.log(err))
-                                
-                                // this.$router.go()
-                                this.Submisions=[]
-                                 }
-                    }
-
-            },
-            edit_questions(){
-                
-                var i
-                this.Answers_KV=[]
-                this.Submisions=[]
-                 for(i=0;i<this.get_qa[0][this.sublink].length;i++){
-                        if(this.get_qa[0][this.sublink][i]['question_name']['question_type']=='Options'){
-                                                                if(this.get_qa[0][this.sublink][i]['answer']=='1'){
-                                                                        this.get_qa[0][this.sublink][i]['answer']={name: 'None of the time', value: 1}
-
-                                                                }
-                                                                if(this.get_qa[0][this.sublink][i]['answer']=='2'){
-                                                                        this.get_qa[0][this.sublink][i]['answer']={name: 'Rarely', value: 2}
-
-                                                                }
-                                                                if(this.get_qa[0][this.sublink][i]['answer']=='3'){
-                                                                        this.get_qa[0][this.sublink][i]['answer']={name: 'Some of the time', value: 3}
-
-                                                                }
-                                                                if(this.get_qa[0][this.sublink][i]['answer']=='4'){
-                                                                        this.get_qa[0][this.sublink][i]['answer']={name: 'Often', value: 4}
-
-                                                                }
-                                                                if(this.get_qa[0][this.sublink][i]['answer']=='5'){
-                                                                        this.get_qa[0][this.sublink][i]['answer']={name: 'All of the time', value: 5}
-
-                                                                }
-                                                                     }
-                        if(this.get_qa[0][this.sublink][i]['question_name']['question_type']=='YESNO'){
-                                                                                            if(this.get_qa[0][this.sublink][i]['answer']=='1'){
-                                                                                                    this.get_qa[0][this.sublink][i]['answer']='YES'
-
-                                                                                            }
-                                                                                            if(this.get_qa[0][this.sublink][i]['answer']=='0'){
-                                                                                                    this.get_qa[0][this.sublink][i]['answer']='NO'
-
-                                                                                            }
-                                                                                            }
-                    
-                                                this.Answers_KV.push({
-                                                    "editid":this.get_qa[0][this.sublink][i]['id'],
-                                                    "qid":this.get_qa[0][this.sublink][i]['question_name']['id'],
-                                                    "answer": parseInt(this.get_qa[0][this.sublink][i]['answer'],10),
-                                                    // "main_question_set":this.getuser,
-                                                    "question_name": this.get_qa[0][this.sublink][i]['question_name']['question'],
-                                                    "question_type":this.get_qa[0][this.sublink][i]['question_name']['question_type'],
-                                                    // "answer_by": this.getuser
-                                                })
-                                                }
-                            console.log('after creating edit answers')
-                            console.log(this.Answers_KV)
-                            this.localedit=true
-
-                    },
-            save(){
-              var i;
-                this.Submisions=[]
-                console.log(" i am here after save button")
-                console.log(this.Answers_KV)
-                    for(i=0;i<this.Answers_KV.length;i++){
-                    
-                        if(this.Answers_KV[i]['question_type']=='Options'){
-                            try{
-                                if(this.Answers_KV[i]['answer']){
-                            //    this.Answers_KV[i]['answer']=this.Answers_KV[i]['answer']['value']
-                            this.Submisions.push(
-                                {
-                                    'answer':this.Answers_KV[i]['answer']['value'],
-                                    'editid':this.Answers_KV[i]['editid'],
-                                        'qid':this.Answers_KV[i]['qid'],
-                                    'question_name':this.Answers_KV[i]['question_name'],
-                                    'question_type':this.Answers_KV[i]['question_type']
-                                }
-                            )
-                            console.log(this.Answers_KV[i])
-                                }
-                            }
-                            catch(err){
-                                console.log(err)
-                                     }
-                            
-                            }
-                            if(this.Answers_KV[i]['question_type']=='Slider'){
-                            try{
-                                if(this.Answers_KV[i]['answer']){
-                            //    this.Answers_KV[i]['answer']=this.Answers_KV[i]['answer']['value']
-                                                                this.Submisions.push(
-                                                                {
-                                                                    'answer':this.Answers_KV[i]['answer'],
-                                                                    'editid':this.Answers_KV[i]['editid'],
-                                                                    'qid':this.Answers_KV[i]['qid'],
-                                                                    'question_name':this.Answers_KV[i]['question_name'],
-                                                                    'question_type':this.Answers_KV[i]['question_type']
-                                                                })
-                                                                console.log(this.Answers_KV[i])
-                                                                  }
-                               }
-                            catch(err){
-                                console.log(err)
-                                    }
-                            
-                        }
-                        if(this.Answers_KV[i]['question_type']=='YESNO'){
-                            try{
-                                if(this.Answers_KV[i]['answer']){
-                                    if(this.Answers_KV[i]['answer']=='YES')
-                                    {
-                                                        this.Submisions.push(
-                                                        {
-                                                    'answer':1,
-                                                    'editid':this.Answers_KV[i]['editid'],
-                                                    'qid':this.Answers_KV[i]['qid'],
-                                                    'question_name':this.Answers_KV[i]['question_name'],
-                                                    'question_type':this.Answers_KV[i]['question_type']
-                                                    })
-
-                                    }
-                                    else{
-                                                                this.Submisions.push(
-                                                        {
-                                                            'answer':0,
-                                                            'editid':this.Answers_KV[i]['editid'],
-                                                            'qid':this.Answers_KV[i]['qid'],
-                                                            'question_name':this.Answers_KV[i]['question_name'],
-                                                            'question_type':this.Answers_KV[i]['question_type']
-                                                        })
-                                    }
-                                }
-                            }
-                            catch(err){
-                                console.log(err)
-                            }
-                            
-                        }
-                        
-                        
-                    }
-            // console.log(this.Submisions)
-               
-                    if(this.get_q_status=='EDIT'){
-                        console.log(this.Submisions)
-                        console.log('no empty fields')
-                                console.log('I am calling store for save')
-                                console.log(this.Submisions)
-                                let link=this.edit
-                                let submisiondata=this.Submisions
-                        
-                                this.$store.dispatch('save',{link,submisiondata})
-                                .then(() =>  this.$toast.add({severity:'success', summary: 'Answers updated', detail:'updated your answers , absorb below', life: 3000}))
-                                .catch(err => console.log(err))
-                        this.Submisions=[]
-                        this.Answers_KV=[]
-                        this.localedit=false
-                        this.check()
-
-                    }
-
-            }
-
+                      }
         },
+        
         watch:{
-            get_q_status(){
-                if(this.get_q_status=='NR'){
-                    this.take_questions=true
-                }
-                if(this.get_q_status=="RS"){
-                    this.$store.dispatch('questions_taker',this.questionlink)
-                    this.create_object()
-                }
-                if(this.get_q_status=='RF'){
-                    console.log(' iam here')
-                    if(this.get_qa[0]['total_answers']=='0'){
-                        this.$store.dispatch('questions_taker',this.questionlink)
-                        this.localstatus='0 answers so far',
-                        this.get_q_status=='RS'
-                        
-                    }
-                }
-            },
             localedit(){
                 this.check()
             },
@@ -466,11 +378,15 @@ export default {
 
         },
         created(){
-            this.$store.dispatch("set_heading",'Inital Well being Model NU')
             this.check()
+            
+            
+            
+
+            
         }
 
-    
+        
 }
 </script>
 <style lang='scss' scoped>
@@ -516,5 +432,7 @@ export default {
         }
     }  
 }
-
+.Demo{
+    text-align: center;
+}
 </style>

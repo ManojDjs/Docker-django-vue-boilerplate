@@ -36,17 +36,17 @@ services:
     depends_on:
       - web
 
-#  migration:
-#    build: .
-#    image: app
-#    command: python backend/manage.py migrate
-#    volumes:
-#      - .:/code
-#    depends_on:
-#      - make_migration
-#  make_migration:
-#          build: .
-#          image: app
-#          command: python backend/manage.py makemigrations
-#          volumes:
-#            - .:/code
+  migration:
+   build: .
+   image: app
+   command: python backend/manage.py migrate
+   volumes:
+     - .:/code
+   depends_on:
+     - make_migration
+  make_migration:
+         build: .
+         image: app
+         command: python backend/manage.py makemigrations
+         volumes:
+           - .:/code

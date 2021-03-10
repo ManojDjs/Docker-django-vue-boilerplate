@@ -25,7 +25,8 @@
                            <iframe v-if="selected==0"  width="800" height="500" src="https://www.youtube-nocookie.com/embed/nJVaQ6ORkoA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                            <iframe v-if="selected==1"  width="800" height="500" src="https://www.youtube-nocookie.com/embed/rILma2T1NBs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                            <iframe  v-if="selected==2"  width="800" height="500" src="https://www.youtube-nocookie.com/embed/HiLmost762M" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                           <iframe v-if="selected==3" width="800" height="500" src="https://www.youtube-nocookie.com/embed/9tmfBwyaQPA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                      
+                           <iframe v-if="selected==4" width="800" height="500" src="https://www.youtube-nocookie.com/embed/9tmfBwyaQPA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>        
+                           <iframe v-if="selected==3" width="800" height="500" src="https://www.youtube-nocookie.com/embed/XczzY5GwNho" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>              
                             </div>
                             <div class="flex-container">
                             <div v-for='(item,index) in videos' :key='index'>
@@ -35,9 +36,15 @@
                                     </Button>
                                 </div>
                             </div>
-                                                            
-                
+                             <Divider/>                               
+                 <h1>After every practice, please complete the diary.</h1>
+                 <Divider/>
+                <Button  class="p-button"  v-on:click="dairy">
+                                        Practice Diary
+                                    </Button>
+                                    <Divider/>
                 </div>
+               
                 </div>
     </div>
 </template>
@@ -47,17 +54,20 @@ export default {
     data(){
         return{
             selected:0,
-            videos:[1,2,3,4]
+            videos:[1,2,3,4,5]
 
         }
     },
     methods:{
         select_video(index){
             this.selected=index
-        }
-    }
+        },
+        dairy()
+            {
+                this.$router.push("/Dairy")
+            }    
      
-    
+    }
 }
 </script>
 <style scoped>

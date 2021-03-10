@@ -48,10 +48,10 @@ INSTALLED_APPS = [
     'FPrograms',
     'corsheaders',
     'Demographics',
-    'MentalWellbeing',
-    'FMentalWellbeing',
-    'WellbeingModelNU',
-    'FWellbeingModelNU',
+    # 'MentalWellbeing',
+    # 'FMentalWellbeing',
+    # 'WellbeingModelNU',
+    # 'FWellbeingModelNU',
     'Courses',
     'Questions'
 

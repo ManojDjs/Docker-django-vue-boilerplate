@@ -169,11 +169,13 @@ export default {
      dashboard(){
       this.$router.push('/Dairy'),
       this.set_color()
+      this.visibleLeft=false;
       
     },
      demo(){
       this.$router.push('/Demo'),
       this.set_color()
+      this.visibleLeft=false;
       
     },
     

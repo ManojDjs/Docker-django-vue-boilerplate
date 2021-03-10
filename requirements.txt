@@ -10,6 +10,7 @@ channels_redis
 Twisted
 txaio
 djangorestframework
+django-filter
 django-cors-headers
 drf-registration
 drf_yasg

@@ -98,17 +98,22 @@ export default {
            this.$router.push('/Videos')
           },
           register_system(){
+              console.log("in regitser")
               const headers={
                 'Authorization': 'Token'+' '+this.token
                     }
-             axios.post(this.server+this.register,
+                    let reglink=this.server+this.register
+                    console.log(reglink)
+             axios.post(reglink,
               {"user":this.user,
                   
               },
               {'headers':headers})
             .then(resp => {
+                console.log(resp.data)
+                console.log(resp.status)
                     if(resp.status==201){
-                        this.$$router.push('/Demo')             
+                        this.$router.push('/Demo')             
                     }
                    })
 

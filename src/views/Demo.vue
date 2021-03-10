@@ -3,36 +3,93 @@
     <h1>Demographic Information</h1>
     {{status }}
     <div class="p-grid" >
-<div class="p-col-12 p-md-6 p-lg-6">
-      <img src="@/assets/Dash.jpeg" style="width:60%; display: block;" id="image" class="p-mr-2"/>
-</div>
-<div class="p-col-12 p-md-6 p-lg-6">
-{{ localstatus }}
- {{ status }}
-    <!-- initial record check -->
-    <div v-if="status=='NR'">
-    <Toast position="center" />
-    <Panel header="Message" >
-     <div class="p-m-2"> <h3>click below button to start filling Demographics</h3></div>
-     <Divider/>
-      <Button icon="pi pi-check" label="Continue" v-on:click="register_user_demo" style="width:100%"/>
-   </Panel>
-   </div>
-   <div v-if="status=='RS'">
-    <Toast position="center" />
-    <Panel header="Message" >
-     <div class="p-m-2"> <h3>Please complete the questions below:</h3></div>
-     <Divider/>
-      <div v-for="age of age_band" :key="age.key" class="p-field-radiobutton">
-            <RadioButton :id="age.key" name="category" :value="category" v-model="selectedCategory" :disabled="age.key === 'R'" />
-            <label :for="age.key">{{age.name}}</label>
+        <div class="p-col-12 p-md-6 p-lg-6">
+            <img src="@/assets/Dash.jpeg" style="width:60%; display: block;" id="image" class="p-mr-2"/>
         </div>
-     <Divider/>
-      <Button icon="pi pi-check" label="Continue" v-on:click="Submit" style="width:100%"/>
-   </Panel>
-   </div>
-</div>
-</div>
+        <div class="p-col-12 p-md-6 p-lg-6" v-if="status=='RS'">
+        {{ status }}
+        {{ demodata }}
+        {{ demoquesions }}
+        {{ Answers_KV }}
+        <h1>Please complete the questions below:</h1>
+         <div v-for='(item,index) in Answers_KV' :key='index'>
+             <div v-if="item .question_no==1">
+                <h2>{{ item.question }}</h2> 
+                <Divider />
+                <Dropdown v-model="item.answer" :options="age_band" optionLabel="name" placeholder="please indicate "/>
+                <Divider />
+                 </div>
+                  <div v-if="item .question_no==2">
+                  <h2>{{ item.question }}</h2>
+                  <Divider />
+                  <Dropdown v-model="item.answer" :options="e_banckground" optionLabel="name" placeholder="please indicate "/>
+                  <Divider />
+                 </div>
+                  <div v-if="item .question_no==3">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="Gender" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                  <div v-if="item .question_no==4">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="work" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+                  <div v-if="item .question_no==5">
+                   <h2>{{ item.question }}</h2>
+                   <Divider />
+                   <Dropdown v-model="item.answer" :options="experience" optionLabel="name" placeholder="please indicate "/>
+                   <Divider />
+                 </div>
+
+         </div>
+
+                <Button v-on:click="submit">Submit</Button>
+
+        </div>
+         <div class="p-col-12 p-md-6 p-lg-6" v-if="status=='EDIT'">
+        <h1>Please Observe carefully your answers below:</h1>
+
+         <div v-for='(item,index) in demodata[0]["Demo"]' :key='index'>
+             <div v-if="item.question_name['id']==1">
+                <h2>{{ item.question_name['question'] }}</h2> 
+                <Divider />
+                <h3>{{ item.answer}}</h3>
+                <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==2">
+                 <h2>{{ item.question_name['question'] }}</h2> 
+                  <Divider />
+                  <h3>{{ item.answer}}</h3>
+                  <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==3">
+                   <h2>{{ item.question_name['question'] }}</h2> 
+                   <Divider />
+                  <h3>{{ item.answer}}</h3>
+                   <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==4">
+                   <h2>{{ item.question_name['question'] }}</h2> 
+                   <Divider />
+                   <h3>{{ item.answer}}</h3>
+                   <Divider />
+                 </div>
+                  <div v-if="item.question_name['id']==5">
+                   <h2>{{ item.question_name['question'] }}</h2> 
+                   <Divider />
+                   <h3>{{ item.answer}}</h3>
+                   <Divider />
+                 </div>
+
+         </div>
+                
+                <Button v-on:click="Continue">Continue</Button>
+
+        </div>
+    </div>
 
 </div>
 </template>
@@ -52,7 +109,9 @@ export default {
             edit:Json[0]['DEMO']['Edit'],
             sublink:'Demo',
             status:'',
-            mqid:'',
+            mqid:0,
+            demodata:[],
+            demoquesions:[],
             age_band:[
                 {name:'18-24',key:"18-24"},
                 {name:'24-34',key:"24-34"},
@@ -60,7 +119,37 @@ export default {
                 {name:'45-54',key:"45-54"},
                 {name:'55-64',key:"55-64"},
                 {name:'65+',key:"65+"}],
-            selectedage:''
+            e_banckground:[
+                {name:'Asian/Asian British',key:"Asian/Asian British"},
+                {name:'Black/African/Caribbean/Black British',key:"Black/African/Caribbean/Black British"},
+                {name:'Mixed/Multiple ethnic groups',key:"Mixed/Multiple ethnic groups"},
+                {name:'White',key:"White"},
+                {name:'Other ethnic group',key:"Other ethnic group"},
+                ],
+            Gender:[
+                {name:'Female (including female transgender)',key:"Female (including female transgender)"},
+                {name:'Male (including male transgender)',key:"Male (including male transgender)"},
+                {name:'Gender neutral',key:"Gender neutral"},
+                {name:'Non-binary',key:"Non-binary"},
+                {name:'Other',key:"Other"},
+                {name:'Prefer not to say',key:"Prefer not to say"}],
+         work:[
+                {name:'Desk based',key:"Desk based"},
+                {name:'Driver',key:"Driver"},
+                {name:'Educator',key:"Educator"},
+                {name:'Home worker',key:"Home worker"},
+                {name:'Retired',key:"Retired"},
+                {name:'Studying',key:"Studying"}],
+        experience:[
+                {name:'No prior experience',key:"No prior experience"},
+                {name:'Some prior experience',key:"Some prior experience"},
+                {name:'Professional practitioner of Qigong',key:"Professional practitioner of Qigong"},
+                {name:'Prior experience of Tai Chi',key:"Prior experience of Tai Chi"},
+                {name:'Prior experience of other form of slow movement exercise',key:"Prior experience of other form of slow movement exercise"},
+                ],
+            selectedage:'',
+            Answers_KV:[],
+            Submisions:[]
         }
         },
         computed:{
@@ -78,76 +167,114 @@ export default {
            
         },
         methods:{
+            Continue(){
+                this.$router.push('/Videos')
+            },
             check(){
                 console.log(this.token)
-                const headers={
-         
-          'Authorization': 'Token'+' '+this.token,
-
-                  }
-                  //  console.log(headers)
+                const headers={'Authorization': 'Token'+' '+this.token, }
                     axios.get(this.server+this.total,{'headers':headers})
                     .then(resp => {
+                    console.log(" i am at initial check")
                     console.log(resp.data)
-                    if(resp.data.length==0){
-                    this.status='NR'
+                    this.demodata=resp.data
+                    if(this.demodata.length==0){
+                        console.log("no answers taken so far")
+                        axios.post(this.server+this.total,{"Answered_by": this.user},{'headers':headers})
+                        .then(resp => {
+                            console.log(resp.data)
+                            if(resp.data.length==0){
+                                  this.check()
+                            }
+                            else{
+                                this.status='RS'
+                                this.check()
+                            }
+
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
                     }
                     else{
-                        if(resp.data[0]['total_answers']==resp.data[0]['total_questions']){
-                        const mqid=resp.data[0].id
-                        this.mqid=mqid
-                        console.log(resp.data)
-                        }
-                        else if(resp.data[0]['total_answers']==0){
+                        this.mqid=resp.data[0]['id']
+                        
+                        if(resp.data[0]['total_answers']==0){
+                            console.log("i am at total answers 0 ")
                             this.status='RS'
-
+                            this.take_demo()
                         }
-                        else{
-                        const mqid=resp.data[0].id
-                        this.mqid=mqid
-                        console.log(mqid)
-                        this.status='RF'//for records found status
+                        if(resp.data[0]['total_answers']==resp.data[0]['total_questions']){
+                            console.log("i am enabeling edit mode")
+                            this.status='EDIT'
+                            this.demodata=resp.data
                         }
-                    
                     }
+
                     })
                     .catch(err => {
                     console.log(err)
                     })
-
-            },
-            register_user_demo(){
-                const headers={
-         
-                    'Authorization': 'Token'+' '+this.token,
-
-                            }
-                            //  console.log(headers)
-                axios.post(this.server+this.total,
-                    {
-                    "Answered_by": this.user
                     },
-                    {'headers':headers})
-                .then(resp => {
-                    console.log(resp.data)
-                    if(resp.data.length==0){
-                    this.status='ER'
+            take_demo(){
+                 const headers={'Authorization': 'Token'+' '+this.token, }
+                    axios.get(this.server+this.questionlink,{'headers':headers})
+                    .then(resp => {
+                    // console.log(resp.data)
+                    this.demoquesions=resp.data
+                    this.create_object()
 
-                    }
-                    else{
-                    this.status='RS'
-                    
-
-                    }
-
-                })
-                .catch(err => {
+                    })
+                    .catch(err => {
                     console.log(err)
-                })
+                    })
+                    },
+            submit(){
+                console.log(this.Answers_KV)
+                 var i;
+              var checking=0;
+              console.log(checking)
                 
-            }
+                    for(i=0;i<this.Answers_KV.length;i++){
+                            try{
+                                const headers={'Authorization': 'Token'+' '+this.token, }
+                                axios.post(this.server+this.submission_link,{
+                                            "answer": this.Answers_KV[i]['answer']['key'],
+                                            "main_question_set": this.mqid,
+                                            "question_name":this.Answers_KV[i]['qid'],
+                                            "answer_by": this.uid},
+                                            {'headers':headers}).then(resp => {
+                                            console.log(resp.data)
+                                        })  
+                                    }
+                                    catch(err){
+                                        console.log(err)
+                                    }
+                                
+                                }
+                                this.check()
 
+                        
+                },
+                create_object(){
+
+                        var i;
+                    // console.log(this.get_questions.data) checking questions
+                    for(i=0;i<this.demoquesions.length;i++){
+                    
+                        
+                        this.Answers_KV.push({
+                            "qid":this.demoquesions[i]['id'],
+                            "answer": "",
+                            "question": this.demoquesions[i]['question'],
+                            "question_no":this.demoquesions[i]['question_no'],
+                            
+                        })
+                      }
+                      console.log(this.Answers_KV)
+                      }
         },
+        
         watch:{
             localedit(){
                 this.check()
@@ -159,12 +286,14 @@ export default {
         },
         created(){
             this.check()
-            this.selectedage=this.a[1]
+            
+            
+            
 
             
         }
 
-    
+        
 }
 </script>
 <style lang='scss' scoped>

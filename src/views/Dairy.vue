@@ -43,7 +43,7 @@
             </template>
             <template #footer>
                 <Button icon="pi pi-check" label="Edit" v-on:click="update_dairy(item.id,item.Dairy_label,item.Dairy_Text)"/>
-                <Button icon="pi pi-trash" label="Delete" class="p-button-secondary" style="margin-left: .5em" />
+                <Button icon="pi pi-trash" label="Delete" v-on:click="delete_dairy(item.id)" class="p-button-secondary" style="margin-left: .5em" />
             </template>
             </Card>
          </div>
@@ -90,6 +90,18 @@ export default {
         }
     },
     methods:{
+        delete_dairy(id){
+            const headers={
+                'Authorization': 'Token'+' '+this.token
+                    }
+            axios.delete(this.server+this.dairy_update_link+id,{'headers':headers}
+            ).then(resp=>{
+                console.log(resp.status)
+                this.get_existing_dairy()
+                 
+                
+            })
+        },
          create_object(){
                      var i;
                 // console.log(this.get_questions.data) checking questions
@@ -152,9 +164,7 @@ export default {
                     }
                    })
         },
-        delete_dairy(){
-
-        },
+       
         update_dairy(id,qsn,txt){
             this.display=true
             this.edittext=txt
