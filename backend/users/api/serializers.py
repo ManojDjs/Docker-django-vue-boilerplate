@@ -1,6 +1,14 @@
 from rest_framework import serializers
-from users.models import User,Registered
+from users.models import User,Registered,Profile
+from django.core import serializers as c
+from rest_framework.renderers import JSONRenderer
+import json
+class Profile_SE(serializers.ModelSerializer):
+    class Meta:
+        Model=Profile
+        fields=['image']
 class UserDetails(serializers.ModelSerializer):
+    # Profile_PIC=Profile_SE(many=True, read_only=True)
     class Meta:
         model=User
         fields=[
@@ -13,7 +21,9 @@ class UserDetails(serializers.ModelSerializer):
         "username",
         "email",
         "first_name",
-        "last_name"]
+        "last_name",
+        "Image"
+        ]
 class UserEdit(serializers.ModelSerializer):
     class Meta:
         model=User
@@ -22,3 +32,11 @@ class Registered_S(serializers.ModelSerializer):
     class Meta:
         model=Registered
         fields="__all__"
+
+class Profile_S(serializers.ModelSerializer):
+    Profile_PIC=UserDetails(many=True, read_only=True)
+    class Meta:
+        model=Profile
+        fields=["id",
+        "image",
+        "Profile_PIC"]

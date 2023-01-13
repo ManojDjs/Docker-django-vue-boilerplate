@@ -41,19 +41,19 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'drf_registration',
-
     'drf_yasg',
     'users',
-    'Programs',
-    'FPrograms',
-    'corsheaders',
-    'Demographics',
+    'Aggregator',
+    # 'Programs',
+    # 'FPrograms',
+    # 'corsheaders',
+    # 'Demographics',
     # 'MentalWellbeing',
     # 'FMentalWellbeing',
     # 'WellbeingModelNU',
     # 'FWellbeingModelNU',
     'Courses',
-    'Questions'
+    # 'Questions'
 
 
 ]
@@ -71,7 +71,9 @@ REST_FRAMEWORK = {
             'rest_framework.permissions.IsAuthenticated',
         ),
     'DATETIME_FORMAT':"%d-%b-%Y-%I:%M%p",
-'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 50
 
 }
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'

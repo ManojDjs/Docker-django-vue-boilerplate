@@ -18,9 +18,25 @@ class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
+    Image= models.ImageField(upload_to='profile_pics', default="default.jpg",blank=True,null=True)
+
+    def __str__(self) -> str:
+        return self.username
+    # def create_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         Profile.objects.create(user=instance)
+    # post_save.connect(create_profile,sender=User)
+    # def save(self, *args, **kwargs):
+    #     super(Profile, self).save(*args, **kwargs)
+
+    #     img = Image.open(self.image.path)
+    #     if img.height > 300 or img.width > 300:
+    #         output_size = (300, 300)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='profile_pics', default="default.jpg")
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='Profile_PIC')
+    image = models.ImageField(upload_to='profile_pics', default="default.jpg",blank=True,null=True)
 
     # default = 'path/to/my/default/image.jpg'
     def __str__(self):

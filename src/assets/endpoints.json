@@ -1,64 +1,62 @@
 [
-    {
-        "SERVER":{
-            "SERVER":"http://127.0.0.1:8000/"
-        },
-        "Course":{
-            "SERVER":"http://127.0.0.1:8000",
-            "REGISTEREDSTATUS":"/USER/Register_status/",
-            "REGISTERED":"/USER/Register_view/",
-            "DAIRYLABLE":"/Course/MyDairy/",
-            "DAIRY":"/Course/Dairy/",
-            "DAIRYUPDATE":"/Course/Dairy_update/"
-        },
-        "ISQ":{
-            "Total":"QA/I_ISQ/",
-            "Questions":"QA/ISQ_Q",
-            "Answers":"QA/ISQ_A/",
-            "Edit":"QA/ISQ_A_EDIT/"
-        },
-        "FISQ":{
-            "Total":"FQA/I_ISQ/",
-            "Questions":"FQA/ISQ_Q/",
-            "Answers":"FQA/ISQ_A/",
-            "Edit":"FQA/ISQ_A_EDIT/"
-        },
-        "DEMO":{
-            "Total":"Demo/DQ_Total/",
-            "Questions":"Demo/DQ_Q/",
-            "Answers":"Demo/DQ_A/",
-            "Edit":"Demo/DQ_A_EDIT/"
-        },
-        "MWB":{
-            "Total":"MWB/MWB_Total/",
-            "Questions":"MWB/MWB",
-            "Answers":"MWB/MWB_A/",
-            "Edit":"MWB/MWB_A_EDIT/"
-
-        },
-        "FMWB":{
-            "Total":"FMWB/MWB_Total/",
-            "Questions":"FMWB/MWB",
-            "Answers":"FMWB/MWB_A/",
-            "Edit":"FMWB/MWB_A_EDIT/"
-
-        },
-        "WBMNU":{
-            "Total":"WBMNU/WBMNU_Total/",
-            "Questions":"WBMNU/WBMNU",
-            "Answers":"WBMNU/WBMNU_A/",
-            "Edit":"WBMNU/WBMNU_A_EDIT/"
-        },
-        "FWBMNU":{
-            "Total":"FWBMNU/WBMNU_Total/",
-            "Questions":"FWBMNU/WBMNU",
-            "Answers":"FWBMNU/WBMNU_A/",
-            "Edit":"FWBMNU/WBMNU_A_EDIT/"
-        },
-        "USER":{
-            "DETAILS":"USER/userdetails",
-            "EDIT":"USER/useredit"
-        }
-
+  {
+    "SERVER": {
+      "SERVER": "http://127.0.0.1:8000/"
+    },
+    "Course": {
+      "SERVER": "http://127.0.0.1:8000",
+      "Course": "/Aggregator/Course_List/",
+      "REGISTEREDSTATUS": "/USER/Register_status/",
+      "REGISTERED": "/USER/Register_view/",
+      "DAIRYLABLE": "/Course/MyDairy/",
+      "DAIRY": "/Course/Dairy/",
+      "DAIRYUPDATE": "/Course/Dairy_update/"
+    },
+    "ISQ": {
+      "Total": "QA/I_ISQ/",
+      "Questions": "QA/ISQ_Q",
+      "Answers": "QA/ISQ_A/",
+      "Edit": "QA/ISQ_A_EDIT/"
+    },
+    "FISQ": {
+      "Total": "FQA/I_ISQ/",
+      "Questions": "FQA/ISQ_Q/",
+      "Answers": "FQA/ISQ_A/",
+      "Edit": "FQA/ISQ_A_EDIT/"
+    },
+    "DEMO": {
+      "Total": "Demo/DQ_Total/",
+      "Questions": "Demo/DQ_Q/",
+      "Answers": "Demo/DQ_A/",
+      "Edit": "Demo/DQ_A_EDIT/"
+    },
+    "MWB": {
+      "Total": "MWB/MWB_Total/",
+      "Questions": "MWB/MWB",
+      "Answers": "MWB/MWB_A/",
+      "Edit": "MWB/MWB_A_EDIT/"
+    },
+    "FMWB": {
+      "Total": "FMWB/MWB_Total/",
+      "Questions": "FMWB/MWB",
+      "Answers": "FMWB/MWB_A/",
+      "Edit": "FMWB/MWB_A_EDIT/"
+    },
+    "WBMNU": {
+      "Total": "WBMNU/WBMNU_Total/",
+      "Questions": "WBMNU/WBMNU",
+      "Answers": "WBMNU/WBMNU_A/",
+      "Edit": "WBMNU/WBMNU_A_EDIT/"
+    },
+    "FWBMNU": {
+      "Total": "FWBMNU/WBMNU_Total/",
+      "Questions": "FWBMNU/WBMNU",
+      "Answers": "FWBMNU/WBMNU_A/",
+      "Edit": "FWBMNU/WBMNU_A_EDIT/"
+    },
+    "USER": {
+      "DETAILS": "USER/userdetails",
+      "EDIT": "USER/useredit"
     }
+  }
 ]

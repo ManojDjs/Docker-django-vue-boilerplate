@@ -11,7 +11,7 @@ class Course(models.Model):
     Description=models.TextField()
     Date=models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=255, unique=True, null=True,blank=True)
-    likes = models.ManyToManyField(User, related_name='likes_post')
+    likes = models.ManyToManyField(User, related_name='likes_courses')
     image = models.ImageField(upload_to='profile_pics', default="Dairy.png",null=True,blank=True)
     def __str__(self):
         return self.Name

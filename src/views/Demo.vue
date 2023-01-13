@@ -1,345 +1,299 @@
 <template>
-<div class="Demo">
-    <h1>Demographic Information</h1>
-    {{status }}
-    <div class="p-grid" >
-        <div class="p-col-12 p-md-6 p-lg-6">
-            <img src="@/assets/Dash.jpeg" style="width:60%; display: block;" id="image" class="p-mr-2"/>
-        </div>
-        <div class="p-col-12 p-md-6 p-lg-6" v-if="status=='RS'">
-        {{ status }}
-        {{ demodata }}
-        {{ demoquesions }}
-        {{ Answers_KV }}
-        <h1>Please complete the questions below:</h1>
-         <div v-for='(item,index) in Answers_KV' :key='index'>
-             <div v-if="item .question_no==1">
-                <h2>{{ item.question }}</h2> 
-                <Divider />
-                <Dropdown v-model="item.answer" :options="age_band" optionLabel="name" placeholder="please indicate "/>
-                <Divider />
-                 </div>
-                  <div v-if="item .question_no==2">
-                  <h2>{{ item.question }}</h2>
-                  <Divider />
-                  <Dropdown v-model="item.answer" :options="e_banckground" optionLabel="name" placeholder="please indicate "/>
-                  <Divider />
-                 </div>
-                  <div v-if="item .question_no==3">
-                   <h2>{{ item.question }}</h2>
-                   <Divider />
-                   <Dropdown v-model="item.answer" :options="Gender" optionLabel="name" placeholder="please indicate "/>
-                   <Divider />
-                 </div>
-                  <div v-if="item .question_no==4">
-                   <h2>{{ item.question }}</h2>
-                   <Divider />
-                   <Dropdown v-model="item.answer" :options="work" optionLabel="name" placeholder="please indicate "/>
-                   <Divider />
-                 </div>
-                  <div v-if="item .question_no==5">
-                   <h2>{{ item.question }}</h2>
-                   <Divider />
-                   <Dropdown v-model="item.answer" :options="experience" optionLabel="name" placeholder="please indicate "/>
-                   <Divider />
-                 </div>
-
-         </div>
-
-                <Button v-on:click="submit">Submit</Button>
-
-        </div>
-         <div class="p-col-12 p-md-6 p-lg-6" v-if="status=='EDIT'">
-        <h1>Please Observe carefully your answers below:</h1>
-
-         <div v-for='(item,index) in demodata[0]["Demo"]' :key='index'>
-             <div v-if="item.question_name['id']==1">
-                <h2>{{ item.question_name['question'] }}</h2> 
-                <Divider />
-                <h3>{{ item.answer}}</h3>
-                <Divider />
-                 </div>
-                  <div v-if="item.question_name['id']==2">
-                 <h2>{{ item.question_name['question'] }}</h2> 
-                  <Divider />
-                  <h3>{{ item.answer}}</h3>
-                  <Divider />
-                 </div>
-                  <div v-if="item.question_name['id']==3">
-                   <h2>{{ item.question_name['question'] }}</h2> 
-                   <Divider />
-                  <h3>{{ item.answer}}</h3>
-                   <Divider />
-                 </div>
-                  <div v-if="item.question_name['id']==4">
-                   <h2>{{ item.question_name['question'] }}</h2> 
-                   <Divider />
-                   <h3>{{ item.answer}}</h3>
-                   <Divider />
-                 </div>
-                  <div v-if="item.question_name['id']==5">
-                   <h2>{{ item.question_name['question'] }}</h2> 
-                   <Divider />
-                   <h3>{{ item.answer}}</h3>
-                   <Divider />
-                 </div>
-
-         </div>
-                
-                <Button v-on:click="Continue">Continue</Button>
-
-        </div>
+  <div class="bg-indigo-50">
+    <div
+      class="mt-6 max-w-screen flex align-items-center justify-content-center"
+    >
+      <Nav></Nav>
     </div>
+    <br />
+    <br />
+    <br />
 
-</div>
+    <div class="card">
+      <div
+        class="flex justify-content-between flex-wrap card-container purple-container"
+      >
+        <div
+          class="flex align-items-center justify-content-center font-bold text-indigo-700 border-round m-2"
+        >
+          <p class="text-center text-4xl uppercase">Price Aggregator</p>
+        </div>
+        <div
+          class="flex align-items-center justify-content-center font-bold text-white border-round m-2"
+        >
+          <p class="text-indigo-600 text-center font-medium text-2xl">
+            Other Sites
+          </p>
+        </div>
+        <div
+          class="flex align-items-center justify-content-center font-bold text-indigo-700 border-round m-2"
+        >
+          <h5 id="single" class="text-xl pr-3">Aggregator</h5>
+          <SelectButton
+            class="bg-orange-500"
+            v-model="value1"
+            :options="options"
+            aria-labelledby="single"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="grid m-1">
+      <div class="col-12 md:col-4 lg:col-4 mb-0">
+        <Card class="border-round-md bg-indigo-700">
+          <template #header>
+            <img alt="user header" :src="course_now.item.image" />
+          </template>
+          <template #title>
+            <div class="flex align-items-center justify-content-between mb-4">
+              <span
+                class="uppercase text-left text-4xl font-medium text-900 mr-5"
+              >
+                Course Name : {{ course_now.item.Name }}</span
+              ><span class="text-3xl font-medium text-900"
+                >₹{{ course_now.item.price }}</span
+              >
+            </div>
+          </template>
+          <template #content>
+            <p class="p-0 mt-0 mb-5 line-height-3 text-700 text-left">
+              {{ course_now.item.Description }}
+            </p>
+          </template>
+          <template #footer>
+            <ul class="list-none p-0 m-0 text-sm px-1 text-600">
+              <li class="flex align-items-center mb-3">
+                <i class="pi pi-credit-card mr-2"></i
+                ><span>Pay in 21 days</span>
+              </li>
+              <li class="flex align-items-center mb-3">
+                <i class="pi pi-send mr-2"></i><span>Free Cancellation</span>
+              </li>
+              <li class="flex align-items-center">
+                <i class="pi pi-refresh mr-2"></i
+                ><span>Price on {{ course_now.item.Date }}</span>
+              </li>
+            </ul>
+            <Button
+              label="Buy Now"
+              icon="pi pi-shopping-cart"
+              class="py-3 my-3"
+            />
+          </template>
+        </Card>
+      </div>
+      <div class="col-12 md:col-8 lg:col-8">
+        <div class="mt-0">
+          <ul
+            class="list-none m-0 p-0 bg-indigo-700 border-round mb-2"
+            :key="item"
+            v-for="item in course_now.item.User_Course"
+            v-if="value1 === 'Off'"
+          >
+            <li class="py-5 border-top-1 surface-border">
+              <div class="flex align-items-center justify-content-between mb-3">
+                <div class="flex align-items-center">
+                  <img
+                    :src="course_now.item.image"
+                    class="w-4rem h-4rem flex-shrink-0 m-3 border-round shadow-7 border-orange-500 border-1 m-2"
+                  />
+                  <div class="flex flex-column">
+                    <span class="text-left text-900 font-medium mb-1">
+                      Plat Form: {{ item.Site }}</span
+                    >
+                    <span class="text-left text-900 font-medium mb-1">
+                      Course Name : {{ course_now.item.Name }}</span
+                    ><span class="text-left text-500 font-medium text-sm"
+                      >Price on {{ course_now.item.Date }}</span
+                    >
+                  </div>
+                </div>
+                <div class="flex align-items-center">
+                  <span class="font-medium text-2xl text-white mr-6"
+                    >{{ item.Price }} ₹</span
+                  >
+                </div>
+              </div>
+              <p class="text-600 p-0 m-0 line-height-3 text-left m-4">
+                {{ course_now.item.Description }}
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 lg:col-12 p-3" v-if="value1 === 'On'">
+          <div class="card">
+            <h5>Compare Prices from our top competators</h5>
+            <Chart type="bar" :data="basicData" :options="horizontalOptions" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <Footer></Footer>
+  </div>
 </template>
 <script>
-import { mapGetters, mapState } from 'vuex'
- import Json from "@/assets/endpoints.json"
- import axios from 'axios'
-// import { computed } from 'vue'
+import { mapState } from "vuex";
+import axios from "axios";
+import Json from "@/assets/endpoints.json";
+import Nav from "@/components/NavBar.vue";
+import Footer from "@/components/Footer.vue";
 export default {
-    data(){
-        return{
-            server:Json[0]['SERVER']['SERVER'],
-            isq_link:Json[0]['DEMO'],
-            total:Json[0]['DEMO']['Total'],
-            questionlink:Json[0]['DEMO']['Questions'],
-            submission_link:Json[0]['DEMO']['Answers'],
-            edit:Json[0]['DEMO']['Edit'],
-            sublink:'Demo',
-            status:'',
-            mqid:0,
-            demodata:[],
-            demoquesions:[],
-            age_band:[
-                {name:'18-24',key:"18-24"},
-                {name:'24-34',key:"24-34"},
-                {name:'35-44',key:"35-44"},
-                {name:'45-54',key:"45-54"},
-                {name:'55-64',key:"55-64"},
-                {name:'65+',key:"65+"}],
-            e_banckground:[
-                {name:'Asian/Asian British',key:"Asian/Asian British"},
-                {name:'Black/African/Caribbean/Black British',key:"Black/African/Caribbean/Black British"},
-                {name:'Mixed/Multiple ethnic groups',key:"Mixed/Multiple ethnic groups"},
-                {name:'White',key:"White"},
-                {name:'Other ethnic group',key:"Other ethnic group"},
-                ],
-            Gender:[
-                {name:'Female (including female transgender)',key:"Female (including female transgender)"},
-                {name:'Male (including male transgender)',key:"Male (including male transgender)"},
-                {name:'Gender neutral',key:"Gender neutral"},
-                {name:'Non-binary',key:"Non-binary"},
-                {name:'Other',key:"Other"},
-                {name:'Prefer not to say',key:"Prefer not to say"}],
-         work:[
-                {name:'Desk based',key:"Desk based"},
-                {name:'Driver',key:"Driver"},
-                {name:'Educator',key:"Educator"},
-                {name:'Home worker',key:"Home worker"},
-                {name:'Retired',key:"Retired"},
-                {name:'Studying',key:"Studying"}],
-        experience:[
-                {name:'No prior experience',key:"No prior experience"},
-                {name:'Some prior experience',key:"Some prior experience"},
-                {name:'Professional practitioner of Qigong',key:"Professional practitioner of Qigong"},
-                {name:'Prior experience of Tai Chi',key:"Prior experience of Tai Chi"},
-                {name:'Prior experience of other form of slow movement exercise',key:"Prior experience of other form of slow movement exercise"},
-                ],
-            selectedage:'',
-            Answers_KV:[],
-            Submisions:[]
-        }
-        },
-        computed:{
-            ...mapGetters([
-                'get_questions',
-                'get_q_status',
-                'get_qa',
-                'getuser'
-            ]),
-            ...mapState([
-                'token',
-                'uid',
-                'user'
-            ])
-           
-        },
-        methods:{
-            Continue(){
-                this.$router.push('/Videos')
+  data() {
+    return {
+      server: Json[0]["Course"]["SERVER"],
+      course: Json[0]["Course"]["Course"],
+      register: Json[0]["Course"]["REGISTERED"],
+      course_now: {},
+      value1: "Off",
+
+      options: ["Off", "On"],
+      horizontalOptions: {
+        responsive: true,
+        indexAxis: "y",
+        plugins: {
+          showDatapoints: true,
+          datalabels: {
+            anchor: "end",
+            align: "right",
+            formatter: Math.round,
+            font: {
+              weight: "bold",
             },
-            check(){
-                console.log(this.token)
-                const headers={'Authorization': 'Token'+' '+this.token, }
-                    axios.get(this.server+this.total,{'headers':headers})
-                    .then(resp => {
-                    console.log(" i am at initial check")
-                    console.log(resp.data)
-                    this.demodata=resp.data
-                    if(this.demodata.length==0){
-                        console.log("no answers taken so far")
-                        axios.post(this.server+this.total,{"Answered_by": this.user},{'headers':headers})
-                        .then(resp => {
-                            console.log(resp.data)
-                            if(resp.data.length==0){
-                                  this.check()
-                            }
-                            else{
-                                this.status='RS'
-                                this.check()
-                            }
-
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
-                    }
-                    else{
-                        this.mqid=resp.data[0]['id']
-                        
-                        if(resp.data[0]['total_answers']==0){
-                            console.log("i am at total answers 0 ")
-                            this.status='RS'
-                            this.take_demo()
-                        }
-                        if(resp.data[0]['total_answers']==resp.data[0]['total_questions']){
-                            console.log("i am enabeling edit mode")
-                            this.status='EDIT'
-                            this.demodata=resp.data
-                        }
-                    }
-
-                    })
-                    .catch(err => {
-                    console.log(err)
-                    })
-                    },
-            take_demo(){
-                 const headers={'Authorization': 'Token'+' '+this.token, }
-                    axios.get(this.server+this.questionlink,{'headers':headers})
-                    .then(resp => {
-                    // console.log(resp.data)
-                    this.demoquesions=resp.data
-                    this.create_object()
-
-                    })
-                    .catch(err => {
-                    console.log(err)
-                    })
-                    },
-            submit(){
-                console.log(this.Answers_KV)
-                 var i;
-              var checking=0;
-              console.log(checking)
-                
-                    for(i=0;i<this.Answers_KV.length;i++){
-                            try{
-                                const headers={'Authorization': 'Token'+' '+this.token, }
-                                axios.post(this.server+this.submission_link,{
-                                            "answer": this.Answers_KV[i]['answer']['key'],
-                                            "main_question_set": this.mqid,
-                                            "question_name":this.Answers_KV[i]['qid'],
-                                            "answer_by": this.uid},
-                                            {'headers':headers}).then(resp => {
-                                            console.log(resp.data)
-                                        })  
-                                    }
-                                    catch(err){
-                                        console.log(err)
-                                    }
-                                
-                                }
-                                this.check()
-
-                        
-                },
-                create_object(){
-
-                        var i;
-                    // console.log(this.get_questions.data) checking questions
-                    for(i=0;i<this.demoquesions.length;i++){
-                    
-                        
-                        this.Answers_KV.push({
-                            "qid":this.demoquesions[i]['id'],
-                            "answer": "",
-                            "question": this.demoquesions[i]['question'],
-                            "question_no":this.demoquesions[i]['question_no'],
-                            
-                        })
-                      }
-                      console.log(this.Answers_KV)
-                      }
-        },
-        
-        watch:{
-            localedit(){
-                this.check()
+          },
+          legend: {
+            labels: {
+              color: "#495057",
+              font: {
+                size: 24,
+              },
             },
-            submitstatus(){
-                this.check()
-            }
-
+          },
         },
-        created(){
-            this.check()
-            
-            
-            
+        scales: {
+          x: {
+            ticks: {
+              color: "#495057",
+              callback: function (value, index, ticks) {
+                return "₹" + value;
+              },
+              scaleLabel: {
+                display: true,
+              },
+            },
+            grid: {
+              color: "#591BDF",
+            },
+          },
+          y: {
+            ticks: {
+              color: "#495057",
+              //   mirror: true, //Show y-axis labels inside horizontal bars
+            },
+            grid: {
+              color: "#ebedef",
+            },
+            gridLines: {
+              drawOnChartArea: false,
+            },
+          },
+        },
+      },
+      basicData: {
+        labels: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+        ],
+        datasets: [
+          {
+            label: "My First dataset",
+            backgroundColor: "#DF711B",
+            barThickness: 25,
+            padding: {
+              top: 5,
+            },
+            data: [650, 59, 80, 81, 56, 55, 40],
+          },
+          //   {
+          //     label: "Line Dataset",
+          //     backgroundColor: "#42A5F5",
+          //     data: [500, 500, 500, 500, 500, 500, 500, 500],
+          //     type: "line",
+          //     // this dataset is drawn on top
+          //     order: 1,
+          //   },
+        ],
+      },
+    };
+  },
+  components: {
+    Nav,
+    Footer,
+  },
+  computed: {
+    ...mapState(["token", "user", "current_course"]),
+  },
+  methods: {
+    get_course_info() {
+      this.course_now = JSON.parse(localStorage.current_course);
+      //   console.log("at initital load", this.current_course);
+      console.log("loaded from local storage");
+      console.log(JSON.parse(localStorage.current_course));
+      //   this.course_now = this.current_course;
+    },
+    scroll(id) {
+      document.getElementById(id).scrollIntoView({
+        behavior: "smooth",
+      });
+    },
+    load_data() {
+      this.course_now;
 
-            
-        }
+      const data_vals = [];
+      data_vals.push(this.course_now.item.price);
+      const sites = [];
+      sites.push("Edumoon");
+      for (var j = 0; j < this.course_now.item.User_Course.length; j++) {
+        data_vals.push(
+          Math.floor(this.course_now.item.User_Course[j].Price / 10) * 10
+        );
+        sites.push(this.course_now.item.User_Course[j].Site);
+      }
+      this.basicData.datasets[0].label =
+        this.course_now.item.Name + "Course -Price Variation";
+      this.basicData.datasets[0].data = data_vals;
+      this.basicData.labels = sites;
+    },
+  },
 
-        
-}
+  created() {
+    this.get_course_info();
+    this.load_data();
+  },
+};
 </script>
-<style lang='scss' scoped>
-::v-deep(.p-scrollpanel) {
-    p {
-        padding: .5rem;
-        line-height: 1.5;
-        margin: 0;
-    }
-    & .button{
-         .p-selectbutton {
-             background:green;
-
-    }
-    }
-    &.custombar1 {
-        .p-scrollpanel-wrapper {
-            border-right: 9px solid var(--surface-b);
-        }
-
-        .p-scrollpanel-bar {
-            background-color: var(--primary-color);
-            opacity: 1;
-            transition: background-color .2s;
-
-            &:hover {
-                background-color: #007ad9;
-            }
-        }
-    }
-
-    &.custombar2 {
-        .p-scrollpanel-wrapper {
-            border-right: 9px solid var(--surface-b);
-            border-bottom: 9px solid var(--surface-b);
-        }
-
-        .p-scrollpanel-bar {
-            background-color: var(--surface-d);
-            border-radius: 0;
-            opacity: 1;
-            transition: background-color .2s;
-        }
-    }  
+<style scoped>
+.div {
+  text-align: center;
 }
-.Demo{
-    text-align: center;
+.Dash {
+  text-align: center;
+}
+#image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+#mark {
+  padding-top: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 </style>

@@ -1,48 +1,39 @@
 {
-  "name": "frontend",
+  "name": "edumoon",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "axios": "^0.21.0",
-    "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.19.0",
-    "chart.js": "^2.9.4",
-    "cordova": "^10.0.0",
-    "core-js": "^3.6.5",
-    "es6-promise": "^4.2.8",
-    "ionic": "^5.4.16",
-    "latest-version": "^5.1.0",
-    "mitt": "^2.1.0",
-    "npm": "^6.14.8",
-    "primeflex": "^2.0.0",
-    "primeicons": "^4.1.0",
-    "primevue": "^3.1.1",
-    "vue": "^3.0.0",
-    "vue-axios": "^3.2.0",
-    "vue-lazy-youtube-video": "^2.3.0",
-    "vue-quick-menu": "^1.0.7",
-    "vue-router": "^4.0.0-rc.5",
-    "vue-sidebar-menu": "^4.7.3",
-    "vue-window-size": "^1.0.2",
-    "vuex": "^4.0.0-rc.1",
-    "wave-ui": "^2.6.0"
+    "axios": "^1.1.3",
+    "chart.js": "^3.9.1",
+    "core-js": "^3.8.3",
+    "primeflex": "^3.2.1",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.8.0",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vue-ultimate-skeleton-cards": "^1.0.3",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-vuex": "^4.5.8",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0-0",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.1.0"
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "gh-pages": "^4.0.0",
+    "node-sass": "^7.0.3",
+    "sass-loader": "^13.1.0"
   },
   "eslintConfig": {
     "root": true,
@@ -54,13 +45,30 @@
       "eslint:recommended"
     ],
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@babel/eslint-parser"
     },
     "rules": {}
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie 11"
+  ],
+  "description": "```\r npm install\r ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManojDjs/Docker-django-vue-boilerplate.git"
+  },
+  "author": "Manoj DJS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManojDjs/Docker-django-vue-boilerplate/issues"
+  },
+  "homepage": "https://github.com/ManojDjs/Docker-django-vue-boilerplate#readme",
+  "keywords": [
+    "Education",
+    "site"
   ]
 }
